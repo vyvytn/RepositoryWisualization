@@ -55,11 +55,11 @@ function showNetwork() {
 }
 
 function btnCLickFunctions() {
-    $(document).ready(function () {
+   /* $(document).ready(function () {
         $('#collapseMenu').click(function () {
             showChord()
         });
-    });
+    });*/
     $(document).ready(function () {
         $('#returnBtn').click(function () {
             showPack()
@@ -70,8 +70,8 @@ function btnCLickFunctions() {
             showPack()
         });
     });
-    $(document).on( "some:event", function(evt,someData) {
+    /*$(document).on( "some:event", function(evt,someData) {
         console.log('DATA')
     } );
-
+*/
 }
