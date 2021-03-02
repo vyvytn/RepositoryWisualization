@@ -1,4 +1,9 @@
+#navBar{
+    background-color: white;
+}
 
+
+/*PackChart*/
 .node {
     cursor: pointer;
 }
@@ -6,7 +11,9 @@
 .btn{
     margin: 5px;
 }
-.node--group:hover,
+.node--group{
+    pointer-events: none;
+}
 .node--area:hover {
     stroke: white;
     stroke-width: 3px;
@@ -43,9 +50,9 @@ line.link {
     stroke-width: 1.5px;
 }
 
+/*selectMenu*/
 #chordMenu{
     max-height: 50vh;
-    overflow-y: auto;
 }
 
 /*MOLEKULE*/

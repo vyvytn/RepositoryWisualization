@@ -8,13 +8,14 @@ export default class PackChart {
     _setUrl(u) {
         this.dataUrl = u;
     }
-/*
-    getCurrentGroup(){
-        return this.currentGroup;
-    }
-    setCurrentGroup(value){
-        this.currentGroup=value;
-    }*/
+
+    /*
+        getCurrentGroup(){
+            return this.currentGroup;
+        }
+        setCurrentGroup(value){
+            this.currentGroup=value;
+        }*/
     drawChart() {
 
         //get JSON data
@@ -78,14 +79,32 @@ export default class PackChart {
                     circleClick(d)
                 });
 
-            function circleClick(d){
+            function circleClick(d) {
+                circle.attr("class")
+                let navBar = document.getElementById('navBar');
                 if (d.depth < 2) {
-                    circle.attr("class")
                     if (focus !== d) zoom(d), d3.event.stopPropagation();
-                } else if (d.depth>=2) {
-                    console.log(d.data.key ? d.data.key: d.data.group.value)
+                    let children=navBar.childElementCount;
+                    console.log(children)
+                    if (children==2) {
+                        // navBar.querySelectorAll('*').forEach(n => n.remove());
+                       navBar.removeChild(navBar.lastChild);
+                    }
+                    let newNav = document.createElement('li');
+                    newNav.className = 'breadcrumb-item active';
+                    newNav.setAttribute = ('aria-current', 'page');
+                    newNav.innerHTML = focus.data.key;
+                    navBar.appendChild(newNav);
+
+                } else if (d.depth >= 2) {
+                    // console.log(d.data.key ? d.data.key : d.data.group.value)
+                    /*   let newNav = document.createElement('li');
+                       newNav.className = 'breadcrumb-item active';
+                       newNav.setAttribute = ('aria-current', 'page');
+                       newNav.innerHTML = d.data.parent.data.key
+                       navBar.appendChild(newNav);*/
                     // $(document).trigger("some:event", d.data.group.value);
-                    $(document).trigger( "some:event", d.data.key ? d.data.key: d.data.group.value);
+                    $(document).trigger("some:event", d.data.key ? d.data.key : d.data.group.value);
 
                 }
             }
@@ -156,6 +175,8 @@ export default class PackChart {
             $(document).ready(function () {
                 $('#resetBtn').click(function () {
                     focus = root;
+                    let navBar = document.getElementById('navBar');
+                    if (navBar.childElementCount>1)navBar.removeChild(navBar.lastChild);
                     zoomTo([root.x, root.y, root.r * 2 + margin]);
                 });
             });
