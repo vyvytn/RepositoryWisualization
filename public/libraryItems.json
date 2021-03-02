@@ -1,0 +1,1295 @@
+{
+  "head": {
+    "link": [],
+    "vars": [
+      "title",
+      "author",
+      "area",
+      "group"
+    ]
+  },
+  "results": {
+    "distinct": false,
+    "ordered": true,
+    "bindings": [
+      {
+        "title": {
+          "type": "literal",
+          "value": "Jahresbericht 2018-2019"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Bundesministerium für Bildung und Forschung BMBF (Deutschland)"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Weizenbaum Institut"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Weizenbaum Institut"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Blockchain and the Promise(s) of Decentralisation: A Sociological Investigation of the Sociotechnical Imaginaries of Blockchain"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Becker, Moritz"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Arbeiten in hochautomatisierten, digital-hybriden Prozessen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Algorithmic governance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Katzenbach, Christian"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Kritische Maker-Kultur"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Algorithmic governance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Ulbricht, Lena"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Kritische Maker-Kultur"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Minimalistic Explanations: Capturing the Essence of Decisions"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Schüler, Martin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Technologien und Wohlbefinden"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Minimalistic Explanations: Capturing the Essence of Decisions"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Wei, Philipp"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Technologien und Wohlbefinden"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sonic Footprints of Web Tracking"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Hauswirth, Manfred"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sonic Footprints of Web Tracking"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Lutz, Otto Hans-Martin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Wearable Computing im Betrieb gestalten: Rolle und Perspektiven der Lösungsentwickler im Prozess der Arbeitsgestaltung"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Evers, Maren"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Rahmenbedingungen für Datenmärkte"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Wearable Computing im Betrieb gestalten: Rolle und Perspektiven der Lösungsentwickler im Prozess der Arbeitsgestaltung"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Krzywdzinski, Martin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Rahmenbedingungen für Datenmärkte"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Wearable Computing im Betrieb gestalten: Rolle und Perspektiven der Lösungsentwickler im Prozess der Arbeitsgestaltung"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Pfeiffer, Sabine"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Rahmenbedingungen für Datenmärkte"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Talk to the Hand! Digitale Inklusion von Taubblinden"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Bieling, Tom"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Talk to the Hand! Digitale Inklusion von Taubblinden"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Burchardt, Aljoscha"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Talk to the Hand! Digitale Inklusion von Taubblinden"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Joost, Gesche"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Talk to the Hand! Digitale Inklusion von Taubblinden"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Uszkoreit, Hans"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Public Policy Targets in EU Broadband Markets: The Role of Technological Neutrality."
+        },
+        "author": {
+          "type": "literal",
+          "value": "Briglauer, Wolfgang"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung und transnationale Öffentlichkeit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Public Policy Targets in EU Broadband Markets: The Role of Technological Neutrality."
+        },
+        "author": {
+          "type": "literal",
+          "value": "Stocker, Volker"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung und transnationale Öffentlichkeit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Public Policy Targets in EU Broadband Markets: The Role of Technological Neutrality."
+        },
+        "author": {
+          "type": "literal",
+          "value": "Whalley, Jason"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung und transnationale Öffentlichkeit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "An Interdisciplinary Exploration of Data Culture and Vocational Training"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Etsiwah, Bennet"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Vertrauen in verteilten Umgebungen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "An Interdisciplinary Exploration of Data Culture and Vocational Training"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Hecht, Stefanie"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Vertrauen in verteilten Umgebungen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "An Interdisciplinary Exploration of Data Culture and Vocational Training"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Hilbig, Romy"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Vertrauen in verteilten Umgebungen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Why Drones for Ordinary People?Digital Representations, Topic Clusters, and Techno-Nationalization of Drones on Zhihu"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Hamm, Andrea"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Kritikalität KI-basierter Systeme"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Why Drones for Ordinary People?Digital Representations, Topic Clusters, and Techno-Nationalization of Drones on Zhihu"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Lin, Zihao"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Kritikalität KI-basierter Systeme"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Exploring Students Engagement Patterns in SPOC Forums and their Association with Course Performance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Liu, Hai"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Sicherheit & Offenheit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Exploring Students Engagement Patterns in SPOC Forums and their Association with Course Performance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Liu, Sannyuya"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Sicherheit & Offenheit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Exploring Students Engagement Patterns in SPOC Forums and their Association with Course Performance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Liu, Zhi"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Sicherheit & Offenheit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Exploring Students Engagement Patterns in SPOC Forums and their Association with Course Performance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Niels, Pinkwart"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Sicherheit & Offenheit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Exploring Students Engagement Patterns in SPOC Forums and their Association with Course Performance"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Zhang, Guangtao"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Sicherheit & Offenheit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Design for civil society. The model project Citizens connect neighborhoods  community development harnesses digital transformation"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Joost, Gesche"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Bildung und Weiterbildung in der digitalen Gesellschaft"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Design for civil society. The model project Citizens connect neighborhoods  community development harnesses digital transformation"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Herlo, Bianca"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Bildung und Weiterbildung in der digitalen Gesellschaft"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "We Need to Talk! Antecedents and Consequences of Childrens Smartphone Use  A Literature Review"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Baumann, Annika"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung der Wissenschaft"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "We Need to Talk! Antecedents and Consequences of Childrens Smartphone Use  A Literature Review"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Bergert, Cora"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "We Need to Talk! Antecedents and Consequences of Childrens Smartphone Use  A Literature Review"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Gladkaya, Margarita"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "We Need to Talk! Antecedents and Consequences of Childrens Smartphone Use  A Literature Review"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Gundlach, Jana"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "We Need to Talk! Antecedents and Consequences of Childrens Smartphone Use  A Literature Review"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Krasnova, Hanna"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "ICT as an Enabler: Understanding the Role of Online Communication in the Social Inclusion of Syrian Refugees in Germany"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Krasnova, Hanna"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Datenbasierte Geschäftsmodellinnovationen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "ICT as an Enabler: Understanding the Role of Online Communication in the Social Inclusion of Syrian Refugees in Germany"
+        },
+        "author": {
+          "type": "literal",
+          "value": "AbuJarour, Safa'a"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Datenbasierte Geschäftsmodellinnovationen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "ICT as an Enabler: Understanding the Role of Online Communication in the Social Inclusion of Syrian Refugees in Germany"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Hoffmeier, Farina"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Datenbasierte Geschäftsmodellinnovationen"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Growing Open Science with the Combined Potential of Citizen Science and Auto Science"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Kirstein, Fabian"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Demokratie und Digitalisierung"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Growing Open Science with the Combined Potential of Citizen Science and Auto Science"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Schimmler, Sonja"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Demokratie und Digitalisierung"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Growing Open Science with the Combined Potential of Citizen Science and Auto Science"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Urbanek, Sebastian"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Demokratie und Digitalisierung"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Growing Open Science with the Combined Potential of Citizen Science and Auto Science"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Wünsche, Hannes"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Demokratie und Digitalisierung"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Linked Data in the European Data Portal: A Comprehensive Platform for Applying DCAT-AP"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Hauswirth, Manfred"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Verantwortung und das Internet der Dinge"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Linked Data in the European Data Portal: A Comprehensive Platform for Applying DCAT-AP"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Kirstein, Fabian"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Verantwortung und das Internet der Dinge"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Linked Data in the European Data Portal: A Comprehensive Platform for Applying DCAT-AP"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Schimmler, Sonja"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Verantwortung und das Internet der Dinge"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Linked Data in the European Data Portal: A Comprehensive Platform for Applying DCAT-AP"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Dittwald, Benjamin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Verantwortung und das Internet der Dinge"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Linked Data in the European Data Portal: A Comprehensive Platform for Applying DCAT-AP"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Dutkowski, Simon"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Verantwortung und das Internet der Dinge"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Linked Data in the European Data Portal: A Comprehensive Platform for Applying DCAT-AP"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Glikman, Yuri"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Verantwortung – Vertrauen – Governance"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Verantwortung und das Internet der Dinge"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Citizen Science and the Dissolution of Inequalities in Scientific Knowledge Production"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Schimmler, Sonja"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Autonome Systeme & Selbstbestimmung"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Citizen Science and the Dissolution of Inequalities in Scientific Knowledge Production"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Wünsche, Hannes"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Autonome Systeme & Selbstbestimmung"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Four Parameters for Measuring Democratic Deliberation: Theoretical and Methodological Challenges and How to Respond"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Fleu, Dannica"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung & Nachhaltigkeit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Four Parameters for Measuring Democratic Deliberation: Theoretical and Methodological Challenges and How to Respond"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Helbig, Karoline"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung & Nachhaltigkeit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Four Parameters for Measuring Democratic Deliberation: Theoretical and Methodological Challenges and How to Respond"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Schaal, Gary S."
+        },
+        "area": {
+          "type": "literal",
+          "value": "Querschnittsformate"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitalisierung & Nachhaltigkeit"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Jahresbericht 2017-2018"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Bundesministerium für Bildung und Forschung BMBF (Deutschland)"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Bildung und Weiterbildung in der digitalen Gesellschaft"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Digital CitizenshipRevisited: The Impact of ICTs on Citizens Political Communication Beyond the Western State"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Emmer, Martin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Technologien und Wohlbefinden"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Digital CitizenshipRevisited: The Impact of ICTs on Citizens Political Communication Beyond the Western State"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Kunst, Marlene"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Technologien und Wohlbefinden"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "The Selective Catalyst: Internet use as a mediator of citizenship norms effects on political participation"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Emmer, Martin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "The Selective Catalyst: Internet use as a mediator of citizenship norms effects on political participation"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Leiner, Laura"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "The Selective Catalyst: Internet use as a mediator of citizenship norms effects on political participation"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Porten-Che, Pablo"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "The Selective Catalyst: Internet use as a mediator of citizenship norms effects on political participation"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Valentim, Antnio"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Mensch - Arbeit - Wissen"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Reorganisation von Wissenspraktiken"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Bürger oder Bots? Automatisierte Kommunikation im Bundestagswahlkampf 2017"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Klinger, Ulrike"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Ungleichheit und digitale Souveränität"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Transnationale Öffentlichkeiten in der Digitalen Gesellschaft: Konzepte und Forschungsperspektiven"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Heft, Annett"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Transnationale Öffentlichkeiten in der Digitalen Gesellschaft: Konzepte und Forschungsperspektiven"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Knüpfer, Curd"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Transnationale Öffentlichkeiten in der Digitalen Gesellschaft: Konzepte und Forschungsperspektiven"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Pfetsch, Barbara"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Markt - Wettbewerb - Ungleichheit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Digitale Integration"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Bently, Lionel"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Dusollier, Sverine"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Geiger, Christophe"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Griffiths, Jonathan"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Metzger, Axel"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Peukert, Alexander"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      },
+      {
+        "title": {
+          "type": "literal",
+          "value": "Sound Sampling, a Permitted Use Under EU Copyright Law? Opinion of the European Copyright Society in Relation to the Pending Reference before the CJEU in Case C-476/17, Pelham GmbH v. Hütter"
+        },
+        "author": {
+          "type": "literal",
+          "value": "Senftleben, Martin"
+        },
+        "area": {
+          "type": "literal",
+          "value": "Demokratie – Partizipation – Öffentlichkeit"
+        },
+        "group": {
+          "type": "literal",
+          "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        }
+      }
+    ]
+  }
+}

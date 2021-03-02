@@ -1,0 +1,106 @@
+
+.node {
+    cursor: pointer;
+}
+
+.btn{
+    margin: 5px;
+}
+.node--group:hover,
+.node--area:hover {
+    stroke: white;
+    stroke-width: 3px;
+}
+
+.node--item {
+    fill: white;
+}
+
+.label {
+    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+}
+
+.label {
+    pointer-events: none;
+}
+.node circle {
+    cursor: pointer;
+    stroke: #3182bd;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font: 10px sans-serif;
+    pointer-events: none;
+    text-anchor: middle;
+}
+
+line.link {
+    fill: none;
+    stroke: #9ecae1;
+    stroke-width: 1.5px;
+}
+
+#chordMenu{
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+/*MOLEKULE*/
+.link line {
+    stroke: #696969;
+}
+
+.link line.separator {
+    stroke: #fff;
+    stroke-width: 2px;
+}
+
+.node circle {
+    stroke: #000;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font: 10px sans-serif;
+    pointer-events: none;
+}
+/*interactive*/
+body {
+    background-color: #333333;
+}
+
+.col-xs-10 {
+    background-color: #eeeeee;
+}
+
+.chord path {
+    fill-opacity: .67;
+    stroke: #000;
+    stroke-width: .5px;
+}
+h2{
+    padding-left:30px;
+    padding-right:30px;
+}
+
+h4{
+    margin-bottom:0px;
+}
+
+#tooltip {
+    visibility: hidden;
+    position: absolute;
+    background-color: #333;
+    border-radius: 4px;
+    padding: 5px;
+    z-index: 10;
+    color: white;
+    font-size: 14px;
+}
+
+.legendContainer {
+    margin-top: -30px;
+}

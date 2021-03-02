@@ -1,0 +1,96 @@
+[
+  {
+    "title": "Mensch, Arbeit, Wissen",
+    "color": "#A69D82",
+    "children": [
+      {
+        "name": "Arbeiten in hochautomatisierten, digital-hybriden Prozessen"
+      },
+      {
+        "name": "Kritische Maker-Kultur"
+      },
+      {
+        "name": "Bildung und Weiterbildung in der digitalen Gesellschaft"
+      },
+      {
+        "name": "Digitale Technologien und Wohlbefinden"
+      },
+      {
+        "name": "Digitalisierung der Wissenschaft"
+      },
+      {
+        "name": "Reorganisation von Wissenspraktiken"
+      }
+    ]
+  },
+  {
+    "title": "Markt, Wettbewerb, Ungleichheit",
+    "children": [
+      {
+        "name": "Arbeiten und Kooperieren in der Sharing Economy"
+      },
+      {
+        "name": "Rahmenbedingungen für Datenmärkte"
+      },
+      {
+        "name": "Datenbasierte Geschäftsmodellinnovationen"
+      },  {
+        "name": "Ungleichheit und digitale Souveränität"
+      },  {
+        "name": "Digitale Integration"
+      }
+    ]
+  },
+  {
+    "title": "Demokratie – Partizipation – Öffentlichkeit",
+    "children": [
+      {
+        "name": "Demokratie und Digitalisierung"
+      },
+      {
+        "name": "Digital Citizenship"
+      },
+      {
+        "name": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+      },
+      {
+        "name": "Digitalisierung und transnationale Öffentlichkeit"
+      }
+    ]
+  },
+  {
+    "title": "Verantwortung – Vertrauen – Governance",
+    "children": [
+      {
+        "name": "Verantwortung und das Internet der Dinge"
+      },
+      {
+        "name": "Verlagerung in der Normsetzung"
+      },
+      {
+        "name": "Vertrauen in verteilten Umgebungen"
+      },  {
+        "name": "Quantifizierung und gesellschaftliche Regulierung"
+      },  {
+        "name": "Digitalisierung und vernetzte Sicherheit"
+      },  {
+        "name": "Kritikalität KI-basierter Systeme"
+      }
+    ]
+  },
+  {
+    "title": "Querschnittsformate",
+    "amount": 3,
+    "children": [
+      {
+        "name": "Autonome Systeme & Selbstbestimmung"
+      },
+      {
+        "name": "Sicherheit & Offenheit"
+      },
+      {
+        "name": "Digitalisierung & Nachhaltigkeit"
+      }
+    ]
+  }
+]
