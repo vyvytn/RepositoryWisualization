@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+</head>
+<body>
+<div class="card card-body" id="card-body">
+   <!-- <b>Mensch - Arbeit - Wissen</b></br>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            Arbeiten in hochautomatisierten, digital-hybriden Prozessen
+        </label>
+    </div>-->
+</div>
+<script>
+    $(async function () {
+        await $.getJSON('/public/researchgroups.json', function (data) {
+            for (let area in data) {
+                let areaname = data[area].title;
+                let arealabel = document.createElement('b');
+                arealabel.id = areaname
+                arealabel.innerHTML=areaname;
+                document.getElementById('card-body').appendChild(arealabel);
+
+                let groupChecks = document.createElement('div');
+                groupChecks.className = 'form-check';
+                document.getElementById('card-body').appendChild(groupChecks);
+
+                let groups = data[area].children;
+
+                let linebreak = document.createElement("br");
+
+
+                for (let i = 0; i < groups.length; i++) {
+                    let groupname = groups[i].name;
+                    let groupCheckbox = document.createElement('input');
+                    groupCheckbox.className = 'form-check-input';
+                    groupCheckbox.type = 'checkbox';
+                    // groupCheckbox.setAttribute('checked','checked')
+                    groupCheckbox.id = 'flexCheckChecked';
+                    groupCheckbox.value=groupname;
+                    document.getElementsByClassName('form-check')[area].appendChild(groupCheckbox);
+
+                    var groupLabel = document.createElement('label');
+                    groupLabel.className = 'form-check-label';
+                    // groupLabel.htmlFor = 'flexCheckChecked';
+                    groupLabel.innerHTML = groupname;
+                    document.getElementsByClassName('form-check')[area].appendChild(groupLabel);
+                    let arealabel = document.createElement('b');
+                    arealabel.innerHTML = areaname;
+                    // document.getElementsByClassName('form-check-input')[area].appendChild(linebreak);
+
+
+                }
+            }
+        })
+        if ($('.form-check-input').is(':checked')){
+            console.log('CHECKED')
+        }
+    })
+</script>
+</body>
+</html>
