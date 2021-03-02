@@ -60,6 +60,9 @@ function btnCLickFunctions() {
             showChord()
         });
     });*/
+    $('selectMenu').on('change', function() {
+        alert( this.value );
+    });
     $(document).ready(function () {
         $('#returnBtn').click(function () {
             showPack()
