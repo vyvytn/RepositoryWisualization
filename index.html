@@ -2,19 +2,30 @@
 <html>
 
 <head>
+<!--    CSS dependency-->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<!--    D3 dependency-->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
     <script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Bootsstraps-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<!--    ajax-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+<!--    Bootsstraps icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     <meta charset="utf-8">
+
+<!--    import extern html pages-->
     <script>
         $(function(){
-            $("#collapseMenu").load("/html/chordMenu.html");
+            $("#selectMenu").load("/html/chordMenu.html");
+            // $("#chordChart").load("/html/chordchart.html");
+
         });
     </script>
 </head>
@@ -47,15 +58,25 @@
                     chord diagram <i class="bi bi-pie-chart-fill"></i>
                 </button>
                 <div id="chordMenu" class="collapse">
-                    <div id="collapseMenu"></div>
+                    <div id="card-body">
+                        <!--    select menu version-->
+                        <select class="form-select" aria-label="Default select example" id="selectMenu">
+                            <!--        <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>-->
+                        </select>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
     <!--   CHORD CHART  -->
-    <div class="row justify-content-center" id="chordContainer">
-        <div class="col" id="my_dataviz"></div>
+    <div class="row justify-content-center" id="chordContainer" >
+<!--        <div class="col" id="my_dataviz"></div>-->
+        <div id="chordChart">
+<!--            <svg id="chordSVG"></svg>-->
+        </div>
         <div class="col">
             <button type="button" class="btn btn-light" id="returnBtn">back<i
                     class="bi bi-arrow-counterclockwise"></i>
@@ -63,25 +84,7 @@
         </div>
     </div>
 <!--    INTERACTIVE CHORD-->
-  <!--  <div id=tooltip></div>
-    <div class="container" id="container">
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1">
-                <h2 class="text-center">Interactions Between Inhibitory and Excitatory Neurons</h2>
-                <h4 class="text-center"><em>Based on a model by Russel Jarvis</em></h4>
-                <div class="text-center">
-                    <div class="chart">
-                    </div>
-
-                    <div class="legendContainer text-center">
-                        <h4>Connections between neurons</h4>
-                    </div>
-                    <br>
-
-                </div>
-            </div>
-        </div>
-    </div>-->
+<!--    -->
 
     <!--   NETWORK CHART  -->
     <div class="row justify-content-center" id="networkContainer">

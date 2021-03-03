@@ -87,12 +87,13 @@
         var viewBoxDimensions = "0 0 " + width + " " + height,
             aspect = width / height;
 
+        var gnames;
         if (config.gnames) {
             gnames = config.gnames;
         } else {
             // make a list of names
             gnames = [];
-            for (var i=97; i<matrix.length; i++) {
+            for (var i = 97; i < matrix.length; i++) {
                 gnames.push(String.fromCharCode(i));
             }
         }
@@ -110,7 +111,7 @@
             .domain(d3.range(matrix.length-1))
             .range(colors);
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select('chordSVG')
             .attr("id", "visual")
             .attr("viewBox", viewBoxDimensions)
             .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio

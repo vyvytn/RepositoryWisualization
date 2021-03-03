@@ -55,13 +55,8 @@ function showNetwork() {
 }
 
 function btnCLickFunctions() {
-   /* $(document).ready(function () {
-        $('#collapseMenu').click(function () {
-            showChord()
-        });
-    });*/
-    $('selectMenu').on('change', function() {
-        alert( this.value );
+    $('#selectMenu').on('change', function() {
+        showChord()
     });
     $(document).ready(function () {
         $('#returnBtn').click(function () {
