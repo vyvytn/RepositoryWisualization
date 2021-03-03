@@ -42,10 +42,23 @@
             <li class="breadcrumb-item active" aria-current="page">Home</li>
         </ol>
     </nav>
-    <!--   PACK CHART  -->
-    <div class="row justify-content-center" id="packChartContainer">
-        <div class="col">
+    <div class="row justify-content-center" >
+
+        <!--   PACK CHART  -->
+        <div class="col" id="packContainer">
             <svg width="800" height="800"></svg>
+        </div>
+        <!--   CHORD CHART  -->
+        <div class="col" id="chordContainer" >
+            <!--        <div class="col" id="my_dataviz"></div>-->
+            <div class="col-lg-9" id="chordChart">
+                <svg id="chordSVG"></svg>
+            </div>
+<!--            <div class="col">
+                <button type="button" class="btn btn-light" id="returnBtn">back<i
+                        class="bi bi-arrow-counterclockwise"></i>
+                </button>
+            </div>-->
         </div>
         <div class="col">
             <div class="row">
@@ -71,18 +84,7 @@
 
         </div>
     </div>
-    <!--   CHORD CHART  -->
-    <div class="row justify-content-center" id="chordContainer" >
-<!--        <div class="col" id="my_dataviz"></div>-->
-        <div id="chordChart">
-<!--            <svg id="chordSVG"></svg>-->
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-light" id="returnBtn">back<i
-                    class="bi bi-arrow-counterclockwise"></i>
-            </button>
-        </div>
-    </div>
+
 <!--    INTERACTIVE CHORD-->
 <!--    -->
 

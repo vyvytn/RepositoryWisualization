@@ -39,17 +39,29 @@ function drawNetwork() {
 function showPack() {
     $("#chordContainer").hide();
     $("#networkContainer").hide();
-    $("#packChartContainer").show();
+    $("#packContainer").show();
 }
 
 function showChord() {
-    $("#packChartContainer").hide();
+/*    var btn= document.getElementById('resetBtn')
+    btn.innerHTML='return to home'*/
+    let areaName= $('#selectMenu option').filter(':selected').val()
+    addNavRoute(areaName);
+    $("#packContainer").hide();
     $("#networkContainer").hide();
     $("#chordContainer").show();
 }
-
+function addNavRoute(areaName){
+    let navBar = document.getElementById('navBar');
+    if (navBar.childElementCount>1)navBar.removeChild(navBar.lastChild);
+    let newNav = document.createElement('li');
+    newNav.className = 'breadcrumb-item active';
+    newNav.setAttribute = ('aria-current', 'page');
+    newNav.innerHTML = areaName;
+    navBar.appendChild(newNav);
+}
 function showNetwork() {
-    $("#packChartContainer").hide();
+    $("#packContainer").hide();
     $("#chordContainer").hide();
     $("#networkContainer").show();
 }

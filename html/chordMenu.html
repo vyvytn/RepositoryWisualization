@@ -9,13 +9,14 @@
     $(async function () {
         await $.getJSON('/public/researchgroups.json', function (data) {
             //    select menu
-            for (let area in data) {
+            for (let el in data) {
                 let selectBox = document.getElementById('selectMenu');
-                let areaLabel = document.createElement('optgroup');
-                let areaName = data[area].title;
-                areaLabel.label = areaName;
-                selectBox.appendChild(areaLabel);
-
+                let area = document.createElement('option');
+                let areaName = data[el].title;
+                area.label = areaName;
+                area.value=areaName;
+                selectBox.appendChild(area);
+/*
                 let groups = data[area].children;
                 for (let i = 0; i < groups.length; i++) {
                     let groupname = groups[i].name;
@@ -24,7 +25,7 @@
                     groupSelect.id = groupname;
                     groupSelect.innerHTML = groupname
                     areaLabel.appendChild(groupSelect)
-                }
+                }*/
             }
 
         })
