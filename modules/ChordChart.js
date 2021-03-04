@@ -6,43 +6,105 @@ export default class ChordChart {
         await d3.json('/public/libraryItems.json', function (data) {
             let unsortedData = data.results.bindings;
             let myNewData = d3.nest()
-                .key(d => d.area.value)
+                .key(d => d.author.value)
                 .key(d => d.group.value)
-                .key(d => d.title.value)
                 .entries(unsortedData);
-            console.log(myNewData)
 
-            let areaArray=myNewData.map(el=>{
-                 return el.key
-            });
+            let groupNested = d3.nest()
+                .key(d => d.group.value)
+                .entries(unsortedData)
 
-            console.log(areaArray)
+            let group = groupNested.map(el => {
+                return el.key
+            })
+            console.log(group)
 
+            let packableItems = {key: "Weizenbaum Library", values: myNewData};
+            let hierarchy = d3
+                .hierarchy(packableItems, d => d.values);
+            console.log(hierarchy)
 
-            var visual = document.getElementById("visual");
+            /*       let nodes = hierarchy.descendants();
+                   console.log(nodes)*/
 
-            // matrix of ADB, EBRD, EIB, IDB, KFW, OPIC, World Bank
-            let areaMatrix;
+            let links = hierarchy.links();
+            console.log(links);
 
-            for (let area in areaArray){
-
+            //creating data matrix
+            let groupMatrix = [group.length];
+            for (var i = 0; i < group.length; i++) {
+                groupMatrix[i] = new Array(group.length);
             }
+
+            //fill matrix with data
+            group.map((g, i) => {
+                let count = 0;
+                links.map(el => {
+                    if (el.target.data.key === g) {
+                        if (el.source.depth === 1) {
+                            el.source.data.values.map(elem => {
+                                if (elem.key !== g) {
+                                    console.log(elem.key)
+                                    let index = group.indexOf(elem.key)
+                                    console.log('index : ' + index);
+                                    groupMatrix[i][index] = '1'
+                                    count += 1;
+                                }
+                            })
+
+                        }
+                    }
+                });
+            })
+
+
+            for (let i = 0; i < groupMatrix.length; i++) {
+                for (let j = 0; j < groupMatrix.length; j++) {
+                    console.log(groupMatrix[i][j]);
+                    if(groupMatrix[i][j]===undefined){
+                        groupMatrix[i][j]=0;
+                    }
+                }
+            }
+            console.log(groupMatrix)
+
+
+            //
+            // for (let area in areaArray) {
+            //
+            // }
+
             var matrix = [
-                [2101, 1694, 1456, 3723, 627, 2491],
-                [ 195, 371, 743,0,0, 65],
-                [1663, 1003, 159, 1903, 803, 871],
-                [ 381, 1255, 80, 639, 743, 65],
-                [1649, 2531, 357, 1244, 262, 357],
-                [280, 2579, 0, 0, 159, 553],
+                [2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [195, 371, 743, 0, 0, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1649, 2531, 357, 1244, 262, 357, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [280, 2579, 0, 0, 159, 553, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [195, 371, 743, 0, 0, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1649, 2531, 357, 1244, 262, 357, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [280, 2579, 0, 0, 159, 553, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [195, 371, 743, 0, 0, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1649, 2531, 357, 1244, 262, 357, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [280, 2579, 0, 0, 159, 553, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
+                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
 
             ];
-
             // var array = ["ADB", "EBRD", "EIB", "IDB", "KfW", "OPIC", "World Bank", "Energy Efficiency", "Renewable Energy", "Policy Loan", "T&D", "High Carbon projects", "Other energy projects"];
+
+            var visual = document.getElementById("visual");
 
             var rotation = .99;
 
             var chord_options = {
-                "gnames": areaArray,
+                "gnames": group,
                 "rotation": rotation,
                 "colors": ["#166000", "#238443", "#fb7e17", "#75b3ff", "#d01501", "#b10056"]
             };
