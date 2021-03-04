@@ -1,11 +1,7 @@
 import PackChart from './modules/PackChart.js'
 import ChordChart from "./modules/ChordChart.js";
-import NetworkChart from "./modules/NetworkChart.js";
-import testNetwork from "./modules/testNetwork.js";
-
 let packChart = new PackChart("./public/libraryItems.json");
-let network = new NetworkChart();
-let test=new testNetwork();
+// let network = new basicNetwork();
 let chordChart = new ChordChart();
 
 
@@ -19,12 +15,13 @@ function visualize() {
 function init() {
     drawPack();
     showPack();
+    // drawNetwork();
     drawChord();
+
 }
 
 function drawChord() {
     chordChart.drawChart();
-    // test.draw();
 }
 
 function drawPack() {
@@ -33,7 +30,6 @@ function drawPack() {
 
 function drawNetwork() {
     // network.drawChart();
-    network.drawChart();
 }
 
 function showPack() {
@@ -42,15 +38,15 @@ function showPack() {
     $("#packContainer").show();
 }
 
- async function showChord() {
+  function showChord() {
 /*    var btn= document.getElementById('resetBtn')
     btn.innerHTML='return to home'*/
     let areaName= $('#selectMenu option').filter(':selected').val();
     addNavRoute(areaName);
-    // chordChart.updateData();
-     $("#chordContainer").show();
      $("#packContainer").hide();
-     $("#networkContainer").hide();
+      $("#networkContainer").hide();
+      // chordChart.updateData();
+      $("#chordContainer").show();
 
  }
 function showNetwork() {
@@ -75,7 +71,8 @@ function addNavRoute(areaName){
 
 function btnCLickFunctions() {
     $('#selectMenu').on('change', function() {
-        showChord()
+        showChord();
+        // showNetwork();
     });
     $(document).ready(function () {
         $('#returnBtn').click(function () {
