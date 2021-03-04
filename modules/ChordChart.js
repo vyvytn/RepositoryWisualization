@@ -1,9 +1,14 @@
 export default class ChordChart {
-    constructor() {
-    }
+    areaName = $('#selectMenu option').filter(':selected').val();
+    vis;
+    opt;
+    mat;
+
 
     // ASYNC
     async drawChart() {
+        console.log(this.areaName)
+        // if(this.groupname===undefined) return;
         await d3.json('/public/libraryItems.json', function (data) {
             let unsortedData = data.results.bindings;
             let myNewData = d3.nest()
@@ -14,8 +19,8 @@ export default class ChordChart {
             console.log(myNewData)
 
 
-        })
-
+        });
+        console.log('draw')
         var visual = document.getElementById("visual");
 
         // matrix of ADB, EBRD, EIB, IDB, KFW, OPIC, World Bank
@@ -198,9 +203,17 @@ export default class ChordChart {
 
         window.onload = function () {
             Chord(visual, chord_options, matrix);
+            this.vis=visual;
+            this.opt=chord_options;
+            this.mat=matrix;
         }
 
         d3.select(self.frameElement).style("height", "600px");
 
+
     }
+    /*updateData(){
+        console.log(this.areaName);
+        Chord(this.vis, this.opt, this.mat);
+    }*/
 }

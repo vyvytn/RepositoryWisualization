@@ -4,9 +4,9 @@ import NetworkChart from "./modules/NetworkChart.js";
 import testNetwork from "./modules/testNetwork.js";
 
 let packChart = new PackChart("./public/libraryItems.json");
-let chordChart = new ChordChart();
 let network = new NetworkChart();
 let test=new testNetwork();
+let chordChart = new ChordChart();
 
 
 visualize()
@@ -18,8 +18,8 @@ function visualize() {
 
 function init() {
     drawPack();
-    drawChord();
     showPack();
+    drawChord();
 }
 
 function drawChord() {
@@ -33,7 +33,7 @@ function drawPack() {
 
 function drawNetwork() {
     // network.drawChart();
-    test.draw();
+    network.drawChart();
 }
 
 function showPack() {
@@ -42,15 +42,24 @@ function showPack() {
     $("#packContainer").show();
 }
 
-function showChord() {
+ async function showChord() {
 /*    var btn= document.getElementById('resetBtn')
     btn.innerHTML='return to home'*/
-    let areaName= $('#selectMenu option').filter(':selected').val()
+    let areaName= $('#selectMenu option').filter(':selected').val();
     addNavRoute(areaName);
+    // chordChart.updateData();
+     $("#chordContainer").show();
+     $("#packContainer").hide();
+     $("#networkContainer").hide();
+
+ }
+function showNetwork() {
     $("#packContainer").hide();
-    $("#networkContainer").hide();
-    $("#chordContainer").show();
+    $("#chordContainer").hide();
+    $("#networkContainer").show();
 }
+
+
 function addNavRoute(areaName){
     let navBar = document.getElementById('navBar');
     if (navBar.childElementCount>1)navBar.removeChild(navBar.lastChild);
@@ -60,11 +69,9 @@ function addNavRoute(areaName){
     newNav.innerHTML = areaName;
     navBar.appendChild(newNav);
 }
-function showNetwork() {
-    $("#packContainer").hide();
-    $("#chordContainer").hide();
-    $("#networkContainer").show();
-}
+
+
+
 
 function btnCLickFunctions() {
     $('#selectMenu').on('change', function() {
