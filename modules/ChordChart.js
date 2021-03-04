@@ -3,8 +3,12 @@ export default class ChordChart {
 
     // ASYNC
     async drawChart() {
+
+        //get data
         await d3.json('/public/libraryItems.json', function (data) {
             let unsortedData = data.results.bindings;
+
+            //nesting data
             let myNewData = d3.nest()
                 .key(d => d.author.value)
                 .key(d => d.group.value)
@@ -17,18 +21,18 @@ export default class ChordChart {
             let group = groupNested.map(el => {
                 return el.key
             })
-            console.log(group)
 
             let packableItems = {key: "Weizenbaum Library", values: myNewData};
+
+            //creating hierarchy
             let hierarchy = d3
                 .hierarchy(packableItems, d => d.values);
-            console.log(hierarchy)
 
             /*       let nodes = hierarchy.descendants();
                    console.log(nodes)*/
 
+            //getting links
             let links = hierarchy.links();
-            console.log(links);
 
             //creating data matrix
             let groupMatrix = [group.length];
@@ -47,7 +51,7 @@ export default class ChordChart {
                                     console.log(elem.key)
                                     let index = group.indexOf(elem.key)
                                     console.log('index : ' + index);
-                                    groupMatrix[i][index] = '1'
+                                    groupMatrix[i][index] = 1
                                     count += 1;
                                 }
                             })
@@ -57,47 +61,17 @@ export default class ChordChart {
                 });
             })
 
-
+            //set '0' for no relation
             for (let i = 0; i < groupMatrix.length; i++) {
                 for (let j = 0; j < groupMatrix.length; j++) {
                     console.log(groupMatrix[i][j]);
-                    if(groupMatrix[i][j]===undefined){
-                        groupMatrix[i][j]=0;
+                    if (groupMatrix[i][j] === undefined) {
+                        groupMatrix[i][j] = 0;
                     }
                 }
             }
+
             console.log(groupMatrix)
-
-
-            //
-            // for (let area in areaArray) {
-            //
-            // }
-
-            var matrix = [
-                [2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [195, 371, 743, 0, 0, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1649, 2531, 357, 1244, 262, 357, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [280, 2579, 0, 0, 159, 553, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [195, 371, 743, 0, 0, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1649, 2531, 357, 1244, 262, 357, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [280, 2579, 0, 0, 159, 553, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [195, 371, 743, 0, 0, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1649, 2531, 357, 1244, 262, 357, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [280, 2579, 0, 0, 159, 553, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [1663, 1003, 159, 1903, 803, 871, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-                [381, 1255, 80, 639, 743, 65, 2101, 1694, 1456, 3723, 627, 2491, 2101, 1694, 1456, 3723, 627, 2491, 0, 0],
-
-            ];
-            // var array = ["ADB", "EBRD", "EIB", "IDB", "KfW", "OPIC", "World Bank", "Energy Efficiency", "Renewable Energy", "Policy Loan", "T&D", "High Carbon projects", "Other energy projects"];
 
             var visual = document.getElementById("visual");
 
@@ -133,7 +107,7 @@ export default class ChordChart {
                     colors = config.colors;
 
                 // set viewBox and aspect ratio to enable a resize of the visual dimensions
-                var viewBoxDimensions = "0 0 " + width + " " + height,
+                var viewBoxDimensions = "0 0 " + width+ " " + height,
                     aspect = width / height;
 
                 var gnames;
@@ -147,13 +121,13 @@ export default class ChordChart {
                     }
                 }
 
-                // start the d3 magic
+                // creating chord diagramm
                 var chord = d3.layout.chord()
                     .padding(.05)
                     .sortSubgroups(d3.descending)
                     .matrix(matrix);
 
-                var innerRadius = Math.min(width, height) * .31,
+                var innerRadius = Math.min(width, height) * .20,
                     outerRadius = innerRadius * 1.1;
 
                 var fill = d3.scale.ordinal()
@@ -164,8 +138,8 @@ export default class ChordChart {
                     .attr("id", "visual")
                     .attr("viewBox", viewBoxDimensions)
                     .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio
-                    .attr("width", width)
-                    .attr("height", height)
+                    .attr("width", width-100)
+                    .attr("height", height-100)
                     .append("g")
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -261,7 +235,7 @@ export default class ChordChart {
             }
 
             window.onload = function () {
-                Chord(visual, chord_options, matrix);
+                Chord(visual, chord_options, groupMatrix);
 
             }
 
