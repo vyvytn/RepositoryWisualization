@@ -1,88 +1,132 @@
-export default class basicNetwork{
+export default class basicNetwork {
 
-    drawChart(){
-        var svg = d3.select("#networkContainer").append('svg'),
-            width = +svg.attr("width"),
-            height = +svg.attr("height");
 
-        var color = d3.scaleOrdinal(d3.schemeCategory20);
+    async drawChart() {
 
-        var simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; }))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2));
 
-        d3.json("miserables.json", function(error, graph) {
-            if (error) throw error;
+        await d3.json("./public/libraryItems.json", function (data) {
+           /*  d3.json("./public/libraryItems.json", function (data) {
+                 let unsortedData = data.results.bindings;
 
-            var link = svg.append("g")
-                .attr("class", "links")
+                 //nesting data
+                 let myNewData = d3.nest()
+                     .key(d => d.area.value)
+                     .key(d => d.group.value)
+                     .key(d => d.title.value)
+                     .key(d => d.author.value)
+                     .entries(unsortedData);
+
+
+                 let packableItems = {key: "Weizenbaum Library", values: myNewData};
+
+                 //creating hierarchy
+                 let hierarchy = d3
+                     .hierarchy(packableItems, d => d.values);
+
+                       let nodes = hierarchy.descendants();
+                        console.log(nodes)
+
+                 //getting links
+                 let links = hierarchy.links();
+
+                 console.log(links)
+
+             })
+*/
+
+            let unsortedData = data.results.bindings;
+
+            //nesting data
+            let myNewData = d3.nest()
+                .key(d => d.area.value)
+                .key(d => d.group.value)
+                .key(d => d.title.value)
+                .key(d => d.author.value)
+                .entries(unsortedData);
+
+
+            let packableItems = {key: "Weizenbaum Library", values: myNewData};
+
+            //creating hierarchy
+            let hierarchy = d3
+                .hierarchy(packableItems, d => d.values);
+
+            let nodes = hierarchy.descendants();
+            console.log(nodes)
+
+            //getting links
+            let links = hierarchy.links();
+
+            console.log(links)
+
+            // Initialize the links
+// append the svg object to the body of the page
+            // set the dimensions and margins of the graph
+            var margin = {top: 10, right: 30, bottom: 30, left: 40},
+                width = 800 - margin.left - margin.right,
+                height = 800 - margin.top - margin.bottom;
+
+            var svg = d3.select("#networkContainer")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+            var link = svg
                 .selectAll("line")
-                .data(graph.links)
-                .enter().append("line")
-                .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+                .data(links)
+                .enter()
+                .append("line")
+                .style("stroke", "#aaa")
 
-            var node = svg.append("g")
-                .attr("class", "nodes")
-                .selectAll("g")
-                .data(graph.nodes)
-                .enter().append("g")
+            // Initialize the nodes
+            var node = svg
+                .selectAll("circle")
+                .data(nodes)
+                .enter()
+                .append("circle")
+                .attr("r", 20)
+                .style("fill", "#69b3a2")
 
-            var circles = node.append("circle")
-                .attr("r", 5)
-                .attr("fill", function(d) { return color(d.group); })
-                .call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended));
+            // Let's list the force we wanna apply on the network
+            var simulation = d3.forceSimulation(nodes)                 // Force algorithm is applied to data.nodes
+                .force("link", d3.forceLink()                               // This force provides links between nodes
+                    .id(function (d) {
+                        return d.id;
+                    })                     // This provide  the id of a node
+                    .links(links)                                    // and this the list of links
+                )
+                .force("charge", d3.forceManyBody().strength(-100))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
+                .force("center", d3.forceCenter(width / 2, height / 2))     // This force attracts nodes to the center of the svg area
+                .on("end", ticked);
 
-            var lables = node.append("text")
-                .text(function(d) {
-                    return d.id;
-                })
-                .attr('x', 6)
-                .attr('y', 3);
-
-            node.append("title")
-                .text(function(d) { return d.id; });
-
-            simulation
-                .nodes(graph.nodes)
-                .on("tick", ticked);
-
-            simulation.force("link")
-                .links(graph.links);
-
+            // This function is run at each iteration of the force algorithm, updating the nodes position.
             function ticked() {
                 link
-                    .attr("x1", function(d) { return d.source.x; })
-                    .attr("y1", function(d) { return d.source.y; })
-                    .attr("x2", function(d) { return d.target.x; })
-                    .attr("y2", function(d) { return d.target.y; });
+                    .attr("x1", function (d) {
+                        return d.source.x;
+                    })
+                    .attr("y1", function (d) {
+                        return d.source.y;
+                    })
+                    .attr("x2", function (d) {
+                        return d.target.x;
+                    })
+                    .attr("y2", function (d) {
+                        return d.target.y;
+                    });
 
                 node
-                    .attr("transform", function(d) {
-                        return "translate(" + d.x + "," + d.y + ")";
+                    .attr("cx", function (d) {
+                        return d.x + 6;
                     })
+                    .attr("cy", function (d) {
+                        return d.y - 6;
+                    });
             }
+
         });
 
-        function dragstarted(d) {
-            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
-
-        function dragged(d) {
-            d.fx = d3.event.x;
-            d.fy = d3.event.y;
-        }
-
-        function dragended(d) {
-            if (!d3.event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
     }
-
 }

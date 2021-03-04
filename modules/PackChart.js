@@ -47,11 +47,13 @@ export default class PackChart {
             let myNewData = d3.nest()
                 .key(d => d.area.value)
                 .key(d => d.group.value)
+                .key(d => d.title.value)
+
                 .entries(rawData);
             let packable = {key: "Weizenbaum Institut", values: myNewData}
             let root = d3.hierarchy(packable, d => d.values)
                 // .sum(d=>d.values.length)
-                .sum(d => 10)
+                .sum(d => 1)
                 .sort(function (a, b) {
                     return b.value - a.value;
                 });
@@ -82,7 +84,7 @@ export default class PackChart {
             function circleClick(d) {
                 circle.attr("class")
                 let navBar = document.getElementById('navBar');
-                if (d.depth < 2) {
+                if (d.depth <2) {
                     if (focus !== d) zoom(d), d3.event.stopPropagation();
                     let children=navBar.childElementCount;
                     console.log(children)
@@ -103,8 +105,9 @@ export default class PackChart {
                        newNav.setAttribute = ('aria-current', 'page');
                        newNav.innerHTML = d.data.parent.data.key
                        navBar.appendChild(newNav);*/
-                    // $(document).trigger("some:event", d.data.group.value);
-                    $(document).trigger("some:event", d.data.key ? d.data.key : d.data.group.value);
+                    $(document).trigger("groupClicked", d.data.key);
+                    // $(document).trigger("some:event", d.data.key ? d.data.key : d.data.group.value);
+                    console.log(d)
 
                 }
             }

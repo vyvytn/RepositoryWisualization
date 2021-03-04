@@ -48,9 +48,7 @@ export default class ChordChart {
                         if (el.source.depth === 1) {
                             el.source.data.values.map(elem => {
                                 if (elem.key !== g) {
-                                    console.log(elem.key)
                                     let index = group.indexOf(elem.key)
-                                    console.log('index : ' + index);
                                     groupMatrix[i][index] = 1
                                     count += 1;
                                 }
@@ -64,14 +62,13 @@ export default class ChordChart {
             //set '0' for no relation
             for (let i = 0; i < groupMatrix.length; i++) {
                 for (let j = 0; j < groupMatrix.length; j++) {
-                    console.log(groupMatrix[i][j]);
                     if (groupMatrix[i][j] === undefined) {
                         groupMatrix[i][j] = 0;
                     }
                 }
             }
 
-            console.log(groupMatrix)
+            // console.log(groupMatrix)
 
             var visual = document.getElementById("visual");
 

@@ -1,8 +1,11 @@
 import PackChart from './modules/PackChart.js'
 import ChordChart from "./modules/ChordChart.js";
+import basicNetwork from "./modules/basicNetwork.js";
+import NetworkChart from "./modules/NetworkChart.js";
 let packChart = new PackChart("./public/libraryItems.json");
-// let network = new basicNetwork();
+let network = new basicNetwork();
 let chordChart = new ChordChart();
+let nw=new NetworkChart();
 
 
 visualize()
@@ -15,7 +18,7 @@ function visualize() {
 function init() {
     drawPack();
     showPack();
-    // drawNetwork();
+    drawNetwork();
     drawChord();
 
 }
@@ -30,6 +33,7 @@ function drawPack() {
 
 function drawNetwork() {
     // network.drawChart();
+    nw.drawChart();
 }
 
 function showPack() {
@@ -71,8 +75,8 @@ function addNavRoute(areaName){
 
 function btnCLickFunctions() {
     $('#selectMenu').on('change', function() {
-        showChord();
-        // showNetwork();
+        // showChord();
+        showNetwork();
     });
     $(document).ready(function () {
         $('#returnBtn').click(function () {
@@ -84,6 +88,10 @@ function btnCLickFunctions() {
             showPack()
         });
     });
+
+    $(document).on("groupClicked", print);
+
+
     /*$(document).on( "some:event", function(evt,someData) {
         console.log('DATA')
     } );
