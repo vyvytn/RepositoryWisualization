@@ -1,10 +1,8 @@
 import PackChart from './modules/PackChart.js'
 import ChordChart from "./modules/ChordChart.js";
-import basicNetwork from "./modules/basicNetwork.js";
 import NetworkChart from "./modules/NetworkChart.js";
 
 let packChart = new PackChart("./public/libraryItems.json");
-let network = new basicNetwork();
 let chordChart = new ChordChart();
 let nw = new NetworkChart();
 
