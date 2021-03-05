@@ -54,7 +54,7 @@ function showChord() {
 }
 
 function showNetwork() {
-
+addNavRoute('network chart')
     $("#packContainer").hide();
     $("#chordContainer").hide();
     $("#networkContainer").show();
