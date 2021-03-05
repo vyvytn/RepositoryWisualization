@@ -193,7 +193,10 @@ export default class NetworkChart {
                     //.on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
                 )
                 .on("click", function (d) {
-                    console.log(d)
+                    node.append("text")
+                        .attr("dy", 4)
+                        .attr("dx", 10)
+                        .text('filter')
                 });
 
             node.append("circle")
@@ -221,6 +224,7 @@ export default class NetworkChart {
                 .attr("dy", 16)
                 .attr("dx", -17)
                 .text(d => d.data.key);
+
 
             //Listen for tick events to render the nodes as they update in your Canvas or SVG.
             simulation
