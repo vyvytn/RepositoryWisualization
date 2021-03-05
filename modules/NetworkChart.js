@@ -13,78 +13,99 @@ export default class NetworkChart {
                 .key(d => d.group.value)
                 .key(d => d.title.value)
                 .key(d => d.author.value)
+
                 .entries(unsortedData);
 
-            let packableItems = {key: "Weizenbaum Library", values: myNewData[1]};
+            let packableItems = {key: "Weizenbaum Library", values: myNewData[1].values};
             console.log(packableItems)
 
             //creating hierarchy
             let hierarchy = d3
                 .hierarchy(packableItems, d => d.values);
+
             let nodes = hierarchy.descendants();
-            console.log(nodes)
+            console.log(nodes);
+
+            /*   nodes=nodes.map((el,i)=> {
+                   return el+={
+                       type: el.depth===0? 'root' : el.depth===1? 'area' :el.depth===2? 'group' : 'item'
+                   }
+               })*/
 
 
             //getting links
             let links = hierarchy.links();
-            console.log(links)
 
+            links.map((el, index) => {
+                    if (el.source.depth === 3) {
+                        let id = nodes.indexOf(el.target);
+                        console.log(id)
+                        links[index].target = nodes[id].parent.parent;
+                    }
+                }
+            )
+            console.log(links)
 
             let width = 805
             let height = 765
             let margin = {top: 30, right: 80, bottom: 5, left: 5}
 
-            let groups=packableItems.values.values.map(el=>{return el.key});
+            let groups = packableItems.values.map(el => {
+                return el.key
+            });
             console.log(groups);
+            // let groups = [1, 2, 3, 4, 5]
 
             let colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
-                .domain(["Stuttgart", "Schweiz", "Oesterreich"])
-                .range(['#ff9e6d', '#86cbff', '#c2e5a0','#fff686','#9e79db'])
+                .domain(groups)
+                .range(['#ff9e6d', '#86cbff', '#c2e5a0', '#fff686', '#9e79db'])
 
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink() // This force provides links between nodes
                     .id(d => d.id) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                    .distance(100) //Abstand der Knoten zueinander
+                    .distance(70) //DESIGN Abstand der Knoten zueinander
                 )
-                .force("charge", d3.forceManyBody().strength(-600)) // This adds repulsion (if it's negative) between nodes. Absto?en- Abstand zwischen Nodes
+                .force("charge", d3.forceManyBody().strength(-150)) // DESIGN Absto?en- Abstand zwischen Nodes
                 .force("center", d3.forceCenter(width / 2, height / 2)); // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
+            /*
 
-            const dataset = {
-                nodes: [
-                    {
-                        id: 1,
-                        name: '001-12345-001',
-                        teilbereich: 'PM/Stgt',
-                        label: 'KiAN: 70',
-                        group: 'Stuttgart',
-                        runtime: 700
-                    },
-                    {id: 2, name: '070-77777-001', teilbereich: 'BER/CH', label: '', group: 'Schweiz', runtime: 0},
-                    {
-                        id: 3,
-                        name: '070-77777-002',
-                        teilbereich: 'BER/CH',
-                        label: 'KiAN: 25',
-                        group: 'Schweiz',
-                        runtime: 250
-                    },
-                    {id: 4, name: '001-34567-001', teilbereich: 'IDS/Stgt', label: '', group: 'Stuttgart', runtime: 0},
-                    {id: 5, name: '001-34567-001', teilbereich: 'IDS/Stgt', label: '', group: 'Stuttgart', runtime: 0},
-                    {id: 6, name: '024-98765-001', teilbereich: 'BER/A', label: '', group: 'Oesterreich', runtime: 0},
-                    {id: 7, name: '001-34567-003', teilbereich: 'BER/Stgt', label: '', group: 'Stuttgart', runtime: 0}
-                ],
-                links: [
-                    {source: 1, target: 2, type: '30'},
-                    {source: 2, target: 1, type: '70'},
-                    {source: 1, target: 3, type: '60'},
-                    {source: 1, target: 4, type: '50'},
-                    {source: 1, target: 5, type: '40'},
-                    {source: 3, target: 6, type: '25'},
-                    {source: 6, target: 3, type: '25'},
-                    {source: 4, target: 7, type: '30'},
-                    {source: 1, target: 7, type: '20'}
-                ]
-            };
+                        const dataset = {
+                            nodes: [
+                                {
+                                    id: 1,
+                                    name: '001-12345-001',
+                                    teilbereich: 'PM/Stgt',
+                                    label: 'KiAN: 70',
+                                    group: 'Stuttgart',
+                                    runtime: 700
+                                },
+                                {id: 2, name: '070-77777-001', teilbereich: 'BER/CH', label: '', group: 'Schweiz', runtime: 0},
+                                {
+                                    id: 3,
+                                    name: '070-77777-002',
+                                    teilbereich: 'BER/CH',
+                                    label: 'KiAN: 25',
+                                    group: 'Schweiz',
+                                    runtime: 250
+                                },
+                                {id: 4, name: '001-34567-001', teilbereich: 'IDS/Stgt', label: '', group: 'Stuttgart', runtime: 0},
+                                {id: 5, name: '001-34567-001', teilbereich: 'IDS/Stgt', label: '', group: 'Stuttgart', runtime: 0},
+                                {id: 6, name: '024-98765-001', teilbereich: 'BER/A', label: '', group: 'Oesterreich', runtime: 0},
+                                {id: 7, name: '001-34567-003', teilbereich: 'BER/Stgt', label: '', group: 'Stuttgart', runtime: 0}
+                            ],
+                            links: [
+                                {source: 1, target: 2, type: '30'},
+                                {source: 2, target: 1, type: '70'},
+                                {source: 1, target: 3, type: '60'},
+                                {source: 1, target: 4, type: '50'},
+                                {source: 1, target: 5, type: '40'},
+                                {source: 3, target: 6, type: '25'},
+                                {source: 6, target: 3, type: '25'},
+                                {source: 4, target: 7, type: '30'},
+                                {source: 1, target: 7, type: '20'}
+                            ]
+                        };
+            */
 
 
             const svg = d3.select('#networkContainer')
@@ -103,8 +124,8 @@ export default class NetworkChart {
                 .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
                 .attr('refY', 0)
                 .attr('orient', 'auto')
-                .attr('markerWidth', 10)
-                .attr('markerHeight', 10)
+                .attr('markerWidth', 5) //DESIGN Pfeilspitzenbreite
+                .attr('markerHeight', 5)//DESIGN Pfeilspitzenh?he
                 .attr('xoverflow', 'visible')
                 .append('svg:path')
                 .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
@@ -112,7 +133,7 @@ export default class NetworkChart {
                 .style('stroke', 'none');
 
             const link = svg.selectAll(".links")
-                .data(dataset.links)
+                .data(links)
                 .enter()
                 .append("line")
                 .attr("class", "links")
@@ -122,10 +143,10 @@ export default class NetworkChart {
 //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
 //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
             link.append("title")
-                .text(d => d.type);
+                .text(d => d.key); //DESIGN tooltip text
 
             const edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
-                .data(dataset.links)
+                .data(links)
                 .enter()
                 .append('path')
                 .attr('class', 'edgepath')
@@ -134,10 +155,11 @@ export default class NetworkChart {
                 .attr('id', function (d, i) {
                     return 'edgepath' + i
                 })
-                .style("pointer-events", "none");
+
+            // .style("pointer-events", "none");
 
             const edgelabels = svg.selectAll(".edgelabel")
-                .data(dataset.links)
+                .data(links)
                 .enter()
                 .append('text')
                 .style("pointer-events", "none")
@@ -148,18 +170,20 @@ export default class NetworkChart {
                 .attr('font-size', 10)
                 .attr('fill', '#aaa');
 
-            edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
-                .attr('xlink:href', function (d, i) {
-                    return '#edgepath' + i
-                })
-                .style("text-anchor", "middle")
-                .style("pointer-events", "none")
-                .attr("startOffset", "50%")
-                .text(d => d.type);
+
+            //Text f?r verbindungen/Pfeile
+            /*            edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
+                            .attr('xlink:href', function (d, i) {
+                                return '#edgepath' + i
+                            })
+                            .style("text-anchor", "middle")
+                            .style("pointer-events", "none")
+                            .attr("startOffset", "50%")
+                            .text(d => 'contains');*/
 
 // Initialize the nodes
             const node = svg.selectAll(".nodes")
-                .data(dataset.nodes)
+                .data(nodes)
                 .enter()
                 .append("g")
                 .attr("class", "nodes")
@@ -167,39 +191,44 @@ export default class NetworkChart {
                         .on("start", dragstarted) //start - after a new pointer becomes active (on mousedown or touchstart).
                         .on("drag", dragged)      //drag - after an active pointer moves (on mousemove or touchmove).
                     //.on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
-                );
+                )
+                .on("click", function (d) {
+                    console.log(d)
+                });
 
             node.append("circle")
-                .attr("r", d => 40)
+                .attr("r", d => 10)
                 .style("stroke", "grey")
                 .style("stroke-opacity", 0.3)
                 .style("stroke-width", d => d.runtime / 10)
-                .style("fill", d => colorScale(d.group))
+                .style("fill", d => d.depth===0?'white':d.depth===1? colorScale(d.data.key):d.depth===2? colorScale(d.parent.data.key):colorScale(d.parent.parent.data.key))
+                // .style("fill", 'white')
+
 
             /*node.append("title")
                 .text(d => d.id + ": " + d.label + " - " + d.group +", runtime:"+ d.runtime+ "min");*/
 
             node.append("title")
-                .text(d => d.id + ": " + d.label + " - " + d.group);
+                .text(d => d.data.key);
 
 
-            node.append("text")
-                .attr("dy", 4)
-                .attr("dx", -33)
-                .text(d => d.name);
+            /*     node.append("text")
+                     .attr("dy", 4)
+                     .attr("dx", -33)
+                     .text(d =>'B');*/
 
             node.append("text")
                 .attr("dy", 16)
                 .attr("dx", -17)
-                .text(d => d.teilbereich);
+                .text(d => d.data.key);
 
             //Listen for tick events to render the nodes as they update in your Canvas or SVG.
             simulation
-                .nodes(dataset.nodes)
+                .nodes(nodes)
                 .on("tick", ticked);
 
             simulation.force("link")
-                .links(dataset.links);
+                .links(links);
 
 
 // This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).

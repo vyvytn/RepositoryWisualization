@@ -2,10 +2,11 @@ import PackChart from './modules/PackChart.js'
 import ChordChart from "./modules/ChordChart.js";
 import basicNetwork from "./modules/basicNetwork.js";
 import NetworkChart from "./modules/NetworkChart.js";
+
 let packChart = new PackChart("./public/libraryItems.json");
 let network = new basicNetwork();
 let chordChart = new ChordChart();
-let nw=new NetworkChart();
+let nw = new NetworkChart();
 
 
 visualize()
@@ -42,27 +43,29 @@ function showPack() {
     $("#packContainer").show();
 }
 
-  function showChord() {
-/*    var btn= document.getElementById('resetBtn')
-    btn.innerHTML='return to home'*/
-    let areaName= $('#selectMenu option').filter(':selected').val();
+function showChord() {
+    /*    var btn= document.getElementById('resetBtn')
+        btn.innerHTML='return to home'*/
+    let areaName = $('#selectMenu option').filter(':selected').val();
     addNavRoute(areaName);
-     $("#packContainer").hide();
-      $("#networkContainer").hide();
-      // chordChart.updateData();
-      $("#chordContainer").show();
+    $("#packContainer").hide();
+    $("#networkContainer").hide();
+    // chordChart.updateData();
+    $("#chordContainer").show();
 
- }
+}
+
 function showNetwork() {
+
     $("#packContainer").hide();
     $("#chordContainer").hide();
     $("#networkContainer").show();
 }
 
 
-function addNavRoute(areaName){
+function addNavRoute(areaName) {
     let navBar = document.getElementById('navBar');
-    if (navBar.childElementCount>1)navBar.removeChild(navBar.lastChild);
+    if (navBar.childElementCount > 1) navBar.removeChild(navBar.lastChild);
     let newNav = document.createElement('li');
     newNav.className = 'breadcrumb-item active';
     newNav.setAttribute = ('aria-current', 'page');
@@ -71,12 +74,10 @@ function addNavRoute(areaName){
 }
 
 
-
-
 function btnCLickFunctions() {
-    $('#selectMenu').on('change', function() {
-        // showChord();
-        showNetwork();
+    $('#selectMenu').on('change', function () {
+        showChord();
+        // showNetwork();
     });
     $(document).ready(function () {
         $('#returnBtn').click(function () {
@@ -90,7 +91,11 @@ function btnCLickFunctions() {
     });
 
     $(document).on("groupClicked", print);
-
+    $(document).ready(function () {
+        $('#networkBtn').click(function () {
+            showNetwork()
+        });
+    });
 
     /*$(document).on( "some:event", function(evt,someData) {
         console.log('DATA')
