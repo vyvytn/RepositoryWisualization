@@ -1,5 +1,9 @@
 export default class ChordChart {
-    areaName = $('#selectMenu option').filter(':selected').val();
+    areaName;
+
+    constructor(areaName) {
+        this.areaName = areaName;
+    }
 
     // ASYNC
     async drawChart() {
@@ -13,6 +17,7 @@ export default class ChordChart {
                 .key(d => d.author.value)
                 .key(d => d.group.value)
                 .entries(unsortedData);
+
 
             let groupNested = d3.nest()
                 .key(d => d.group.value)
@@ -35,9 +40,9 @@ export default class ChordChart {
             let links = hierarchy.links();
 
             //creating data matrix
-            let groupMatrix = [group.length];
+            let matrix = [group.length];
             for (var i = 0; i < group.length; i++) {
-                groupMatrix[i] = new Array(group.length);
+                matrix[i] = new Array(group.length);
             }
 
             //fill matrix with data
@@ -45,42 +50,42 @@ export default class ChordChart {
                 let count = 0;
                 links.map(el => {
                     if (el.target.data.key === g) {
-                        if (el.source.depth === 1) {
-                            el.source.data.values.map(elem => {
-                                if (elem.key !== g) {
-                                    let index = group.indexOf(elem.key)
-                                    groupMatrix[i][index] = 1
-                                    count += 1;
-                                }
-                            })
+                        if (true) {
+                            if (el.source.depth === 1) {
+                                el.source.data.values.map(elem => {
+                                    if (elem.key !== g) {
+                                        let index = group.indexOf(elem.key)
+                                        matrix[i][index] = 1
+                                        count += 1;
+                                    }
+                                })
 
+                            }
                         }
                     }
                 });
             })
 
             //set '0' for no relation
-            for (let i = 0; i < groupMatrix.length; i++) {
-                for (let j = 0; j < groupMatrix.length; j++) {
-                    if (groupMatrix[i][j] === undefined) {
-                        groupMatrix[i][j] = 0;
+            for (let i = 0; i < matrix.length; i++) {
+                for (let j = 0; j < matrix.length; j++) {
+                    if (matrix[i][j] === undefined) {
+                        matrix[i][j] = 0;
                     }
                 }
             }
 
-            // console.log(groupMatrix)
 
             var visual = document.getElementById("visual");
 
             var rotation = .99;
 
-            var chord_options = {
+            var options = {
                 "gnames": group,
                 "rotation": rotation,
                 "colors": ["#166000", "#238443", "#fb7e17", "#75b3ff", "#d01501", "#b10056"]
             };
 
-            function Chord(container, options, matrix) {
 
                 // initialize the chord configuration variables
                 var config = {
@@ -104,7 +109,7 @@ export default class ChordChart {
                     colors = config.colors;
 
                 // set viewBox and aspect ratio to enable a resize of the visual dimensions
-                var viewBoxDimensions = "0 0 " + width+ " " + height,
+                var viewBoxDimensions = "0 0 " + width + " " + height,
                     aspect = width / height;
 
                 var gnames;
@@ -135,8 +140,8 @@ export default class ChordChart {
                     .attr("id", "visual")
                     .attr("viewBox", viewBoxDimensions)
                     .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio
-                    .attr("width", width-100)
-                    .attr("height", height-100)
+                    .attr("width", width - 100)
+                    .attr("height", height - 100)
                     .append("g")
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -220,27 +225,27 @@ export default class ChordChart {
                 }
 
 
-                window.onresize = function () {
+                /*window.onresize = function () {
                     var targetWidth = (window.innerWidth < width) ? window.innerWidth : width;
 
                     var svg = d3.select("#visual")
                         .attr("width", targetWidth)
                         .attr("height", targetWidth / aspect);
-                }
+                }*/
 
 
-            }
 
-            window.onload = function () {
+
+
+            /*window.onload = function () {
                 Chord(visual, chord_options, groupMatrix);
 
-            }
+            }*/
 
-            d3.select(self.frameElement).style("height", "600px");
+            // d3.select(self.frameElement).style("height", "600px");
 
 
         });
-
     }
 
 

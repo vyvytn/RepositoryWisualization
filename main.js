@@ -1,10 +1,10 @@
 import PackChart from './modules/PackChart.js'
-import ChordChart from "./modules/ChordChart.js";
-import NetworkChart from "./modules/NetworkChart.js";
+// import ChordChart from "./modules/ChordChart.js";
+// import NetworkChart from "./modules/NetworkChart.js";
 
 let packChart = new PackChart("./public/libraryItems.json");
-let chordChart = new ChordChart();
-let nw = new NetworkChart();
+// let chordChart = new ChordChart();
+// let nw = new NetworkChart();
 
 
 visualize()
@@ -17,23 +17,14 @@ function visualize() {
 function init() {
     drawPack();
     showPack();
-    drawNetwork();
-    drawChord();
 
-}
 
-function drawChord() {
-    chordChart.drawChart();
 }
 
 function drawPack() {
     packChart.drawChart();
 }
 
-function drawNetwork() {
-    // network.drawChart();
-    nw.drawChart();
-}
 
 function showPack() {
     $("#chordContainer").hide();
@@ -41,9 +32,10 @@ function showPack() {
     $("#packContainer").show();
 }
 
+/*
 function showChord() {
-    /*    var btn= document.getElementById('resetBtn')
-        btn.innerHTML='return to home'*/
+    /!*    var btn= document.getElementById('resetBtn')
+        btn.innerHTML='return to home'*!/
     let areaName = $('#selectMenu option').filter(':selected').val();
     addNavRoute(areaName);
     $("#packContainer").hide();
@@ -59,6 +51,7 @@ addNavRoute('network chart')
     $("#chordContainer").hide();
     $("#networkContainer").show();
 }
+*/
 
 
 function addNavRoute(areaName) {

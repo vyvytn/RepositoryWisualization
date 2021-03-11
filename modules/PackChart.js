@@ -1,8 +1,14 @@
+import ChordChart from "./ChordChart.js";
+import NetworkChart from "./NetworkChart.js";
+
+
 export default class PackChart {
     dataUrl;
 
     constructor(url) {
-        this._setUrl(url)
+        this._setUrl(url);
+        $("#chordMenuContainer").hide();
+
     }
 
     _setUrl(u) {
@@ -63,8 +69,12 @@ export default class PackChart {
                 nodes = pack(root).descendants(),
                 view;
 
+
             let circle = g.selectAll("circle")
                 .data(nodes)
+                .attr("id", function () {
+                    return "circleBasicTooltip"
+                })
                 .enter().append("circle")
                 .attr("class", function (d) {
                     // return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root";
@@ -78,39 +88,32 @@ export default class PackChart {
 
                 })
                 .on("click", function (d) {
-                    circleClick(d)
+                    if (d.depth >= 2) {
+                        drawChord();
+                    }
+                    if(focus !== d) zoom(d), d3.event.stopPropagation();
                 });
 
-            function circleClick(d) {
-                circle.attr("class")
-                let navBar = document.getElementById('navBar');
-                if (d.depth <2) {
-                    if (focus !== d) zoom(d), d3.event.stopPropagation();
-                    let children=navBar.childElementCount;
-                    console.log(children)
-                    if (children==2) {
-                        // navBar.querySelectorAll('*').forEach(n => n.remove());
-                       navBar.removeChild(navBar.lastChild);
-                    }
-                    let newNav = document.createElement('li');
-                    newNav.className = 'breadcrumb-item active';
-                    newNav.setAttribute = ('aria-current', 'page');
-                    newNav.innerHTML = focus.data.key;
-                    navBar.appendChild(newNav);
 
-                } else if (d.depth >= 2) {
-                    // console.log(d.data.key ? d.data.key : d.data.group.value)
-                    /*   let newNav = document.createElement('li');
-                       newNav.className = 'breadcrumb-item active';
-                       newNav.setAttribute = ('aria-current', 'page');
-                       newNav.innerHTML = d.data.parent.data.key
-                       navBar.appendChild(newNav);*/
-                    $(document).trigger("groupClicked", d.data.key);
-                    // $(document).trigger("some:event", d.data.key ? d.data.key : d.data.group.value);
-                    console.log(d)
 
-                }
-            }
+            // create a tooltip
+            var tooltip = d3.select("#packContainer")
+                .append("div")
+                .style("position", "absolute")
+                .style("visibility", "hidden")
+                .text("I'm a circle!");
+
+            d3.select("#circleBasicTooltip")
+                .on("mouseover", function () {
+                    return tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function () {
+                    return tooltip.style("top", (event.pageY - 800) + "px").style("left", (event.pageX - 800) + "px");
+                })
+                .on("mouseout", function () {
+                    return tooltip.style("visibility", "hidden");
+                });
+
 
             let text = g.selectAll("text")
                 .data(nodes)
@@ -139,6 +142,13 @@ export default class PackChart {
             function zoom(d) {
                 let focus0 = focus;
                 focus = d;
+                console.log(focus);
+                updateNavigation(1,focus.data.key);
+
+                focus.depth!==0 ? $("#chordMenuContainer").show():$("#chordMenuContainer").hide();
+
+
+
 
                 let transition = d3.transition()
                     .duration(d3.event.altKey ? 50 : 500)
@@ -163,6 +173,17 @@ export default class PackChart {
                         if (d.parent !== focus) this.style.display = "none";
                     });
             }
+            function updateNavigation(depth,name){
+                let navBar = document.getElementById('navBar');
+                while (navBar.childElementCount > depth) {
+                    navBar.removeChild(navBar.lastChild)
+                }
+                let newNav = document.createElement('li');
+                newNav.className = 'breadcrumb-item active';
+                newNav.setAttribute = ('aria-current', 'page');
+                newNav.innerHTML = name;
+                navBar.appendChild(newNav);
+            }
 
             function zoomTo(v) {
                 let k = diameter / v[2];
@@ -175,11 +196,45 @@ export default class PackChart {
                 });
             }
 
+            function drawChord() {
+                let chordChart = new ChordChart;
+                chordChart.drawChart();
+/*                let areaName = $('#selectMenu option').filter(':selected').val();
+                let navBar = document.getElementById('navBar');
+                if (navBar.childElementCount > 1) navBar.removeChild(navBar.lastChild);
+                let newNav = document.createElement('li');
+                newNav.className = 'breadcrumb-item active';
+                newNav.setAttribute = ('aria-current', 'page');
+                newNav.innerHTML = areaName;
+                navBar.appendChild(newNav);*/
+                $("#chordMenuContainer").hide()
+                $("#packContainer").hide();
+                $("#networkContainer").hide();
+                // chordChart.updateData();
+                $("#chordContainer").show();
+
+            }
+
+            function drawNetwork()
+            {
+                let nw = new NetworkChart();
+                nw.drawChart().then(
+                    function () {
+                        $("#packContainer").hide()
+                        $("#chordContainer").hide()
+                        $("#networkContainer").show()
+                    }
+                )
+            }
+
             $(document).ready(function () {
                 $('#resetBtn').click(function () {
                     focus = root;
+                    $("#chordMenuContainer").hide()
                     let navBar = document.getElementById('navBar');
-                    if (navBar.childElementCount>1)navBar.removeChild(navBar.lastChild);
+                    while (navBar.childElementCount > 1) {
+                        navBar.removeChild(navBar.lastChild)
+                    }
                     zoomTo([root.x, root.y, root.r * 2 + margin]);
                 });
             });
