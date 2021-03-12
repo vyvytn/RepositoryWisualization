@@ -15,21 +15,11 @@ export default class PackChart {
         this.dataUrl = u;
     }
 
-    /*
-        getCurrentGroup(){
-            return this.currentGroup;
-        }
-        setCurrentGroup(value){
-            this.currentGroup=value;
-        }*/
     drawChart() {
 
         //get JSON data
         d3.json(this.dataUrl, function (data) {
-            /*   var svg = d3.select("body").append("svg");
-               svg.attr("width", 750);
-               svg.attr("height", 800);
-   */
+
             //select SVG from HTML and creates symbols
             let svg = d3.select("svg");
             let margin = 20,
@@ -89,7 +79,7 @@ export default class PackChart {
                 })
                 .on("click", function (d) {
                     if (d.depth >= 2) {
-                        drawChord();
+                        drawNetwork();
                     }
                     if(focus !== d) zoom(d), d3.event.stopPropagation();
                 });
@@ -144,10 +134,8 @@ export default class PackChart {
                 focus = d;
                 console.log(focus);
                 updateNavigation(1,focus.data.key);
-
-                focus.depth!==0 ? $("#chordMenuContainer").show():$("#chordMenuContainer").hide();
-
-
+                let chordBtn=$("#chordMenuContainer")
+                focus.depth!==0 ? chordBtn.show():chordBtn.hide();
 
 
                 let transition = d3.transition()
@@ -173,7 +161,9 @@ export default class PackChart {
                         if (d.parent !== focus) this.style.display = "none";
                     });
             }
-            function updateNavigation(depth,name){
+
+
+             function updateNavigation(depth,name){
                 let navBar = document.getElementById('navBar');
                 while (navBar.childElementCount > depth) {
                     navBar.removeChild(navBar.lastChild)
@@ -184,6 +174,8 @@ export default class PackChart {
                 newNav.innerHTML = name;
                 navBar.appendChild(newNav);
             }
+
+
 
             function zoomTo(v) {
                 let k = diameter / v[2];
@@ -228,6 +220,10 @@ export default class PackChart {
             }
 
             $(document).ready(function () {
+                $('#chordMenuBtn').on('click', function () {
+                    drawChord();
+                    // showNetwork();
+                });
                 $('#resetBtn').click(function () {
                     focus = root;
                     $("#chordMenuContainer").hide()
@@ -237,6 +233,7 @@ export default class PackChart {
                     }
                     zoomTo([root.x, root.y, root.r * 2 + margin]);
                 });
+
             });
         });
 

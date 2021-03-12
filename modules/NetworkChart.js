@@ -108,8 +108,7 @@ export default class NetworkChart {
             */
 
 
-            const svg = d3.select('#networkContainer')
-                .append("svg")
+            const svg = d3.select('#nwSVG')
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")

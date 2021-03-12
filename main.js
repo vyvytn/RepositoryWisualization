@@ -66,10 +66,7 @@ function addNavRoute(areaName) {
 
 
 function btnCLickFunctions() {
-    $('#selectMenu').on('change', function () {
-        showChord();
-        // showNetwork();
-    });
+
     $(document).ready(function () {
         $('#returnBtn').click(function () {
             showPack()
