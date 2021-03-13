@@ -24,9 +24,9 @@
 }
 
 .label {
-    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 15px "Monaco", "Monaco", Monospaced, Monospace;
     text-anchor: middle;
-    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+    /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
 }
 
 .label {
@@ -37,6 +37,8 @@
     stroke: #3182bd;
     stroke-width: 1.5px;
 }
+
+
 
 .node text {
     font: 10px sans-serif;
