@@ -103,7 +103,7 @@ export default class PackChart {
                     })
                     .style("fill", function (d) {
                         // return d.children ? colors[d.depth + 1] : null;
-                        return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : 'white'
+                        return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth===2? 'white':'none'
                     })
                     .style("opacity", function (d) {
                         return d.depth === 0 ? 0.3 : d.depth === 1 ? 0.5 : d.depth === 2 ? 0.7 : 1
@@ -273,6 +273,20 @@ export default class PackChart {
                             navBar.removeChild(navBar.lastChild)
                         }
                         zoomTo([root.x, root.y, root.r * 2 + margin]);
+
+                       d3.transition().selectAll("text")
+                            .filter(function (d) {
+                                return d.parent === focus || this.style.display === "inline";
+                            })
+                            .style("fill-opacity", function (d) {
+                                return d.parent === focus ? 1 : 0;
+                            })
+                            .on("start", function (d) {
+                                if (d.parent === focus) this.style.display = "inline";
+                            })
+                            .on("end", function (d) {
+                                if (d.parent !== focus) this.style.display = "none";
+                            });
                     });
 
                 });
