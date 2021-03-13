@@ -220,7 +220,7 @@ export default class PackChart {
             }
 
             $(document).ready(function () {
-                $('#chordMenuBtn').on('click', function () {
+                $('#chordMenuBtn').click(function () {
                     drawChord();
                     // showNetwork();
                 });
