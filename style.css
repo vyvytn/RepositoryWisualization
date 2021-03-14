@@ -1,4 +1,4 @@
-#navBar{
+#navBar {
     background-color: white;
 }
 
@@ -8,12 +8,19 @@
     cursor: pointer;
 }
 
-.btn{
+.btn {
     margin: 5px;
 }
-.node--group{
-    pointer-events: none;
+
+.node--group {
+    /*pointer-events: none;*/
 }
+
+.node--group:hover {
+    stroke: white;
+    stroke-width: 8px;
+}
+
 .node--area:hover {
     stroke: white;
     stroke-width: 3px;
@@ -32,12 +39,12 @@
 .label {
     pointer-events: none;
 }
+
 .node circle {
     cursor: pointer;
     stroke: #3182bd;
     stroke-width: 1.5px;
 }
-
 
 
 .node text {
@@ -53,7 +60,7 @@ line.link {
 }
 
 /*selectMenu*/
-#chordMenu{
+#chordMenu {
     max-height: 50vh;
 }
 
@@ -76,6 +83,7 @@ line.link {
     font: 10px sans-serif;
     pointer-events: none;
 }
+
 /*interactive Chord*/
 
 #visual {
@@ -115,17 +123,17 @@ text {
     font: 10px sans-serif;
 }
 
-svg{
+svg {
     /*border:1px solid #000;*/
 }
 
 
 /*basic network chart*/
 
- .links line {
-     stroke: #999;
-     stroke-opacity: 0.6;
- }
+.links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
 
 .nodes circle {
     stroke: #fff;
