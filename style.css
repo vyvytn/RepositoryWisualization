@@ -12,7 +12,7 @@
     margin: 5px;
 }
 .node--group{
-    /*pointer-events: none;*/
+    pointer-events: none;
 }
 .node--area:hover {
     stroke: white;

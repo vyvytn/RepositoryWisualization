@@ -48,10 +48,10 @@ export default class PackChart {
                         case "Markt - Wettbewerb - Ungleichheit":
                             return colors[3];
 
-                        case "Demokratie - Partizipation - Öffentlichkeit":
+                        case "Demokratie – Partizipation – Öffentlichkeit":
                             return colors[4];
 
-                        case "Verantwortung - Vertrauen - Governance":
+                        case "Verantwortung – Vertrauen – Governance":
                             return colors[5];
 
                         case  "Querschnittsformate":
@@ -106,10 +106,11 @@ export default class PackChart {
                         return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth===2? 'white':'none'
                     })
                     .style("opacity", function (d) {
-                        return d.depth === 0 ? 0.3 : d.depth === 1 ? 0.5 : d.depth === 2 ? 0.7 : 1
+                        return d.depth === 0 ? 0.5 : d.depth === 1 ? 0.7 : d.depth === 2 ? 0.7 : 1
 
                     })
                     .on("click", function (d) {
+                        console.log(d.data.key)
                         if (d.depth >= 2) {
                             drawNetwork();
                         }
