@@ -94,6 +94,21 @@ export default class PackChart {
                     view;
 
 
+                let tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .attr('class', 'd3-tip')
+                    // .offset([-10, 0])
+                    .html(function (d) {
+                        return d.data.key;
+                    });
+
+                svg
+                    // .style("background", colors[0])
+                    .on("click", function () {
+                        zoom(root);
+                    })
+                    .call(tip)
+
                 let circle = g.selectAll("circle")
                     .data(nodes)
                     .enter().append("circle")
@@ -103,42 +118,19 @@ export default class PackChart {
                     })
                     .style("fill", function (d) {
                         // return d.children ? colors[d.depth + 1] : null;
-                        return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth===2? 'white':'none'
+                        return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? 'white' : 'none'
                     })
                     .style("opacity", function (d) {
                         return d.depth === 0 ? 0.5 : d.depth === 1 ? 0.7 : d.depth === 2 ? 0.7 : 1
 
                     })
                     .on("click", function (d) {
-                        console.log(d.data.key)
+                        console.log(d)
                         if (d.depth >= 2) {
                             drawNetwork();
                         }
                         if (focus !== d) zoom(d), d3.event.stopPropagation();
-                        console.log(d)
                     })
-                    .on("mouseover", function () {
-
-                    });
-
-
-                // create a tooltip
-                var tooltip = d3.select("#packContainer")
-                    .append("div")
-                    .style("position", "absolute")
-                    .style("visibility", "hidden")
-                    .text("I'm a circle!");
-
-                d3.select("#circleBasicTooltip")
-                    .on("mouseover", function () {
-                        return tooltip.style("visibility", "visible");
-                    })
-                    .on("mousemove", function () {
-                        return tooltip.style("top", (event.pageY - 800) + "px").style("left", (event.pageX - 800) + "px");
-                    })
-                    .on("mouseout", function () {
-                        return tooltip.style("visibility", "hidden");
-                    });
 
 
                 let text = g.selectAll("text")
@@ -157,27 +149,44 @@ export default class PackChart {
 
                 let node = g.selectAll("circle,text");
 
-                svg
-                    // .style("background", colors[0])
-                    .on("click", function () {
-                        zoom(root);
-                    });
 
                 zoomTo([root.x, root.y, root.r * 2 + margin]);
 
                 function zoom(d) {
                     let focus0 = focus;
                     focus = d;
-                    console.log(focus);
+
+                    //add navigation to path
                     if (d.depth !== 0) {
                         updateNavigation(2, focus.data.key)
                     } else {
                         while (navBar.childElementCount > 2) {
                             navBar.removeChild(navBar.lastChild)
-
                         }
                     }
 
+                    //add pointer events to groups
+                    //add toolip for displaying group names
+                    if (d.depth === 1) {
+                        circle
+                            .on('mouseover', tip.show)
+                            .on('mouseout', tip.hide)
+                            .style("pointer-events", function (d) {
+                                if (d.depth === 2) return "all"
+                            })
+                        text.style("visibility", "hidden")
+                        if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
+                    } else if (d.depth === 0) {
+                        circle
+                            .on("mouseover", tip.hide)
+                            .style("pointer-events", function (d) {
+                                if (d.depth === 2) return "none"
+                            })
+                        text.style("visibility", "visible")
+
+                    }
+
+                    //show chord button
                     let chordBtn = $("#chordMenuContainer")
                     focus.depth !== 0 ? chordBtn.show() : chordBtn.hide();
 
@@ -234,14 +243,6 @@ export default class PackChart {
                 function drawChord() {
                     let chordChart = new ChordChart;
                     chordChart.drawChart();
-                    /*                let areaName = $('#selectMenu option').filter(':selected').val();
-                                    let navBar = document.getElementById('navBar');
-                                    if (navBar.childElementCount > 1) navBar.removeChild(navBar.lastChild);
-                                    let newNav = document.createElement('li');
-                                    newNav.className = 'breadcrumb-item active';
-                                    newNav.setAttribute = ('aria-current', 'page');
-                                    newNav.innerHTML = areaName;
-                                    navBar.appendChild(newNav);*/
                     $("#chordMenuContainer").hide()
                     $("#packContainer").hide();
                     $("#networkContainer").hide();
@@ -273,9 +274,10 @@ export default class PackChart {
                         while (navBar.childElementCount > 2) {
                             navBar.removeChild(navBar.lastChild)
                         }
+                        text.style("visibility", "visible")
                         zoomTo([root.x, root.y, root.r * 2 + margin]);
 
-                       d3.transition().selectAll("text")
+                        d3.transition().selectAll("text")
                             .filter(function (d) {
                                 return d.parent === focus || this.style.display === "inline";
                             })
