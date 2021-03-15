@@ -7,6 +7,8 @@ export default class ChordChart {
 
     // ASYNC
     async drawChart() {
+        console.log("areaName")
+        console.log(this.areaName)
 
         //get data
         await d3.json('/public/libraryItems.json', function (data) {

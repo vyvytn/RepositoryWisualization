@@ -172,6 +172,11 @@ export default class PackChart {
                     //add pointer events to groups
                     //add toolip for displaying group names
                     if (d.depth === 1) {
+                        $(document).ready(function () {
+                            $('#chordMenuBtn').click(function () {
+                                drawChord(focus.data.key);
+                            });
+                        })
                         circle
                             .on('mouseover',tip.show)
                             .on('mouseout', tip.hide)
@@ -181,6 +186,7 @@ export default class PackChart {
                             .style("fill", function (d) {
                                 return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? colorFIll(d.parent.data.key) : 'none'
                             })
+
 
                         text.style("visibility", "hidden")
                         if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
@@ -242,8 +248,8 @@ export default class PackChart {
                     });
                 }
 
-                function drawChord() {
-                    let chordChart = new ChordChart;
+                function drawChord(name) {
+                    let chordChart = new ChordChart(name);
                     chordChart.drawChart();
                     $("#chordMenuContainer").hide()
                     $("#packContainer").hide();
@@ -280,10 +286,6 @@ export default class PackChart {
                 }
 
                 $(document).ready(function () {
-                    $('#chordMenuBtn').click(function () {
-                        drawChord();
-                        // showNetwork();
-                    });
                     $('#resetBtn').click(function () {
                         focus = root;
                         $("#chordMenuContainer").hide()
