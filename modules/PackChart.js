@@ -6,9 +6,10 @@ export default class PackChart {
     dataUrl;
 
     constructor(url) {
-       this.init(url)
+        this.init(url)
     }
-    init(url){
+
+    init(url) {
         this.dataUrl = url;
         $("#chordMenuContainer").hide();
         $("#returnBtn").hide();
@@ -100,7 +101,7 @@ export default class PackChart {
                     .attr('class', 'd3-tip')
                     // .offset([-10, 0])
                     .html(function (d) {
-                        return d.data.key;
+                        return d.depth === 1 ? d.data.key : "show network chart of " + '<br>' + "'" + d.data.key + "'"
                     });
 
                 svg
@@ -124,7 +125,7 @@ export default class PackChart {
 
                     })
                     .style("stroke", function (d) {
-                        return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) :'none'
+                        return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : 'none'
                     })
                     .style("opacity", function (d) {
                         return d.depth === 0 ? 0.5 : d.depth === 1 ? 0.7 : d.depth === 2 ? 0.7 : 1
@@ -162,38 +163,74 @@ export default class PackChart {
                     let focus0 = focus;
                     focus = d;
 
-                    //add navigation to path
-                    if (d.depth !== 0) {
-                        updateNavigation(3, focus.data.key)
-                    } else {
-                        while (navBar.childElementCount > 2) {
-                            navBar.removeChild(navBar.lastChild)
-                        }
-                    }
+                    switch (d.depth) {
+                        case 0:
+                            circle
+                                .on("mouseover", tip.hide)
+                                .style("pointer-events", function (d) {
+                                    if (d.depth === 2) return "none"
+                                })
+                                .style("fill", function (d) {
+                                    // return d.children ? colors[d.depth + 1] : null;
+                                    // return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? 'white' : 'none'
+                                    return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : 'none'
 
-                    //add pointer events to groups
-                    //add toolip for displaying group names
-                    if (d.depth === 1) {
-                        $(document).ready(function () {
-                            $('#chordMenuBtn').click(function () {
-                                drawChord(focus.data.key);
-                            });
-                        })
-                        circle
-                            .on('mouseover',tip.show)
-                            .on('mouseout', tip.hide)
-                            .style("pointer-events", function (d) {
-                                if (d.depth === 2) return "all"
+                                })
+                            text.style("visibility", "visible")
+                            deleteNavigation(1)
+                            break;
+                        case 1:
+                            $(document).ready(function () {
+                                $('#chordMenuBtn').click(function () {
+                                    drawChord(focus.data.key);
+                                });
                             })
-                            .style("fill", function (d) {
-                                return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? colorFIll(d.parent.data.key) : 'none'
-                            })
+                            circle
+                                .on('mouseover', tip.show)
+                                .on('mouseout', tip.hide)
+                                .style("pointer-events", function (d) {
+                                    if (d.depth === 2) return "all"
+                                })
+                                .style("fill", function (d) {
+                                    return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? colorFIll(d.parent.data.key) : 'none'
+                                })
 
-                        text.style("visibility", "hidden")
-                        if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
-                    } else if (d.depth === 0) {
-                        initZoomedRoot()
+                            text.style("visibility", "hidden")
+                            if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
+                            updateNavigation(2, focus.data.key)
+                            break;
+
                     }
+                    /*  //add navigation to path
+                      if (d.depth !== 0) {
+                          updateNavigation(2, focus.data.key)
+                      } else {
+                          deleteNavigation(2)
+                      }*/
+
+                    /*                //add pointer events to groups
+                                    //add toolip for displaying group names
+                                    if (d.depth === 1) {
+                                        $(document).ready(function () {
+                                            $('#chordMenuBtn').click(function () {
+                                                drawChord(focus.data.key);
+                                            });
+                                        })
+                                        circle
+                                            .on('mouseover', tip.show)
+                                            .on('mouseout', tip.hide)
+                                            .style("pointer-events", function (d) {
+                                                if (d.depth === 2) return "all"
+                                            })
+                                            .style("fill", function (d) {
+                                                return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? colorFIll(d.parent.data.key) : 'none'
+                                            })
+
+                                        text.style("visibility", "hidden")
+                                        if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
+                                    } else if (d.depth === 0) {
+                                        initZoomedRoot()
+                                    }*/
 
                     //show chord button
                     let chordBtn = $("#chordMenuContainer")
@@ -238,14 +275,20 @@ export default class PackChart {
                     navBar.appendChild(newNav);
                 }
 
-                function addNavigation(name){
+                function addNavigation(name) {
                     let navBar = document.getElementById('navBar');
                     let newNav = document.createElement('li');
                     newNav.className = 'breadcrumb-item active';
                     newNav.setAttribute = ('aria-current', 'page');
                     newNav.innerHTML = name;
                     navBar.appendChild(newNav);
+                }
 
+                function deleteNavigation(depth) {
+                    let navBar = document.getElementById('navBar');
+                    while (navBar.childElementCount > depth) {
+                        navBar.removeChild(navBar.lastChild)
+                    }
                 }
 
 
@@ -273,8 +316,8 @@ export default class PackChart {
 
                 }
 
-                function drawNetwork( group) {
-                    addNavigation( group)
+                function drawNetwork(group) {
+                    addNavigation(group)
                     let nw = new NetworkChart();
                     nw.drawChart().then(
                         function () {
@@ -286,20 +329,6 @@ export default class PackChart {
                     )
                 }
 
-                function initZoomedRoot() {
-                    circle
-                        .on("mouseover", tip.hide)
-                        .style("pointer-events", function (d) {
-                            if (d.depth === 2) return "none"
-                        })
-                        .style("fill", function (d) {
-                            // return d.children ? colors[d.depth + 1] : null;
-                            // return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? 'white' : 'none'
-                            return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : 'none'
-
-                        })
-                    text.style("visibility", "visible")
-                }
 
                 $(document).ready(function () {
                     $('#resetBtn').click(function () {
@@ -327,6 +356,7 @@ export default class PackChart {
                             });
                     });
                     $('#returnBtn').click(function () {
+                        deleteNavigation(3)
                         $("#chordContainer").hide()
                         $("#networkContainer").hide()
                         $("#packContainer").show()
