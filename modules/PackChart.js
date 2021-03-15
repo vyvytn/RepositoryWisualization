@@ -6,14 +6,15 @@ export default class PackChart {
     dataUrl;
 
     constructor(url) {
-        this._setUrl(url);
+       this.init(url)
+    }
+    init(url){
+        this.dataUrl = url;
         $("#chordMenuContainer").hide();
+        $("#returnBtn").hide();
 
     }
 
-    _setUrl(u) {
-        this.dataUrl = u;
-    }
 
     drawChart() {
 
@@ -131,6 +132,7 @@ export default class PackChart {
                     .on("click", function (d) {
                         console.log(d)
                         if (d.depth >= 2) {
+                            $("#returnBtn").show();
                             drawNetwork(d.data.key);
                         }
                         if (focus !== d) zoom(d), d3.event.stopPropagation();
@@ -259,12 +261,14 @@ export default class PackChart {
                 }
 
                 function drawChord(name) {
+
                     let chordChart = new ChordChart(name);
                     chordChart.drawChart();
                     $("#chordMenuContainer").hide()
                     $("#packContainer").hide();
                     $("#networkContainer").hide();
                     // chordChart.updateData();
+                    $("#returnBtn").show();
                     $("#chordContainer").show();
 
                 }
@@ -277,6 +281,7 @@ export default class PackChart {
                             $("#packContainer").hide()
                             $("#chordContainer").hide()
                             $("#networkContainer").show()
+
                         }
                     )
                 }
@@ -321,7 +326,12 @@ export default class PackChart {
                                 if (d.parent !== focus) this.style.display = "none";
                             });
                     });
-
+                    $('#returnBtn').click(function () {
+                        $("#chordContainer").hide()
+                        $("#networkContainer").hide()
+                        $("#packContainer").show()
+                        $('#returnBtn').hide()
+                    })
                 });
             }
         );
