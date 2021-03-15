@@ -131,7 +131,7 @@ export default class PackChart {
                     .on("click", function (d) {
                         console.log(d)
                         if (d.depth >= 2) {
-                            drawNetwork();
+                            drawNetwork(d.data.key);
                         }
                         if (focus !== d) zoom(d), d3.event.stopPropagation();
                     })
@@ -162,7 +162,7 @@ export default class PackChart {
 
                     //add navigation to path
                     if (d.depth !== 0) {
-                        updateNavigation(2, focus.data.key)
+                        updateNavigation(3, focus.data.key)
                     } else {
                         while (navBar.childElementCount > 2) {
                             navBar.removeChild(navBar.lastChild)
@@ -187,7 +187,6 @@ export default class PackChart {
                                 return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? colorFIll(d.parent.data.key) : 'none'
                             })
 
-
                         text.style("visibility", "hidden")
                         if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
                     } else if (d.depth === 0) {
@@ -198,7 +197,7 @@ export default class PackChart {
                     let chordBtn = $("#chordMenuContainer")
                     focus.depth !== 0 ? chordBtn.show() : chordBtn.hide();
 
-
+                    //actual zoom function
                     let transition = d3.transition()
                         .duration(d3.event.altKey ? 50 : 500)
                         .tween("zoom", function (d) {
@@ -208,6 +207,7 @@ export default class PackChart {
                             };
                         });
 
+                    //label changing while zooming
                     transition.selectAll("text")
                         .filter(function (d) {
                             return d.parent === focus || this.style.display === "inline";
@@ -236,6 +236,16 @@ export default class PackChart {
                     navBar.appendChild(newNav);
                 }
 
+                function addNavigation(name){
+                    let navBar = document.getElementById('navBar');
+                    let newNav = document.createElement('li');
+                    newNav.className = 'breadcrumb-item active';
+                    newNav.setAttribute = ('aria-current', 'page');
+                    newNav.innerHTML = name;
+                    navBar.appendChild(newNav);
+
+                }
+
 
                 function zoomTo(v) {
                     let k = diameter / v[2];
@@ -259,7 +269,8 @@ export default class PackChart {
 
                 }
 
-                function drawNetwork() {
+                function drawNetwork( group) {
+                    addNavigation( group)
                     let nw = new NetworkChart();
                     nw.drawChart().then(
                         function () {
