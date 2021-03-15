@@ -165,19 +165,7 @@ export default class PackChart {
 
                     switch (d.depth) {
                         case 0:
-                            circle
-                                .on("mouseover", tip.hide)
-                                .style("pointer-events", function (d) {
-                                    if (d.depth === 2) return "none"
-                                })
-                                .style("fill", function (d) {
-                                    // return d.children ? colors[d.depth + 1] : null;
-                                    // return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? 'white' : 'none'
-                                    return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : 'none'
-
-                                })
-                            text.style("visibility", "visible")
-                            deleteNavigation(1)
+                           initZoomRoot()
                             break;
                         case 1:
                             $(document).ready(function () {
@@ -201,36 +189,6 @@ export default class PackChart {
                             break;
 
                     }
-                    /*  //add navigation to path
-                      if (d.depth !== 0) {
-                          updateNavigation(2, focus.data.key)
-                      } else {
-                          deleteNavigation(2)
-                      }*/
-
-                    /*                //add pointer events to groups
-                                    //add toolip for displaying group names
-                                    if (d.depth === 1) {
-                                        $(document).ready(function () {
-                                            $('#chordMenuBtn').click(function () {
-                                                drawChord(focus.data.key);
-                                            });
-                                        })
-                                        circle
-                                            .on('mouseover', tip.show)
-                                            .on('mouseout', tip.hide)
-                                            .style("pointer-events", function (d) {
-                                                if (d.depth === 2) return "all"
-                                            })
-                                            .style("fill", function (d) {
-                                                return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? colorFIll(d.parent.data.key) : 'none'
-                                            })
-
-                                        text.style("visibility", "hidden")
-                                        if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
-                                    } else if (d.depth === 0) {
-                                        initZoomedRoot()
-                                    }*/
 
                     //show chord button
                     let chordBtn = $("#chordMenuContainer")
@@ -329,16 +287,26 @@ export default class PackChart {
                     )
                 }
 
+                function initZoomRoot(){
+                    circle
+                        .on("mouseover", tip.hide)
+                        .style("pointer-events", function (d) {
+                            if (d.depth === 2) return "none"
+                        })
+                        .style("fill", function (d) {
+                            // return d.children ? colors[d.depth + 1] : null;
+                            // return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : d.depth === 2 ? 'white' : 'none'
+                            return d.depth === 0 ? colors[0] : d.depth === 1 ? colorFIll(d.data.key) : 'none'
+
+                        })
+                    text.style("visibility", "visible")
+                    deleteNavigation(2)
+                }
 
                 $(document).ready(function () {
                     $('#resetBtn').click(function () {
                         focus = root;
-                        $("#chordMenuContainer").hide()
-                        let navBar = document.getElementById('navBar');
-                        while (navBar.childElementCount > 2) {
-                            navBar.removeChild(navBar.lastChild)
-                        }
-                        initZoomedRoot()
+                      initZoomRoot()
                         zoomTo([root.x, root.y, root.r * 2 + margin]);
 
                         d3.transition().selectAll("text")

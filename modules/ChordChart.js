@@ -85,7 +85,16 @@ export default class ChordChart {
             var options = {
                 "gnames": group,
                 "rotation": rotation,
-                "colors": ["#166000", "#238443", "#fb7e17", "#75b3ff", "#d01501", "#b10056"]
+                "colors": [
+                    "#beab90",
+                    "#c93e37",
+                    "#7a9b54",
+                    "#7d94b1",
+                    "#c38a2b",
+                    "#4e8a60",
+                    "#8b5964",
+                    "#cb5616",
+                    ]
             };
 
 
