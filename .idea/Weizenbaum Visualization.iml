@@ -21,5 +21,6 @@
     <orderEntry type="library" name="popper.js" level="application" />
     <orderEntry type="library" name="d3.tip.v0.6.3" level="application" />
     <orderEntry type="library" name="d3-tip" level="application" />
+    <orderEntry type="library" name="axios" level="application" />
   </component>
 </module>

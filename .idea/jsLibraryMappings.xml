@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootstrap, bootstrap-icons, d3-tip, d3.tip.v0.6.3, d3.v4, jquery, popper.js}" />
+    <file url="PROJECT" libraries="{axios, bootstrap, bootstrap-icons, d3-tip, d3.tip.v0.6.3, d3.v4, jquery, popper.js}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>

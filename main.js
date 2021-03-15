@@ -14,7 +14,8 @@ function visualize() {
     btnCLickFunctions();
 }
 
-function init() {
+async function init() {
+
     drawPack();
     showPack();
 
