@@ -1,7 +1,12 @@
 export default class NetworkChart {
-
+    group;
+constructor(group) {
+    this.group=group;
+}
 
     async drawChart() {
+    let group=this.group
+        console.log(group)
 
         await d3.json("./public/libraryItems.json", function (data) {
 
@@ -16,7 +21,17 @@ export default class NetworkChart {
 
                 .entries(unsortedData);
 
-            let packableItems = {key: "Weizenbaum Library", values: myNewData[1].values};
+
+            let groupData=[];
+            myNewData.map(el=>{
+                el.values.map(elem=>{
+                    if(elem.key===group) groupData=elem.values
+                })
+            })
+
+            console.log(groupData)
+
+            let packableItems = {key: group, values: groupData};
             console.log(packableItems)
 
             //creating hierarchy
@@ -245,8 +260,13 @@ export default class NetworkChart {
                 .attr("x", 10)
                 .attr("y", 5)
                 .text(d => d);
+
+
+
         })
     }
+
+    
 
     updateChart(){
         d3.select("#nwSVG").datum(newData).call(this.drawChart())
