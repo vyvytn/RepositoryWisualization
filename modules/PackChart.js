@@ -23,7 +23,7 @@ export default class PackChart {
         d3.json(this.dataUrl, function (data) {
 
 
-            //select SVG from HTML and creates symbols
+                //select SVG from HTML and creates symbols
                 let svg = d3.select("svg");
                 let margin = 20,
                     diameter = +svg.attr("width"),
@@ -161,12 +161,15 @@ export default class PackChart {
                 zoomTo([root.x, root.y, root.r * 2 + margin]);
 
                 function zoom(d) {
+                    //stop zooming into group
+                    if(d.depth===2)return;
+
                     let focus0 = focus;
                     focus = d;
 
                     switch (d.depth) {
                         case 0:
-                           initZoomRoot()
+                            initZoomRoot()
                             break;
                         case 1:
                             $(document).ready(function () {
@@ -263,12 +266,12 @@ export default class PackChart {
                 }
 
                 function drawChord(name) {
-
                     let chordChart = new ChordChart(name);
                     chordChart.drawChart();
-                    $("#chordMenuContainer").hide()
                     $("#packContainer").hide();
                     $("#networkContainer").hide();
+                    $("#resetBtn").hide();
+                    $("#chordMenuBtn").hide();
                     // chordChart.updateData();
                     $("#returnBtn").show();
                     $("#chordContainer").show();
@@ -280,15 +283,18 @@ export default class PackChart {
                     let nw = new NetworkChart(group);
                     nw.drawChart().then(
                         function () {
+                            $("#resetBtn").hide();
                             $("#packContainer").hide()
                             $("#chordContainer").hide()
                             $("#networkContainer").show()
-
+                            $('#chordMenuBtn').hide()
                         }
                     )
+                    resetMenu(nw)
+
                 }
 
-                function initZoomRoot(){
+                function initZoomRoot() {
                     circle
                         .on("mouseover", tip.hide)
                         .style("pointer-events", function (d) {
@@ -304,10 +310,25 @@ export default class PackChart {
                     deleteNavigation(2)
                 }
 
+                function resetMenu(network){
+                    $(document).ready(function () {
+                            $('#returnBtn').click(function () {
+                                $('#chordMenuBtn').show()
+                                deleteNavigation(3)
+                                $("#chordContainer").hide()
+                                $("#networkContainer").hide()
+                                $('#returnBtn').hide()
+                                $("#packContainer").show()
+                                $('#resetBtn').show()
+                                if(network) network.delete();
+                            })
+                        }
+                    )
+                }
                 $(document).ready(function () {
                     $('#resetBtn').click(function () {
                         focus = root;
-                      initZoomRoot()
+                        initZoomRoot()
                         zoomTo([root.x, root.y, root.r * 2 + margin]);
 
                         d3.transition().selectAll("text")
@@ -324,13 +345,13 @@ export default class PackChart {
                                 if (d.parent !== focus) this.style.display = "none";
                             });
                     });
-                    $('#returnBtn').click(function () {
-                        deleteNavigation(3)
-                        $("#chordContainer").hide()
-                        $("#networkContainer").hide()
-                        $("#packContainer").show()
-                        $('#returnBtn').hide()
-                    })
+                    /*  $('#returnBtn').click(function () {
+                          deleteNavigation(3)
+                          $("#chordContainer").hide()
+                          $("#networkContainer").hide()
+                          $("#packContainer").show()
+                          $('#returnBtn').hide()
+                      })*/
                 });
             }
         );

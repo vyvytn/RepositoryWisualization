@@ -1,11 +1,17 @@
 export default class NetworkChart {
+
     group;
-constructor(group) {
-    this.group=group;
-}
+
+    links;
+    data;
+
+
+    constructor(group) {
+        this.group = group;
+    }
 
     async drawChart() {
-    let group=this.group
+        let group = this.group
         console.log(group)
 
         await d3.json("./public/libraryItems.json", function (data) {
@@ -22,10 +28,10 @@ constructor(group) {
                 .entries(unsortedData);
 
 
-            let groupData=[];
-            myNewData.map(el=>{
-                el.values.map(elem=>{
-                    if(elem.key===group) groupData=elem.values
+            let groupData = [];
+            myNewData.map(el => {
+                el.values.map(elem => {
+                    if (elem.key === group) groupData = elem.values
                 })
             })
 
@@ -178,8 +184,8 @@ constructor(group) {
                 .style("stroke", "grey")
                 .style("stroke-opacity", 0.3)
                 .style("stroke-width", d => d.runtime / 10)
-                .style("fill", d => d.depth===0?'white':d.depth===1? colorScale(d.data.key):d.depth===2? colorScale(d.parent.data.key):colorScale(d.parent.parent.data.key))
-                // .style("fill", 'white')
+                .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
+            // .style("fill", 'white')
 
 
             /*node.append("title")
@@ -262,15 +268,13 @@ constructor(group) {
                 .text(d => d);
 
 
-
         })
     }
 
-    
 
-    updateChart(){
-        d3.select("#nwSVG").datum(newData).call(this.drawChart())
-
+    delete() {
+        let svg= d3.select('#nwSVG');
+        svg.select("g").remove();
     }
 
 }
