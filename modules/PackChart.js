@@ -21,8 +21,10 @@ export default class PackChart {
 
         //get JSON data
         d3.json(this.dataUrl, function (data) {
+            let nw = new NetworkChart();
 
-                //select SVG from HTML and creates symbols
+
+            //select SVG from HTML and creates symbols
                 let svg = d3.select("svg");
                 let margin = 20,
                     diameter = +svg.attr("width"),
@@ -276,7 +278,6 @@ export default class PackChart {
 
                 function drawNetwork(group) {
                     addNavigation(group)
-                    let nw = new NetworkChart();
                     nw.drawChart().then(
                         function () {
                             $("#packContainer").hide()

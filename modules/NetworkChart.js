@@ -67,46 +67,6 @@ export default class NetworkChart {
                 )
                 .force("charge", d3.forceManyBody().strength(-150)) // DESIGN Absto?en- Abstand zwischen Nodes
                 .force("center", d3.forceCenter(width / 2, height / 2)); // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
-            /*
-
-                        const dataset = {
-                            nodes: [
-                                {
-                                    id: 1,
-                                    name: '001-12345-001',
-                                    teilbereich: 'PM/Stgt',
-                                    label: 'KiAN: 70',
-                                    group: 'Stuttgart',
-                                    runtime: 700
-                                },
-                                {id: 2, name: '070-77777-001', teilbereich: 'BER/CH', label: '', group: 'Schweiz', runtime: 0},
-                                {
-                                    id: 3,
-                                    name: '070-77777-002',
-                                    teilbereich: 'BER/CH',
-                                    label: 'KiAN: 25',
-                                    group: 'Schweiz',
-                                    runtime: 250
-                                },
-                                {id: 4, name: '001-34567-001', teilbereich: 'IDS/Stgt', label: '', group: 'Stuttgart', runtime: 0},
-                                {id: 5, name: '001-34567-001', teilbereich: 'IDS/Stgt', label: '', group: 'Stuttgart', runtime: 0},
-                                {id: 6, name: '024-98765-001', teilbereich: 'BER/A', label: '', group: 'Oesterreich', runtime: 0},
-                                {id: 7, name: '001-34567-003', teilbereich: 'BER/Stgt', label: '', group: 'Stuttgart', runtime: 0}
-                            ],
-                            links: [
-                                {source: 1, target: 2, type: '30'},
-                                {source: 2, target: 1, type: '70'},
-                                {source: 1, target: 3, type: '60'},
-                                {source: 1, target: 4, type: '50'},
-                                {source: 1, target: 5, type: '40'},
-                                {source: 3, target: 6, type: '25'},
-                                {source: 6, target: 3, type: '25'},
-                                {source: 4, target: 7, type: '30'},
-                                {source: 1, target: 7, type: '20'}
-                            ]
-                        };
-            */
-
 
             const svg = d3.select('#nwSVG')
                 .attr("width", width + margin.left + margin.right)
@@ -286,6 +246,11 @@ export default class NetworkChart {
                 .attr("y", 5)
                 .text(d => d);
         })
+    }
+
+    updateChart(){
+        d3.select("#nwSVG").datum(newData).call(this.drawChart())
+
     }
 
 }

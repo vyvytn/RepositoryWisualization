@@ -1,4 +1,6 @@
 import PackChart from './modules/PackChart.js'
+import sparqlRequest from "./modules/request/sparlRequest.js";
+
 // import ChordChart from "./modules/ChordChart.js";
 // import NetworkChart from "./modules/NetworkChart.js";
 
@@ -15,6 +17,13 @@ function visualize() {
 }
 
 async function init() {
+
+    let req=new sparqlRequest();
+    // console.log(req.decode())
+    req.buildRequestURI()
+
+
+
 
     drawPack();
     showPack();
