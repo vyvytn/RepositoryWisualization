@@ -102,7 +102,15 @@ export default class NetworkChart {
                     "#c38a2b",
                     "#4e8a60"
                 ])
-
+            let colors = [
+                "#beab90",
+                "#7d94b1",
+                "#8b5964",
+                "#cb5616",
+                "#7a9b54",
+                "#c38a2b",
+                "#4e8a60"
+            ]
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink() // This force provides links between nodes
                     .id(d => d.id) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
@@ -203,16 +211,25 @@ export default class NetworkChart {
                         return "('display', 'none')"
                     }
                 })
-                .style("background", 'black')
+                .style("background", colors[2])
+                .style("overflow-y", 'scroll')
                 .html(function (d) {
-                        console.log(d)
-                        return d.children.map(el=>{ return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault>" + el.data.key+"</label> </div>"})
+                    console.log(d)
+                    return "<div class=row> " +
+                        "<div class=col>" +
+                        "<h>show node</h>" +
+                        "</div>" +
+                        "       <div class=col>" +
+                        "           <button type=\"button\" class=\"btn btn-default\" id=\"resetBtn\"><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                        "       </div>" +
+                        "</div>"
+                        + d.children.map(el => {
+                            return "<div class=form-check>" +
+                                "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
+                        })
+                })
 
-
-                        // if(d.depth===0)return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault>" +d.data.key+"</label> </div>"
-                        // return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault>" +d.data.key+"</label> </div>"
-                    }
-                )
 
             // .offset([-10, 0])
             // .html("<button id='but1'>Button 1</button><button  id='but2'>Button 2</button>")
@@ -226,7 +243,10 @@ export default class NetworkChart {
 
             svg.call(tip)
             node.on("mouseenter", tip.show)
-                .on("mouseleave", tip.hide)
+            node.on("mouseover", function (d){
+               let color= d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
+                tip.style("background", color)
+            })
 
 
             node.append("circle")
