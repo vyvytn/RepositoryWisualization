@@ -17,6 +17,16 @@ export default class NetworkChart {
         await d3.json("./public/libraryItems.json", function (data) {
 
             let unsortedData = data.results.bindings;
+            let authorItems = d3.nest()
+                .key(d => d.author.value)
+                .key(d => d.title.value)
+                .entries(unsortedData);
+            console.log(authorItems)
+
+            let test = d3.nest()
+                .entries(authorItems);
+            console.log(test)
+
 
             //nesting data
             let myNewData = d3.nest()
@@ -24,8 +34,20 @@ export default class NetworkChart {
                 .key(d => d.group.value)
                 .key(d => d.title.value)
                 .key(d => d.author.value)
-
                 .entries(unsortedData);
+
+
+            /*  myNewData.map(area => {
+                  area.values.map(group =>
+                      group.values.map(title =>
+                          title.values.map((author, i) =>
+                              authorItems.map(item => {
+                                  if (author.key === item.key) console.log(item)
+                                  //author.push(item.values)
+                              })
+                          )))
+              })
+              console.log(myNewData)*/
 
 
             let groupData = [];
@@ -34,18 +56,11 @@ export default class NetworkChart {
                     if (elem.key === group) groupData = elem.values
                 })
             })
-
-            console.log(groupData)
-
             let packableItems = {key: group, values: groupData};
-            console.log(packableItems)
-
             //creating hierarchy
             let hierarchy = d3
                 .hierarchy(packableItems, d => d.values);
-
             let nodes = hierarchy.descendants();
-            console.log(nodes);
 
             /*   nodes=nodes.map((el,i)=> {
                    return el+={
@@ -53,19 +68,18 @@ export default class NetworkChart {
                    }
                })*/
 
-
             //getting links
             let links = hierarchy.links();
 
-            links.map((el, index) => {
-                    if (el.source.depth === 3) {
-                        let id = nodes.indexOf(el.target);
-                        console.log(id)
-                        links[index].target = nodes[id].parent.parent;
-                    }
-                }
-            )
-            console.log(links)
+            /*  links.map((el, index) => {
+                      if (el.source.depth === 3) {
+                          let id = nodes.indexOf(el.target);
+                          console.log(id)
+                          links[index].target = nodes[id].parent.parent;
+                      }
+                  }
+              )*/
+
 
             let width = 805
             let height = 765
@@ -79,14 +93,22 @@ export default class NetworkChart {
 
             let colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
                 .domain(groups)
-                .range(['#ff9e6d', '#86cbff', '#c2e5a0', '#fff686', '#9e79db'])
+                .range([
+                    "#beab90",
+                    "#7d94b1",
+                    "#8b5964",
+                    "#cb5616",
+                    "#7a9b54",
+                    "#c38a2b",
+                    "#4e8a60"
+                ])
 
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink() // This force provides links between nodes
                     .id(d => d.id) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                    .distance(70) //DESIGN Abstand der Knoten zueinander
+                    .distance(20) //DESIGN Abstand der Knoten zueinander
                 )
-                .force("charge", d3.forceManyBody().strength(-150)) // DESIGN Absto?en- Abstand zwischen Nodes
+                .force("charge", d3.forceManyBody().strength(-400)) // DESIGN Absto?en- Abstand zwischen Nodes
                 .force("center", d3.forceCenter(width / 2, height / 2)); // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
 
             const svg = d3.select('#nwSVG')
@@ -96,16 +118,16 @@ export default class NetworkChart {
                 .attr("transform", `translate(${margin.left},${margin.top})`);
 
             //appending little triangles, path object, as arrowhead
-//The <defs> element is used to store graphical objects that will be used at a later time
-//The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+            //The <defs> element is used to store graphical objects that will be used at a later time
+            //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
             svg.append('defs').append('marker')
                 .attr("id", 'arrowhead')
                 .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
                 .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
                 .attr('refY', 0)
                 .attr('orient', 'auto')
-                .attr('markerWidth', 5) //DESIGN Pfeilspitzenbreite
-                .attr('markerHeight', 5)//DESIGN Pfeilspitzenh?he
+                .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
+                .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
                 .attr('xoverflow', 'visible')
                 .append('svg:path')
                 .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
@@ -120,8 +142,8 @@ export default class NetworkChart {
                 .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
 
 
-//The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
-//Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
+            //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
+            //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
             link.append("title")
                 .text(d => d.key); //DESIGN tooltip text
 
@@ -137,7 +159,6 @@ export default class NetworkChart {
                 })
 
             // .style("pointer-events", "none");
-
             const edgelabels = svg.selectAll(".edgelabel")
                 .data(links)
                 .enter()
@@ -161,7 +182,7 @@ export default class NetworkChart {
                             .attr("startOffset", "50%")
                             .text(d => 'contains');*/
 
-// Initialize the nodes
+            // Initialize the nodes
             const node = svg.selectAll(".nodes")
                 .data(nodes)
                 .enter()
@@ -172,20 +193,81 @@ export default class NetworkChart {
                         .on("drag", dragged)      //drag - after an active pointer moves (on mousemove or touchmove).
                     //.on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
                 )
-                .on("click", function (d) {
-                    node.append("text")
-                        .attr("dy", 4)
-                        .attr("dx", 10)
-                        .text('filter')
-                });
+
+            let tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .style(function(d){
+                    if(d.depth===0){
+                        return "('display', 'inline')"}
+                    else{
+                        return "('display', 'none')"
+                    }
+                })
+                .style("background", 'black')
+                .html(function(d){
+                    if(d.depth===0)return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault> Default checkbox </label> </div>"}
+                    )
+
+            // .offset([-10, 0])
+            // .html("<button id='but1'>Button 1</button><button  id='but2'>Button 2</button>")
+
+            /*<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Default checkbox
+  </label>
+</div>*/
+
+            svg.call(tip)
+            node.on("mouseover",tip.show)
+
 
             node.append("circle")
-                .attr("r", d => 10)
+                .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
                 .style("stroke", "grey")
                 .style("stroke-opacity", 0.3)
                 .style("stroke-width", d => d.runtime / 10)
                 .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
-            // .style("fill", 'white')
+                .on("mouseover", function (d) {
+                    d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25)
+                    if (d.depth === 0) {
+                        d3.select(this)
+                            .append("text")
+                            .attr("class", "fa")
+                            .attr('font-size', function (d) {
+                                return '20px'
+                            })
+                            .attr("dx", 30)
+                            .attr("dy", -30)
+                            .text(function (d, i) {
+                                if (i === 0) return "\uf055"
+                            })
+                    }
+                })
+                .on('mouseout', function (d) {
+                    d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                    if (d.depth === 0) {
+                        d3.select(this).select('circle').attr("r", 50)
+                    }
+                })
+            /*for root node*/
+            node.append("text")
+                .attr("class", "fa")
+                .attr('font-size', function (d) {
+                    return '20px'
+                })
+                .attr("dx", 30)
+                .attr("dy", -30)
+                .text(function (d, i) {
+                    if (i === 0) return "\uf055"
+                })
+
+
+            node.on("click", function (d) {
+                if (d.depth === 0)
+                    d3.select(this).append("text")
+                        .text("root")
+            })
 
 
             /*node.append("title")
@@ -215,7 +297,7 @@ export default class NetworkChart {
                 .links(links);
 
 
-// This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).
+            // This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).
             function ticked() {
                 link.attr("x1", d => d.source.x)
                     .attr("y1", d => d.source.y)
@@ -227,8 +309,8 @@ export default class NetworkChart {
                 edgepaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
             }
 
-//When the drag gesture starts, the targeted node is fixed to the pointer
-//The simulation is temporarily ?heated? during interaction by setting the target alpha to a non-zero value.
+            //When the drag gesture starts, the targeted node is fixed to the pointer
+            //The simulation is temporarily ?heated? during interaction by setting the target alpha to a non-zero value.
             function dragstarted(d) {
                 if (!d3.event.active) simulation.alphaTarget(0.3).restart();//sets the current target alpha to the specified number in the range [0,1].
                 d.fy = d.y; //fx - the node?s fixed x-position. Original is null.
@@ -241,16 +323,17 @@ export default class NetworkChart {
                 d.fy = d3.event.y;
             }
 
-//the targeted node is released when the gesture ends
-//   function dragended(d) {
-//     if (!d3.event.active) simulation.alphaTarget(0);
-//     d.fx = null;
-//     d.fy = null;
+            /*the targeted node is released when the gesture ends
+              function dragended(d) {
+                if (!d3.event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
 
-//     console.log("dataset after dragged is ...",dataset);
-//   }
+                console.log("dataset after dragged is ...",dataset);
+              }
 
-            //drawing the legend
+                        drawing the legend*/
+
             const legend_g = svg.selectAll(".legend")
                 .data(colorScale.domain())
                 .enter().append("g")
@@ -273,7 +356,7 @@ export default class NetworkChart {
 
 
     delete() {
-        let svg= d3.select('#nwSVG');
+        let svg = d3.select('#nwSVG');
         svg.select("g").remove();
     }
 

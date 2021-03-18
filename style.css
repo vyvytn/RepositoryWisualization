@@ -89,26 +89,6 @@ line.link {
     max-height: 50vh;
 }
 
-/*MOLEKULE*/
-.link line {
-    stroke: #696969;
-}
-
-.link line.separator {
-    stroke: #fff;
-    stroke-width: 2px;
-}
-
-.node circle {
-    stroke: #000;
-    stroke-width: 1.5px;
-}
-
-.node text {
-    font: 10px sans-serif;
-    pointer-events: none;
-}
-
 /*interactive Chord*/
 
 #visual {
@@ -152,20 +132,3 @@ svg {
     /*border:1px solid #000;*/
 }
 
-
-/*basic network chart*/
-
-.links line {
-    stroke: #999;
-    stroke-opacity: 0.6;
-}
-
-.nodes circle {
-    stroke: #fff;
-    stroke-width: 1.5px;
-}
-
-text {
-    font-family: sans-serif;
-    font-size: 12px;
-}
