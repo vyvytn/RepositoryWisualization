@@ -196,17 +196,23 @@ export default class NetworkChart {
 
             let tip = d3.tip()
                 .attr('class', 'd3-tip')
-                .style(function(d){
-                    if(d.depth===0){
-                        return "('display', 'inline')"}
-                    else{
+                .style(function (d) {
+                    if (d.depth === 0) {
+                        return "('display', 'inline')"
+                    } else {
                         return "('display', 'none')"
                     }
                 })
                 .style("background", 'black')
-                .html(function(d){
-                    if(d.depth===0)return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault> Default checkbox </label> </div>"}
-                    )
+                .html(function (d) {
+                        console.log(d)
+                        return d.children.map(el=>{ return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault>" + el.data.key+"</label> </div>"})
+
+
+                        // if(d.depth===0)return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault>" +d.data.key+"</label> </div>"
+                        // return "<div class=form-check> <input class=form-check-input type=checkbox id=flexCheckDefault >  <label class=form-check-label for=flexCheckDefault>" +d.data.key+"</label> </div>"
+                    }
+                )
 
             // .offset([-10, 0])
             // .html("<button id='but1'>Button 1</button><button  id='but2'>Button 2</button>")
@@ -219,7 +225,8 @@ export default class NetworkChart {
 </div>*/
 
             svg.call(tip)
-            node.on("mouseover",tip.show)
+            node.on("mouseenter", tip.show)
+                .on("mouseleave", tip.hide)
 
 
             node.append("circle")
