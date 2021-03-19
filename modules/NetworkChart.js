@@ -20,6 +20,9 @@ export default class NetworkChart {
             let authorItems = d3.nest()
                 .key(d => d.author.value)
                 .key(d => d.title.value)
+                .key(d=> d.group.value)
+                .key(d=> d.area.value)
+
                 .entries(unsortedData);
             console.log(authorItems)
 
@@ -215,21 +218,66 @@ export default class NetworkChart {
                 .style("overflow-y", 'scroll')
                 .html(function (d) {
                     console.log(d)
-                    return "<div class=row> " +
-                        "<div class=col>" +
-                        "<h>show node</h>" +
-                        "</div>" +
-                        "       <div class=col>" +
-                        "           <button type=\"button\" class=\"btn btn-default\" id=\"resetBtn\"><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                        "       </div>" +
-                        "</div>"
-                        + d.children.map(el => {
-                            return "<div class=form-check>" +
-                                "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
-                        })
+                    leftMenuClicked()
+                    let authorTitles = getItemsOfAuthor(d);
+                    console.log(authorTitles)
+                    if(d.depth<2){
+                        return "<div class=row> " +
+                            "<div class=col>" +
+                            "<h>show node</h>" +
+                            "</div>" +
+                            "       <div class=col>" +
+                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                            "       </div>" +
+                            "</div>"
+                            + d.children.map(el => {
+                                return "<div class=form-check>" +
+                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                    "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
+                            })
+                    }else{
+                        return "<div class=row> " +
+                            "<div class=col>" +
+                            "<h>show node</h>" +
+                            "</div>" +
+                            "       <div class=col>" +
+                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                            "       </div>" +
+                            "</div>"
+                            + authorTitles.map(el => {
+                                return "<div class=form-check>" +
+                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                    "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
+                            })
+                    }
+
+
                 })
 
+
+            function getItemsOfAuthor(d) {
+                if (d.depth === 2) {
+                    let items = [];
+                    authorItems.map(el => {
+                        let author = d.data.key
+                        if (author === el.key) {
+                            console.log(el.values.map(elem => {
+                                items.push(elem)
+                            }))
+                        }
+                    })
+                    return items
+                }
+
+            }
+
+            function leftMenuClicked() {
+                $(document).ready(function () {
+                    $('#leftMenuBtn').click(function () {
+                        console.log("hide")
+                    })
+                })
+            }
 
             // .offset([-10, 0])
             // .html("<button id='but1'>Button 1</button><button  id='but2'>Button 2</button>")
@@ -243,8 +291,8 @@ export default class NetworkChart {
 
             svg.call(tip)
             node.on("mouseenter", tip.show)
-            node.on("mouseover", function (d){
-               let color= d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
+            node.on("mouseover", function (d) {
+                let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                 tip.style("background", color)
             })
 
