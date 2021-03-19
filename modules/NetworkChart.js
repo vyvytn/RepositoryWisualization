@@ -216,9 +216,9 @@ export default class NetworkChart {
                 })
                 .style("background", colors[2])
                 .style("overflow-y", 'scroll')
-                .html(function (d) {
+                .html(function (d,i) {
                     console.log(d)
-                    leftMenuClicked()
+                    leftMenuClicked(d,i)
                     let authorTitles = getItemsOfAuthor(d);
                     console.log(authorTitles)
                     if(d.depth<2){
@@ -236,23 +236,47 @@ export default class NetworkChart {
                                     "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
                             })
                     }else{
-                        return "<div class=row> " +
-                            "<div class=col>" +
-                            "<h>show node</h>" +
-                            "</div>" +
-                            "       <div class=col>" +
-                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                            "       </div>" +
-                            "</div>"
-                            + authorTitles.map(el => {
-                                return "<div class=form-check>" +
-                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                    "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
-                            })
+                        if(authorTitles.length>0){
+                            return "<div class=row> " +
+                                "<div class=col>" +
+                                "<h>show node</h>" +
+                                "</div>" +
+                                "       <div class=col>" +
+                                "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                "       </div>" +
+                                "</div>"
+                                + authorTitles.map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                        "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
+                                })
+                        }
                     }
 
 
                 })
+
+            function getItems(){
+
+            }
+
+            function getAuthors(d){
+                if(d.depth===2){
+
+                }
+
+            }
+
+            function getAuthor(){
+
+            }
+
+
+            function getAbstract(){
+
+            }
+
+            //year type
 
 
             function getItemsOfAuthor(d) {
@@ -261,9 +285,9 @@ export default class NetworkChart {
                     authorItems.map(el => {
                         let author = d.data.key
                         if (author === el.key) {
-                            console.log(el.values.map(elem => {
-                                items.push(elem)
-                            }))
+                            el.values.map(elem => {
+                                if(d.parent.data.key!==elem.key) items.push(elem)
+                            })
                         }
                     })
                     return items
@@ -271,10 +295,10 @@ export default class NetworkChart {
 
             }
 
-            function leftMenuClicked() {
+            function leftMenuClicked(d,i) {
                 $(document).ready(function () {
                     $('#leftMenuBtn').click(function () {
-                        console.log("hide")
+                        tip.hide(d,i)
                     })
                 })
             }

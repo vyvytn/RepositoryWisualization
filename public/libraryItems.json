@@ -46,6 +46,23 @@
         "group": {
           "type": "literal",
           "value": "Arbeiten in hochautomatisierten, digital-hybriden Prozessen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/74"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The idea of revolutionary social change is common topos within the discussion around decentralized technologies. An example for this is the recently emerged blockchain technology. This article aims to characterize the techno-utopian promises associated with the idea of decentralization in the context of blockchain technology and to assess their significance within the discourses surrounding the technology. Based on different materials from the community discourse, three promises of decentralization in the context of block chain a reidentified, namely the promise of self-organised social order, automated coordination by technology and disruptive social change. It is found that while these promises characterized the normative foundation surrounding the technology in its early days, other ideals have emerged that now stand next to it. This presumed pluralization of imaginaries is interpreted as an indication for adiversification of the blockchain community that has occurred since its inception. Thereby, the research hints to two largely neglected factors within the discussion about the promises associated with blockchain technology: Firstly, it shows that decentralization can mean different things and should rather be understood as a metaphor. Secondly,it demonstrates that the idea of decentralization is not uncontested within the discourses around blockchain technology. Only if these insights are taken into account, a realistic representation of the techno-utopian ideals behind blockchain can be attained."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -64,6 +81,23 @@
         "group": {
           "type": "literal",
           "value": "Kritische Maker-Kultur"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/80"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Algorithmic governance as a key concept in controversies around the emerging digital society highlights the idea that digital technologies produce social ordering in a specific way. Starting with the origins of the concept, this paper portrays different perspectives and objects of inquiry where algorithmic governance has gained prominence ranging from the public sector to labour management and ordering digital communication. Recurrent controversies across all sectors such as datafication and surveillance, bias, agency and transparency indicate that the concept of algorithmic governance allows to bring objects of inquiry and research fields that had not been related before into a joint conversation. Short case studies on predictive policy and automated content moderation show that algorithmic governance is multiple, contingent and contested. It takes different forms in different contexts and jurisdictions, and it is shaped by interests, power, and resistance."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -82,6 +116,23 @@
         "group": {
           "type": "literal",
           "value": "Kritische Maker-Kultur"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/80"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Algorithmic governance as a key concept in controversies around the emerging digital society highlights the idea that digital technologies produce social ordering in a specific way. Starting with the origins of the concept, this paper portrays different perspectives and objects of inquiry where algorithmic governance has gained prominence ranging from the public sector to labour management and ordering digital communication. Recurrent controversies across all sectors such as datafication and surveillance, bias, agency and transparency indicate that the concept of algorithmic governance allows to bring objects of inquiry and research fields that had not been related before into a joint conversation. Short case studies on predictive policy and automated content moderation show that algorithmic governance is multiple, contingent and contested. It takes different forms in different contexts and jurisdictions, and it is shaped by interests, power, and resistance."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -100,6 +151,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Technologien und Wohlbefinden"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/75"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The use of complex machine learning models can make systems opaque to users. Machine learning research proposes the use of post-hoc explanations. However, it is unclear if they give users insights into otherwise uninterpretable models. One minimalistic way of explaining image classifications by a deep neural network is to show only the areas that were decisive for the assignment of a label. In a pilot study, 20 participants looked at 14 of such explanations generated either by a human or the LIME algorithm. For explanations of correct decisions, they identified the explained object with significantly higher accuracy (75.64 % vs. 18.52 %). We argue that this shows that explanations can be very minimalistic while retaining the essence of a decision, but the decision-making contexts that can be conveyed in this manner is limited. Finally, we found that explanations are unique to the explainer and human-generated explanations were assigned 79 % higher trust ratings. As a starting point for further studies, this work shares our first insights into quality criteria of post-hoc explanations."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -118,6 +186,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Technologien und Wohlbefinden"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/75"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The use of complex machine learning models can make systems opaque to users. Machine learning research proposes the use of post-hoc explanations. However, it is unclear if they give users insights into otherwise uninterpretable models. One minimalistic way of explaining image classifications by a deep neural network is to show only the areas that were decisive for the assignment of a label. In a pilot study, 20 participants looked at 14 of such explanations generated either by a human or the LIME algorithm. For explanations of correct decisions, they identified the explained object with significantly higher accuracy (75.64 % vs. 18.52 %). We argue that this shows that explanations can be very minimalistic while retaining the essence of a decision, but the decision-making contexts that can be conveyed in this manner is limited. Finally, we found that explanations are unique to the explainer and human-generated explanations were assigned 79 % higher trust ratings. As a starting point for further studies, this work shares our first insights into quality criteria of post-hoc explanations."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -136,6 +221,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/87"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Web tracking is found on 90 % of common websites. It facilitates online behavior analysis which can reveal insights into sensitive personal data of an individual.  Most users are  not  aware  of  the  amount  of  web  tracking  happening in the background.  We present an interactive demonstration of web tracker sonification which is designed to promote awareness for online privacy issues by disclosing the amount of web tracking through sound.  While the user is browsing the web, data exchanged with web tracking hosts is transformed into sonic events. In the demonstration, users can try out different websites testing several browsers, with and without ad blocking add-ons,  and compare the different sonic experiences.  Additionally,  we provide a Wi-Fi access point to which users can connect with their mobile devices so they can listen to the data transferred to third-party tracking providers from their own devices.  This demonstration aims to spark discussion not only regarding the sonification design, but to widen the discourse into a critical reflection of online privacy and surveillance issues."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -154,6 +256,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/87"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Web tracking is found on 90 % of common websites. It facilitates online behavior analysis which can reveal insights into sensitive personal data of an individual.  Most users are  not  aware  of  the  amount  of  web  tracking  happening in the background.  We present an interactive demonstration of web tracker sonification which is designed to promote awareness for online privacy issues by disclosing the amount of web tracking through sound.  While the user is browsing the web, data exchanged with web tracking hosts is transformed into sonic events. In the demonstration, users can try out different websites testing several browsers, with and without ad blocking add-ons,  and compare the different sonic experiences.  Additionally,  we provide a Wi-Fi access point to which users can connect with their mobile devices so they can listen to the data transferred to third-party tracking providers from their own devices.  This demonstration aims to spark discussion not only regarding the sonification design, but to widen the discourse into a critical reflection of online privacy and surveillance issues."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -172,6 +291,23 @@
         "group": {
           "type": "literal",
           "value": "Rahmenbedingungen für Datenmärkte"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/65"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Wearables (beispielsweise Datenbrillen und Smartwatches) sind  ein  besonders  sichtbares  Element  von  Industrie-4.0-Anwendungen.  Sie  sollen  situationsgerechte  Informationen  zur  Verf\u00FCgung  stellen,  k\u00F6nnen  aber  zugleich auch Daten \u00FCber den Arbeitsprozess \u2013 und teils sogar \u00FCber Bewegungsmuster  und  Vitalfunktionen  der  Besch\u00E4ftigten  \u2013  generieren.  Die  Wearable-Technologie  ist  in  einem  fr\u00FChen  Entwicklungsstadium,  in  dem  die  Interessen  und  Sichtweisen  der  relevanten  Akteure,  vor  allem  der  Technikentwickler  und  des Managements m\u00F6glicher Anwendungsunternehmen von besonderer Bedeu-tung  sind.  Der  vorliegende  Artikel  untersucht  die  Rolle  der  L\u00F6sungsentwickler  und  ihr  Verst\u00E4ndnis  von  Arbeit  und  den  Arbeitsprozessen,  in  denen  Wearables  eingesetzt  werden  sollen.  Er  beruht  auf  leitfadengest\u00FCtzten  Interviews  mit  L\u00F6sungsentwicklern.  Gezeigt  wird  ein  ambivalentes  Verst\u00E4ndnis  von  Arbeit:  Auf  der  einen  Seite  dominiert  die  Wahrnehmung  menschlicher  Arbeitskr\u00E4fte  als  potenzielle  Fehlerquellen  und  die  Fokussierung  auf  die  Optimierung  einzelner  Arbeitspl\u00E4tze und ihrer Ergonomie, w\u00E4hrend \u00FCbergreifende Fragen der Arbeitsgestaltung  und  Arbeitsorganisation  ausgeblendet  werden.  Auf  der  anderen  Seite  werden  die  Potenziale  und  Gefahren  der  Wearable-Technologien  im  Hin-blick  auf  Individualisierung,  Datenschutz  und  Kontrolle  differenziert  gesehen  und diskutiert."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -190,6 +326,19 @@
         "group": {
           "type": "literal",
           "value": "Rahmenbedingungen für Datenmärkte"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Wearables (beispielsweise Datenbrillen und Smartwatches) sind  ein  besonders  sichtbares  Element  von  Industrie-4.0-Anwendungen.  Sie  sollen  situationsgerechte  Informationen  zur  Verf\u00FCgung  stellen,  k\u00F6nnen  aber  zugleich auch Daten \u00FCber den Arbeitsprozess \u2013 und teils sogar \u00FCber Bewegungsmuster  und  Vitalfunktionen  der  Besch\u00E4ftigten  \u2013  generieren.  Die  Wearable-Technologie  ist  in  einem  fr\u00FChen  Entwicklungsstadium,  in  dem  die  Interessen  und  Sichtweisen  der  relevanten  Akteure,  vor  allem  der  Technikentwickler  und  des Managements m\u00F6glicher Anwendungsunternehmen von besonderer Bedeu-tung  sind.  Der  vorliegende  Artikel  untersucht  die  Rolle  der  L\u00F6sungsentwickler  und  ihr  Verst\u00E4ndnis  von  Arbeit  und  den  Arbeitsprozessen,  in  denen  Wearables  eingesetzt  werden  sollen.  Er  beruht  auf  leitfadengest\u00FCtzten  Interviews  mit  L\u00F6sungsentwicklern.  Gezeigt  wird  ein  ambivalentes  Verst\u00E4ndnis  von  Arbeit:  Auf  der  einen  Seite  dominiert  die  Wahrnehmung  menschlicher  Arbeitskr\u00E4fte  als  potenzielle  Fehlerquellen  und  die  Fokussierung  auf  die  Optimierung  einzelner  Arbeitspl\u00E4tze und ihrer Ergonomie, w\u00E4hrend \u00FCbergreifende Fragen der Arbeitsgestaltung  und  Arbeitsorganisation  ausgeblendet  werden.  Auf  der  anderen  Seite  werden  die  Potenziale  und  Gefahren  der  Wearable-Technologien  im  Hin-blick  auf  Individualisierung,  Datenschutz  und  Kontrolle  differenziert  gesehen  und diskutiert."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -208,6 +357,19 @@
         "group": {
           "type": "literal",
           "value": "Rahmenbedingungen für Datenmärkte"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Wearables (beispielsweise Datenbrillen und Smartwatches) sind  ein  besonders  sichtbares  Element  von  Industrie-4.0-Anwendungen.  Sie  sollen  situationsgerechte  Informationen  zur  Verf\u00FCgung  stellen,  k\u00F6nnen  aber  zugleich auch Daten \u00FCber den Arbeitsprozess \u2013 und teils sogar \u00FCber Bewegungsmuster  und  Vitalfunktionen  der  Besch\u00E4ftigten  \u2013  generieren.  Die  Wearable-Technologie  ist  in  einem  fr\u00FChen  Entwicklungsstadium,  in  dem  die  Interessen  und  Sichtweisen  der  relevanten  Akteure,  vor  allem  der  Technikentwickler  und  des Managements m\u00F6glicher Anwendungsunternehmen von besonderer Bedeu-tung  sind.  Der  vorliegende  Artikel  untersucht  die  Rolle  der  L\u00F6sungsentwickler  und  ihr  Verst\u00E4ndnis  von  Arbeit  und  den  Arbeitsprozessen,  in  denen  Wearables  eingesetzt  werden  sollen.  Er  beruht  auf  leitfadengest\u00FCtzten  Interviews  mit  L\u00F6sungsentwicklern.  Gezeigt  wird  ein  ambivalentes  Verst\u00E4ndnis  von  Arbeit:  Auf  der  einen  Seite  dominiert  die  Wahrnehmung  menschlicher  Arbeitskr\u00E4fte  als  potenzielle  Fehlerquellen  und  die  Fokussierung  auf  die  Optimierung  einzelner  Arbeitspl\u00E4tze und ihrer Ergonomie, w\u00E4hrend \u00FCbergreifende Fragen der Arbeitsgestaltung  und  Arbeitsorganisation  ausgeblendet  werden.  Auf  der  anderen  Seite  werden  die  Potenziale  und  Gefahren  der  Wearable-Technologien  im  Hin-blick  auf  Individualisierung,  Datenschutz  und  Kontrolle  differenziert  gesehen  und diskutiert."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -226,6 +388,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/66"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Taubblinde  Menschen  leben  aufgrund  ihrer  Seh-  und  H\u00F6reinschr\u00E4nkung h\u00E4ufig sehr isoliert. Eine der Kommunikationsformen, mit denen sie sich ihrer Au\u00DFenwelt mitteilen k\u00F6nnen, ist das Lorm-Alphabet. Mit Tast- und Streichbewegungen  schreibt  man  seiner  Gespr\u00E4chspartnerin  oder  seinem  Gespr\u00E4chspartner  Nachrichten in die Handfl\u00E4che. Ein Gespr\u00E4ch ist nur mit Menschen m\u00F6glich, die das Lorm-Alphabet beherrschen und die nah genug sind, um einander anfassen zu k\u00F6nnen. Die ohnehin schon schwierige Kommunikation mit der Au\u00DFenwelt wird dadurch also noch erschwert.  Am Design Research Lab (Universit\u00E4t der K\u00FCnste Berlin) werden in enger Zusammenarbeit  mit  Betroffenen  technische  L\u00F6sungsm\u00F6glichkeiten  erforscht  und  entwickelt.  Zwei der hierbei entstandenen Projekte widmen sich der Digitalisierung des Lorm-Alphabets, einer g\u00E4ngigen Kommunikationsform f\u00FCr Taubblinde.  Der Lorm Glove kann das Lorm-Alphabet in digitalen Text \u00FCbersetzen und umgekehrt. Mittels kleiner Sensoren kann der gelormte Text beispielsweise per SMS und E-Mail verschickt  oder  als  Sprachnachricht  ausgegeben  werden.  Eingehende  Nachrichten  werden  vom  Handschuh  mittels  kleiner  Motoren  als  Vibrationen  wiedergegeben.  Taubblinde  k\u00F6nnen  dadurch  mit  anderen  Menschen  kommunizieren,  selbst  wenn  diese sich ganz woanders befinden.  Erg\u00E4nzend zu diesem tragbaren, textilen Interaktions-Apparat (\u201EWearable\u201C) wird au\u00DFerdem ein station\u00E4res Ger\u00E4t entwickelt: Mithilfe der sogenannten Lorm Hand, einem haptischen Interface, k\u00F6nnen Nachrichten automatisch in den sozialen Netzwerken Twitter  und  Facebook  gepostet  werden.  \u00DCber  einen  Monitor  haben  Sehende  zudem  die M\u00F6glichkeit, das Lorm-Alphabet auf der \u201ELorm Hand\u201C auszuprobieren und zu erlernen. Beide  basieren  auf  einem  Interaktionsprinzip  taktiler  Ein-  und  Ausgabem\u00F6glichkeiten  mit  der  Hand  als  Schnittstelle  und  entstanden  in  einem  iterativ-partizipativen  Prozess  gemeinsam  mit  prim\u00E4r  und  sekund\u00E4r  Betroffenen,  also  taubblinden  Menschen und deren Betreuer/innen oder Angeh\u00F6rigen."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -244,6 +423,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/66"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Taubblinde  Menschen  leben  aufgrund  ihrer  Seh-  und  H\u00F6reinschr\u00E4nkung h\u00E4ufig sehr isoliert. Eine der Kommunikationsformen, mit denen sie sich ihrer Au\u00DFenwelt mitteilen k\u00F6nnen, ist das Lorm-Alphabet. Mit Tast- und Streichbewegungen  schreibt  man  seiner  Gespr\u00E4chspartnerin  oder  seinem  Gespr\u00E4chspartner  Nachrichten in die Handfl\u00E4che. Ein Gespr\u00E4ch ist nur mit Menschen m\u00F6glich, die das Lorm-Alphabet beherrschen und die nah genug sind, um einander anfassen zu k\u00F6nnen. Die ohnehin schon schwierige Kommunikation mit der Au\u00DFenwelt wird dadurch also noch erschwert.  Am Design Research Lab (Universit\u00E4t der K\u00FCnste Berlin) werden in enger Zusammenarbeit  mit  Betroffenen  technische  L\u00F6sungsm\u00F6glichkeiten  erforscht  und  entwickelt.  Zwei der hierbei entstandenen Projekte widmen sich der Digitalisierung des Lorm-Alphabets, einer g\u00E4ngigen Kommunikationsform f\u00FCr Taubblinde.  Der Lorm Glove kann das Lorm-Alphabet in digitalen Text \u00FCbersetzen und umgekehrt. Mittels kleiner Sensoren kann der gelormte Text beispielsweise per SMS und E-Mail verschickt  oder  als  Sprachnachricht  ausgegeben  werden.  Eingehende  Nachrichten  werden  vom  Handschuh  mittels  kleiner  Motoren  als  Vibrationen  wiedergegeben.  Taubblinde  k\u00F6nnen  dadurch  mit  anderen  Menschen  kommunizieren,  selbst  wenn  diese sich ganz woanders befinden.  Erg\u00E4nzend zu diesem tragbaren, textilen Interaktions-Apparat (\u201EWearable\u201C) wird au\u00DFerdem ein station\u00E4res Ger\u00E4t entwickelt: Mithilfe der sogenannten Lorm Hand, einem haptischen Interface, k\u00F6nnen Nachrichten automatisch in den sozialen Netzwerken Twitter  und  Facebook  gepostet  werden.  \u00DCber  einen  Monitor  haben  Sehende  zudem  die M\u00F6glichkeit, das Lorm-Alphabet auf der \u201ELorm Hand\u201C auszuprobieren und zu erlernen. Beide  basieren  auf  einem  Interaktionsprinzip  taktiler  Ein-  und  Ausgabem\u00F6glichkeiten  mit  der  Hand  als  Schnittstelle  und  entstanden  in  einem  iterativ-partizipativen  Prozess  gemeinsam  mit  prim\u00E4r  und  sekund\u00E4r  Betroffenen,  also  taubblinden  Menschen und deren Betreuer/innen oder Angeh\u00F6rigen."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -262,6 +458,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/66"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Taubblinde  Menschen  leben  aufgrund  ihrer  Seh-  und  H\u00F6reinschr\u00E4nkung h\u00E4ufig sehr isoliert. Eine der Kommunikationsformen, mit denen sie sich ihrer Au\u00DFenwelt mitteilen k\u00F6nnen, ist das Lorm-Alphabet. Mit Tast- und Streichbewegungen  schreibt  man  seiner  Gespr\u00E4chspartnerin  oder  seinem  Gespr\u00E4chspartner  Nachrichten in die Handfl\u00E4che. Ein Gespr\u00E4ch ist nur mit Menschen m\u00F6glich, die das Lorm-Alphabet beherrschen und die nah genug sind, um einander anfassen zu k\u00F6nnen. Die ohnehin schon schwierige Kommunikation mit der Au\u00DFenwelt wird dadurch also noch erschwert.  Am Design Research Lab (Universit\u00E4t der K\u00FCnste Berlin) werden in enger Zusammenarbeit  mit  Betroffenen  technische  L\u00F6sungsm\u00F6glichkeiten  erforscht  und  entwickelt.  Zwei der hierbei entstandenen Projekte widmen sich der Digitalisierung des Lorm-Alphabets, einer g\u00E4ngigen Kommunikationsform f\u00FCr Taubblinde.  Der Lorm Glove kann das Lorm-Alphabet in digitalen Text \u00FCbersetzen und umgekehrt. Mittels kleiner Sensoren kann der gelormte Text beispielsweise per SMS und E-Mail verschickt  oder  als  Sprachnachricht  ausgegeben  werden.  Eingehende  Nachrichten  werden  vom  Handschuh  mittels  kleiner  Motoren  als  Vibrationen  wiedergegeben.  Taubblinde  k\u00F6nnen  dadurch  mit  anderen  Menschen  kommunizieren,  selbst  wenn  diese sich ganz woanders befinden.  Erg\u00E4nzend zu diesem tragbaren, textilen Interaktions-Apparat (\u201EWearable\u201C) wird au\u00DFerdem ein station\u00E4res Ger\u00E4t entwickelt: Mithilfe der sogenannten Lorm Hand, einem haptischen Interface, k\u00F6nnen Nachrichten automatisch in den sozialen Netzwerken Twitter  und  Facebook  gepostet  werden.  \u00DCber  einen  Monitor  haben  Sehende  zudem  die M\u00F6glichkeit, das Lorm-Alphabet auf der \u201ELorm Hand\u201C auszuprobieren und zu erlernen. Beide  basieren  auf  einem  Interaktionsprinzip  taktiler  Ein-  und  Ausgabem\u00F6glichkeiten  mit  der  Hand  als  Schnittstelle  und  entstanden  in  einem  iterativ-partizipativen  Prozess  gemeinsam  mit  prim\u00E4r  und  sekund\u00E4r  Betroffenen,  also  taubblinden  Menschen und deren Betreuer/innen oder Angeh\u00F6rigen."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -280,6 +493,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/66"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Taubblinde  Menschen  leben  aufgrund  ihrer  Seh-  und  H\u00F6reinschr\u00E4nkung h\u00E4ufig sehr isoliert. Eine der Kommunikationsformen, mit denen sie sich ihrer Au\u00DFenwelt mitteilen k\u00F6nnen, ist das Lorm-Alphabet. Mit Tast- und Streichbewegungen  schreibt  man  seiner  Gespr\u00E4chspartnerin  oder  seinem  Gespr\u00E4chspartner  Nachrichten in die Handfl\u00E4che. Ein Gespr\u00E4ch ist nur mit Menschen m\u00F6glich, die das Lorm-Alphabet beherrschen und die nah genug sind, um einander anfassen zu k\u00F6nnen. Die ohnehin schon schwierige Kommunikation mit der Au\u00DFenwelt wird dadurch also noch erschwert.  Am Design Research Lab (Universit\u00E4t der K\u00FCnste Berlin) werden in enger Zusammenarbeit  mit  Betroffenen  technische  L\u00F6sungsm\u00F6glichkeiten  erforscht  und  entwickelt.  Zwei der hierbei entstandenen Projekte widmen sich der Digitalisierung des Lorm-Alphabets, einer g\u00E4ngigen Kommunikationsform f\u00FCr Taubblinde.  Der Lorm Glove kann das Lorm-Alphabet in digitalen Text \u00FCbersetzen und umgekehrt. Mittels kleiner Sensoren kann der gelormte Text beispielsweise per SMS und E-Mail verschickt  oder  als  Sprachnachricht  ausgegeben  werden.  Eingehende  Nachrichten  werden  vom  Handschuh  mittels  kleiner  Motoren  als  Vibrationen  wiedergegeben.  Taubblinde  k\u00F6nnen  dadurch  mit  anderen  Menschen  kommunizieren,  selbst  wenn  diese sich ganz woanders befinden.  Erg\u00E4nzend zu diesem tragbaren, textilen Interaktions-Apparat (\u201EWearable\u201C) wird au\u00DFerdem ein station\u00E4res Ger\u00E4t entwickelt: Mithilfe der sogenannten Lorm Hand, einem haptischen Interface, k\u00F6nnen Nachrichten automatisch in den sozialen Netzwerken Twitter  und  Facebook  gepostet  werden.  \u00DCber  einen  Monitor  haben  Sehende  zudem  die M\u00F6glichkeit, das Lorm-Alphabet auf der \u201ELorm Hand\u201C auszuprobieren und zu erlernen. Beide  basieren  auf  einem  Interaktionsprinzip  taktiler  Ein-  und  Ausgabem\u00F6glichkeiten  mit  der  Hand  als  Schnittstelle  und  entstanden  in  einem  iterativ-partizipativen  Prozess  gemeinsam  mit  prim\u00E4r  und  sekund\u00E4r  Betroffenen,  also  taubblinden  Menschen und deren Betreuer/innen oder Angeh\u00F6rigen."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -298,6 +528,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung und transnationale Öffentlichkeit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/81"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The  European  Commission  has  recently  sought  to  substantially  revise  how  it  regulates  the telecommunication  industry, with  a  key  goal  being  to incentivise  investment  in  high-speed broadband  networks. Ambitious  goals to  incentivise  investment  in  high-speed  broadband networks have been set across the European Union, initially in the \u2018Digital Agenda for Europe\u2019 and more recently in its \u2018Gigabit strategy\u2019. These goals reflect the view of many that there are widespread  and  significant  socio-economic  benefits associated  withbroadband. Our  analysis explores  the  consequenceof  target  setting  at  a  European  level,  in  terms  of  encouraging investment and picking which technology should be adopted within the context of technological neutrality. We  demonstrate  that  while  public  policy  targets might  implicitly favour  specific technologies, especially when gigabit targets are defined, the technological choices that occur within individual Member Statesare shaped by the complex and dynamic interaction between a  series  of  path  dependencies that  may  vary  significantly  across  as  well  as  within  Member States. Adopting an ecosystem perspective, we propose a conceptual framework that identifies the key factors associated with technological neutrality and informs a rational decision-making process."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -316,6 +563,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung und transnationale Öffentlichkeit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/81"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The  European  Commission  has  recently  sought  to  substantially  revise  how  it  regulates  the telecommunication  industry, with  a  key  goal  being  to incentivise  investment  in  high-speed broadband  networks. Ambitious  goals to  incentivise  investment  in  high-speed  broadband networks have been set across the European Union, initially in the \u2018Digital Agenda for Europe\u2019 and more recently in its \u2018Gigabit strategy\u2019. These goals reflect the view of many that there are widespread  and  significant  socio-economic  benefits associated  withbroadband. Our  analysis explores  the  consequenceof  target  setting  at  a  European  level,  in  terms  of  encouraging investment and picking which technology should be adopted within the context of technological neutrality. We  demonstrate  that  while  public  policy  targets might  implicitly favour  specific technologies, especially when gigabit targets are defined, the technological choices that occur within individual Member Statesare shaped by the complex and dynamic interaction between a  series  of  path  dependencies that  may  vary  significantly  across  as  well  as  within  Member States. Adopting an ecosystem perspective, we propose a conceptual framework that identifies the key factors associated with technological neutrality and informs a rational decision-making process."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -334,6 +598,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung und transnationale Öffentlichkeit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/81"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The  European  Commission  has  recently  sought  to  substantially  revise  how  it  regulates  the telecommunication  industry, with  a  key  goal  being  to incentivise  investment  in  high-speed broadband  networks. Ambitious  goals to  incentivise  investment  in  high-speed  broadband networks have been set across the European Union, initially in the \u2018Digital Agenda for Europe\u2019 and more recently in its \u2018Gigabit strategy\u2019. These goals reflect the view of many that there are widespread  and  significant  socio-economic  benefits associated  withbroadband. Our  analysis explores  the  consequenceof  target  setting  at  a  European  level,  in  terms  of  encouraging investment and picking which technology should be adopted within the context of technological neutrality. We  demonstrate  that  while  public  policy  targets might  implicitly favour  specific technologies, especially when gigabit targets are defined, the technological choices that occur within individual Member Statesare shaped by the complex and dynamic interaction between a  series  of  path  dependencies that  may  vary  significantly  across  as  well  as  within  Member States. Adopting an ecosystem perspective, we propose a conceptual framework that identifies the key factors associated with technological neutrality and informs a rational decision-making process."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -352,6 +633,23 @@
         "group": {
           "type": "literal",
           "value": "Vertrauen in verteilten Umgebungen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/67"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this interdisciplinary paper we discuss the intersection of organizational data culture and vocational education and training (VET). Building on a preliminary definition of data culture and an explorative analysis of data-related value propositions in the German VET market, we analyze how VET providers address organizational challenges in the wake of big data and digitization that affect many of today\u2019s organizations, regardless of their traditional industry. We argue that if organizations want to implement a data culture, their employees have to receive appropriate trainings that convey relevant skills and competencies."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -370,6 +668,23 @@
         "group": {
           "type": "literal",
           "value": "Vertrauen in verteilten Umgebungen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/67"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this interdisciplinary paper we discuss the intersection of organizational data culture and vocational education and training (VET). Building on a preliminary definition of data culture and an explorative analysis of data-related value propositions in the German VET market, we analyze how VET providers address organizational challenges in the wake of big data and digitization that affect many of today\u2019s organizations, regardless of their traditional industry. We argue that if organizations want to implement a data culture, their employees have to receive appropriate trainings that convey relevant skills and competencies."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -388,6 +703,23 @@
         "group": {
           "type": "literal",
           "value": "Vertrauen in verteilten Umgebungen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/67"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this interdisciplinary paper we discuss the intersection of organizational data culture and vocational education and training (VET). Building on a preliminary definition of data culture and an explorative analysis of data-related value propositions in the German VET market, we analyze how VET providers address organizational challenges in the wake of big data and digitization that affect many of today\u2019s organizations, regardless of their traditional industry. We argue that if organizations want to implement a data culture, their employees have to receive appropriate trainings that convey relevant skills and competencies."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -406,6 +738,23 @@
         "group": {
           "type": "literal",
           "value": "Kritikalität KI-basierter Systeme"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/68"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Unmanned and unwomaned aerial vehicles (UAV), or drones, are breaking and creating new boundaries of image-based communication. Using social network analysis and critical discourse analysis, we examine the 60 most popular question threads about drones on Zhihu, China\u2019s largest social question answering platform. We trace how controversial issues around these supposedly novel tech products are mediated, domesticated, visualized, or marginalized via digital representational technology. Supported by Zhihu\u2019s topic categorization algorithm, drone-related discussions form topic clusters. These topic clusters gain currency in the government-regulated cyberspace, where their meanings remain open to widely divergent interpretations and mediation by various agents. We find that the largest drone company DJI occupies a central and strongly interconnected position in the discussions. Drones are, moreover, represented as objects of consumption, technological advancement, national future, and uncertainty. At the same time, the sense-making process of drone-related discussions evokes emerging sets of narrative user identities with potential political effects. Users engage in digital representational technologies publicly and collectively to raise questions and represent their views on new technologies. Therefore, we argue that platforms like Zhihu are essential when studying views of the Chinese citizenry towards technological developments."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -424,6 +773,23 @@
         "group": {
           "type": "literal",
           "value": "Kritikalität KI-basierter Systeme"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/68"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Unmanned and unwomaned aerial vehicles (UAV), or drones, are breaking and creating new boundaries of image-based communication. Using social network analysis and critical discourse analysis, we examine the 60 most popular question threads about drones on Zhihu, China\u2019s largest social question answering platform. We trace how controversial issues around these supposedly novel tech products are mediated, domesticated, visualized, or marginalized via digital representational technology. Supported by Zhihu\u2019s topic categorization algorithm, drone-related discussions form topic clusters. These topic clusters gain currency in the government-regulated cyberspace, where their meanings remain open to widely divergent interpretations and mediation by various agents. We find that the largest drone company DJI occupies a central and strongly interconnected position in the discussions. Drones are, moreover, represented as objects of consumption, technological advancement, national future, and uncertainty. At the same time, the sense-making process of drone-related discussions evokes emerging sets of narrative user identities with potential political effects. Users engage in digital representational technologies publicly and collectively to raise questions and represent their views on new technologies. Therefore, we argue that platforms like Zhihu are essential when studying views of the Chinese citizenry towards technological developments."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -442,6 +808,23 @@
         "group": {
           "type": "literal",
           "value": "Sicherheit & Offenheit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/69"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "With the popularity of Small Private Online Courses (SPOCs) in higher education, a plentiful of discussion data has been increasingly generated in SPOC forums. With 752 undergraduates\u2019 discussion posts, this study aims to investigate students\u2019 engagement patterns within SPOC forums in terms of engagement behaviors and emotions. Firstly, we designed a behavioral code rule to identify posting- and content-level behaviors, and examined their association with course performance. Secondly, we built an emotion lexicon including positivity, negativity and confusion word sets, and adopted an emotion calculation approach to visualize emotional evolutionary trends and to examine emotional differences in registration types and course performance. The results show that, (1) the high-performing group was more active in the most engagement behaviors except for interactive postings. (2) The registered group delivered more threads and wrote richer vocabulary in post content. (3) Whether students were registered for a course or not did not have a significant effect on their emotional expressions, but the registered group exhibited more confusion in forum interactions at the end of the semester. (4) Positive emotion was prevailing for the entire population. Furthermore, compared with the low-achieving group, the high-performing group had higher emotion densities in three types of emotions."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -460,6 +843,23 @@
         "group": {
           "type": "literal",
           "value": "Sicherheit & Offenheit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/69"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "With the popularity of Small Private Online Courses (SPOCs) in higher education, a plentiful of discussion data has been increasingly generated in SPOC forums. With 752 undergraduates\u2019 discussion posts, this study aims to investigate students\u2019 engagement patterns within SPOC forums in terms of engagement behaviors and emotions. Firstly, we designed a behavioral code rule to identify posting- and content-level behaviors, and examined their association with course performance. Secondly, we built an emotion lexicon including positivity, negativity and confusion word sets, and adopted an emotion calculation approach to visualize emotional evolutionary trends and to examine emotional differences in registration types and course performance. The results show that, (1) the high-performing group was more active in the most engagement behaviors except for interactive postings. (2) The registered group delivered more threads and wrote richer vocabulary in post content. (3) Whether students were registered for a course or not did not have a significant effect on their emotional expressions, but the registered group exhibited more confusion in forum interactions at the end of the semester. (4) Positive emotion was prevailing for the entire population. Furthermore, compared with the low-achieving group, the high-performing group had higher emotion densities in three types of emotions."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -478,6 +878,23 @@
         "group": {
           "type": "literal",
           "value": "Sicherheit & Offenheit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/69"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "With the popularity of Small Private Online Courses (SPOCs) in higher education, a plentiful of discussion data has been increasingly generated in SPOC forums. With 752 undergraduates\u2019 discussion posts, this study aims to investigate students\u2019 engagement patterns within SPOC forums in terms of engagement behaviors and emotions. Firstly, we designed a behavioral code rule to identify posting- and content-level behaviors, and examined their association with course performance. Secondly, we built an emotion lexicon including positivity, negativity and confusion word sets, and adopted an emotion calculation approach to visualize emotional evolutionary trends and to examine emotional differences in registration types and course performance. The results show that, (1) the high-performing group was more active in the most engagement behaviors except for interactive postings. (2) The registered group delivered more threads and wrote richer vocabulary in post content. (3) Whether students were registered for a course or not did not have a significant effect on their emotional expressions, but the registered group exhibited more confusion in forum interactions at the end of the semester. (4) Positive emotion was prevailing for the entire population. Furthermore, compared with the low-achieving group, the high-performing group had higher emotion densities in three types of emotions."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -496,6 +913,23 @@
         "group": {
           "type": "literal",
           "value": "Sicherheit & Offenheit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/69"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "With the popularity of Small Private Online Courses (SPOCs) in higher education, a plentiful of discussion data has been increasingly generated in SPOC forums. With 752 undergraduates\u2019 discussion posts, this study aims to investigate students\u2019 engagement patterns within SPOC forums in terms of engagement behaviors and emotions. Firstly, we designed a behavioral code rule to identify posting- and content-level behaviors, and examined their association with course performance. Secondly, we built an emotion lexicon including positivity, negativity and confusion word sets, and adopted an emotion calculation approach to visualize emotional evolutionary trends and to examine emotional differences in registration types and course performance. The results show that, (1) the high-performing group was more active in the most engagement behaviors except for interactive postings. (2) The registered group delivered more threads and wrote richer vocabulary in post content. (3) Whether students were registered for a course or not did not have a significant effect on their emotional expressions, but the registered group exhibited more confusion in forum interactions at the end of the semester. (4) Positive emotion was prevailing for the entire population. Furthermore, compared with the low-achieving group, the high-performing group had higher emotion densities in three types of emotions."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -514,6 +948,23 @@
         "group": {
           "type": "literal",
           "value": "Sicherheit & Offenheit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/69"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "With the popularity of Small Private Online Courses (SPOCs) in higher education, a plentiful of discussion data has been increasingly generated in SPOC forums. With 752 undergraduates\u2019 discussion posts, this study aims to investigate students\u2019 engagement patterns within SPOC forums in terms of engagement behaviors and emotions. Firstly, we designed a behavioral code rule to identify posting- and content-level behaviors, and examined their association with course performance. Secondly, we built an emotion lexicon including positivity, negativity and confusion word sets, and adopted an emotion calculation approach to visualize emotional evolutionary trends and to examine emotional differences in registration types and course performance. The results show that, (1) the high-performing group was more active in the most engagement behaviors except for interactive postings. (2) The registered group delivered more threads and wrote richer vocabulary in post content. (3) Whether students were registered for a course or not did not have a significant effect on their emotional expressions, but the registered group exhibited more confusion in forum interactions at the end of the semester. (4) Positive emotion was prevailing for the entire population. Furthermore, compared with the low-achieving group, the high-performing group had higher emotion densities in three types of emotions."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -532,6 +983,23 @@
         "group": {
           "type": "literal",
           "value": "Bildung und Weiterbildung in der digitalen Gesellschaft"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/70"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This paper reports  on the practice-led  design  research  project \u201CCitizens  Connect Neighborhoods: community  development  harnesses  digital  transformation\u201D  (2016-2018),  located  at  the  intersection  of  participatory  design,  technology  development and  their  political and  social  implications. The  paper  aims  at situating  the  project\u2019s processes  and  outcomes  in  the  context  of a currently  renewed  discourse  on  the potential  of  practice-based and  transdisciplinary  research  for  shaping  new  social practices and civic technologies that affect democratic developments in our everyday lives  (Manzini  2014). The  focus  was  on  questions  about  who  gets  to  shape  and  to take  part  in  the digitalization  of  societal, political  and  cultural  processes,  and  who determines  the  way  we  communicate  or  have  access  to  information. The  living labs/citizens\u2019 workshops became  the  focal  point,  by  which  a  series  of  intensive co-design workshops with initiatives of the civil society were conducted, as well as group discussions,   informal   and   half   structured   interviews,   meetings   with   different stakeholders  and  public  presentations.  These transdisciplinary  processes  engaged us critically in the urgent question of design\u2019s agency within practices of collaboration and co-creation and provided us with a productive framework for the queries into the interdependence of digitalization, political participation and social cohesion, on which this paper reports."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -550,6 +1018,23 @@
         "group": {
           "type": "literal",
           "value": "Bildung und Weiterbildung in der digitalen Gesellschaft"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/70"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This paper reports  on the practice-led  design  research  project \u201CCitizens  Connect Neighborhoods: community  development  harnesses  digital  transformation\u201D  (2016-2018),  located  at  the  intersection  of  participatory  design,  technology  development and  their  political and  social  implications. The  paper  aims  at situating  the  project\u2019s processes  and  outcomes  in  the  context  of a currently  renewed  discourse  on  the potential  of  practice-based and  transdisciplinary  research  for  shaping  new  social practices and civic technologies that affect democratic developments in our everyday lives  (Manzini  2014). The  focus  was  on  questions  about  who  gets  to  shape  and  to take  part  in  the digitalization  of  societal, political  and  cultural  processes,  and  who determines  the  way  we  communicate  or  have  access  to  information. The  living labs/citizens\u2019 workshops became  the  focal  point,  by  which  a  series  of  intensive co-design workshops with initiatives of the civil society were conducted, as well as group discussions,   informal   and   half   structured   interviews,   meetings   with   different stakeholders  and  public  presentations.  These transdisciplinary  processes  engaged us critically in the urgent question of design\u2019s agency within practices of collaboration and co-creation and provided us with a productive framework for the queries into the interdependence of digitalization, political participation and social cohesion, on which this paper reports."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -568,6 +1053,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung der Wissenschaft"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/83"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Smartphones have become central devices of daily use in our society and constitute an important part of IS research. An emergent group of smartphone users are children who grow up facing the ubiquity of such devices. Yet, little is understood concerning the antecedents and consequences of their smartphone use. This systematic literature review identifies 30 papers that empirically analyze the causes and effects leading to or resulting from smartphone usage of this vulnerable group to assess the current state of research. Parenting style is key in explaining causes for smartphone use of children. In terms of consequences, negative effects seem to outweigh the benefits. Especially sleep quality, quantity and cognitive abilities are negatively affected. Our paper identifies opportunities for further research and provides advice on proactive approaches to ensure responsible interaction of children with smartphones."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -586,6 +1088,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/83"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Smartphones have become central devices of daily use in our society and constitute an important part of IS research. An emergent group of smartphone users are children who grow up facing the ubiquity of such devices. Yet, little is understood concerning the antecedents and consequences of their smartphone use. This systematic literature review identifies 30 papers that empirically analyze the causes and effects leading to or resulting from smartphone usage of this vulnerable group to assess the current state of research. Parenting style is key in explaining causes for smartphone use of children. In terms of consequences, negative effects seem to outweigh the benefits. Especially sleep quality, quantity and cognitive abilities are negatively affected. Our paper identifies opportunities for further research and provides advice on proactive approaches to ensure responsible interaction of children with smartphones."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -604,6 +1123,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/83"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Smartphones have become central devices of daily use in our society and constitute an important part of IS research. An emergent group of smartphone users are children who grow up facing the ubiquity of such devices. Yet, little is understood concerning the antecedents and consequences of their smartphone use. This systematic literature review identifies 30 papers that empirically analyze the causes and effects leading to or resulting from smartphone usage of this vulnerable group to assess the current state of research. Parenting style is key in explaining causes for smartphone use of children. In terms of consequences, negative effects seem to outweigh the benefits. Especially sleep quality, quantity and cognitive abilities are negatively affected. Our paper identifies opportunities for further research and provides advice on proactive approaches to ensure responsible interaction of children with smartphones."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -622,6 +1158,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/83"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Smartphones have become central devices of daily use in our society and constitute an important part of IS research. An emergent group of smartphone users are children who grow up facing the ubiquity of such devices. Yet, little is understood concerning the antecedents and consequences of their smartphone use. This systematic literature review identifies 30 papers that empirically analyze the causes and effects leading to or resulting from smartphone usage of this vulnerable group to assess the current state of research. Parenting style is key in explaining causes for smartphone use of children. In terms of consequences, negative effects seem to outweigh the benefits. Especially sleep quality, quantity and cognitive abilities are negatively affected. Our paper identifies opportunities for further research and provides advice on proactive approaches to ensure responsible interaction of children with smartphones."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -640,6 +1193,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/83"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Smartphones have become central devices of daily use in our society and constitute an important part of IS research. An emergent group of smartphone users are children who grow up facing the ubiquity of such devices. Yet, little is understood concerning the antecedents and consequences of their smartphone use. This systematic literature review identifies 30 papers that empirically analyze the causes and effects leading to or resulting from smartphone usage of this vulnerable group to assess the current state of research. Parenting style is key in explaining causes for smartphone use of children. In terms of consequences, negative effects seem to outweigh the benefits. Especially sleep quality, quantity and cognitive abilities are negatively affected. Our paper identifies opportunities for further research and provides advice on proactive approaches to ensure responsible interaction of children with smartphones."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -658,6 +1228,23 @@
         "group": {
           "type": "literal",
           "value": "Datenbasierte Geschäftsmodellinnovationen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/84"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Following recent call for papers, our paper contributes to the agenda of inclusive development as it showcases how technology can be used to foster the integration of those in need. In particular, due to the distinct role of ICT in the current refugee situation in Europe where it contributes to the social inclusion of refugees. Based on a thorough literature review, we conducted a comprehensive research with qualitative and quantitative studies to investigate the role of online communication on the social inclusion of Syrian refugees in Germany. In particular, we investigate the relation between the intensity of Internet use and the sense of social connectedness of refugees, as well as the impact of social connectedness on refugee social inclusion. Analyzing ten interviews, we derive new insights about social inclusion of Syrian refugees in Germany. We use these insights to construct our hypotheses that are validated through 135 participations in our questionnaire. Our hypotheses capture the relation in Internet use and social connectedness, social connectedness with family and friends, and social connectedness with locals. We believe that our findings could contribute to a successful social inclusion process."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -676,6 +1263,23 @@
         "group": {
           "type": "literal",
           "value": "Datenbasierte Geschäftsmodellinnovationen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/84"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Following recent call for papers, our paper contributes to the agenda of inclusive development as it showcases how technology can be used to foster the integration of those in need. In particular, due to the distinct role of ICT in the current refugee situation in Europe where it contributes to the social inclusion of refugees. Based on a thorough literature review, we conducted a comprehensive research with qualitative and quantitative studies to investigate the role of online communication on the social inclusion of Syrian refugees in Germany. In particular, we investigate the relation between the intensity of Internet use and the sense of social connectedness of refugees, as well as the impact of social connectedness on refugee social inclusion. Analyzing ten interviews, we derive new insights about social inclusion of Syrian refugees in Germany. We use these insights to construct our hypotheses that are validated through 135 participations in our questionnaire. Our hypotheses capture the relation in Internet use and social connectedness, social connectedness with family and friends, and social connectedness with locals. We believe that our findings could contribute to a successful social inclusion process."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -694,6 +1298,23 @@
         "group": {
           "type": "literal",
           "value": "Datenbasierte Geschäftsmodellinnovationen"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/84"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Following recent call for papers, our paper contributes to the agenda of inclusive development as it showcases how technology can be used to foster the integration of those in need. In particular, due to the distinct role of ICT in the current refugee situation in Europe where it contributes to the social inclusion of refugees. Based on a thorough literature review, we conducted a comprehensive research with qualitative and quantitative studies to investigate the role of online communication on the social inclusion of Syrian refugees in Germany. In particular, we investigate the relation between the intensity of Internet use and the sense of social connectedness of refugees, as well as the impact of social connectedness on refugee social inclusion. Analyzing ten interviews, we derive new insights about social inclusion of Syrian refugees in Germany. We use these insights to construct our hypotheses that are validated through 135 participations in our questionnaire. Our hypotheses capture the relation in Internet use and social connectedness, social connectedness with family and friends, and social connectedness with locals. We believe that our findings could contribute to a successful social inclusion process."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -712,6 +1333,23 @@
         "group": {
           "type": "literal",
           "value": "Demokratie und Digitalisierung"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/63"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this paper, we present our ideas on how to best support researchers in every phase of the research process when dealing with their research data. We propose a Research Data Portal as the central data infrastructure. With the help of this portal, a researcher can easily manage and update his or her research data, share it with collaborators, and reach out to the public. We further propose a Citizen Science Portal, which includes some new and innovative concepts and methods. In this portal, Citizen Science and Auto Science concepts are applied, and support to bring together the best of both worlds is provided. Citizen Science promises to entail the individual (scientists and hobby scientists) to help with research. Auto Science is meant to help analyze research data, e.g., to help publish the data and to help improve its quality, by applying methods from artificial intelligence."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -730,6 +1368,23 @@
         "group": {
           "type": "literal",
           "value": "Demokratie und Digitalisierung"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/63"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this paper, we present our ideas on how to best support researchers in every phase of the research process when dealing with their research data. We propose a Research Data Portal as the central data infrastructure. With the help of this portal, a researcher can easily manage and update his or her research data, share it with collaborators, and reach out to the public. We further propose a Citizen Science Portal, which includes some new and innovative concepts and methods. In this portal, Citizen Science and Auto Science concepts are applied, and support to bring together the best of both worlds is provided. Citizen Science promises to entail the individual (scientists and hobby scientists) to help with research. Auto Science is meant to help analyze research data, e.g., to help publish the data and to help improve its quality, by applying methods from artificial intelligence."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -748,6 +1403,23 @@
         "group": {
           "type": "literal",
           "value": "Demokratie und Digitalisierung"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/63"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this paper, we present our ideas on how to best support researchers in every phase of the research process when dealing with their research data. We propose a Research Data Portal as the central data infrastructure. With the help of this portal, a researcher can easily manage and update his or her research data, share it with collaborators, and reach out to the public. We further propose a Citizen Science Portal, which includes some new and innovative concepts and methods. In this portal, Citizen Science and Auto Science concepts are applied, and support to bring together the best of both worlds is provided. Citizen Science promises to entail the individual (scientists and hobby scientists) to help with research. Auto Science is meant to help analyze research data, e.g., to help publish the data and to help improve its quality, by applying methods from artificial intelligence."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -766,6 +1438,23 @@
         "group": {
           "type": "literal",
           "value": "Demokratie und Digitalisierung"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/63"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "In this paper, we present our ideas on how to best support researchers in every phase of the research process when dealing with their research data. We propose a Research Data Portal as the central data infrastructure. With the help of this portal, a researcher can easily manage and update his or her research data, share it with collaborators, and reach out to the public. We further propose a Citizen Science Portal, which includes some new and innovative concepts and methods. In this portal, Citizen Science and Auto Science concepts are applied, and support to bring together the best of both worlds is provided. Citizen Science promises to entail the individual (scientists and hobby scientists) to help with research. Auto Science is meant to help analyze research data, e.g., to help publish the data and to help improve its quality, by applying methods from artificial intelligence."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -784,6 +1473,23 @@
         "group": {
           "type": "literal",
           "value": "Verantwortung und das Internet der Dinge"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/62"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The European Data Portal (EDP) is a central access point for metadata of Open Data published by public authorities in Europe and acquires data from more than 70 national data providers. The platform is a starting point in adopting the Linked Data specification DCAT-AP, aiming to increase interoperability and accessibility of Open Data. In this paper, we present the design of the central data management components of the platform, responsible for metadata storage, data harvesting and quality assessment. The core component is based on CKAN, which is extended by the support for native Linked Data replication to a triplestore to ensure legacy compatibility and the support for DCAT-AP. Regular data harvesting and the creation of detailed quality reports are performed by custom components adressing the requirements of DCAT-AP. The EDP is well on track to become the core platform for European Open Data and fostered the acceptance of DCAT-AP. Our platform is available here: https://www.europeandataportal.eu."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -802,6 +1508,23 @@
         "group": {
           "type": "literal",
           "value": "Verantwortung und das Internet der Dinge"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/62"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The European Data Portal (EDP) is a central access point for metadata of Open Data published by public authorities in Europe and acquires data from more than 70 national data providers. The platform is a starting point in adopting the Linked Data specification DCAT-AP, aiming to increase interoperability and accessibility of Open Data. In this paper, we present the design of the central data management components of the platform, responsible for metadata storage, data harvesting and quality assessment. The core component is based on CKAN, which is extended by the support for native Linked Data replication to a triplestore to ensure legacy compatibility and the support for DCAT-AP. Regular data harvesting and the creation of detailed quality reports are performed by custom components adressing the requirements of DCAT-AP. The EDP is well on track to become the core platform for European Open Data and fostered the acceptance of DCAT-AP. Our platform is available here: https://www.europeandataportal.eu."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -820,6 +1543,23 @@
         "group": {
           "type": "literal",
           "value": "Verantwortung und das Internet der Dinge"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/62"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The European Data Portal (EDP) is a central access point for metadata of Open Data published by public authorities in Europe and acquires data from more than 70 national data providers. The platform is a starting point in adopting the Linked Data specification DCAT-AP, aiming to increase interoperability and accessibility of Open Data. In this paper, we present the design of the central data management components of the platform, responsible for metadata storage, data harvesting and quality assessment. The core component is based on CKAN, which is extended by the support for native Linked Data replication to a triplestore to ensure legacy compatibility and the support for DCAT-AP. Regular data harvesting and the creation of detailed quality reports are performed by custom components adressing the requirements of DCAT-AP. The EDP is well on track to become the core platform for European Open Data and fostered the acceptance of DCAT-AP. Our platform is available here: https://www.europeandataportal.eu."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -838,6 +1578,23 @@
         "group": {
           "type": "literal",
           "value": "Verantwortung und das Internet der Dinge"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/62"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The European Data Portal (EDP) is a central access point for metadata of Open Data published by public authorities in Europe and acquires data from more than 70 national data providers. The platform is a starting point in adopting the Linked Data specification DCAT-AP, aiming to increase interoperability and accessibility of Open Data. In this paper, we present the design of the central data management components of the platform, responsible for metadata storage, data harvesting and quality assessment. The core component is based on CKAN, which is extended by the support for native Linked Data replication to a triplestore to ensure legacy compatibility and the support for DCAT-AP. Regular data harvesting and the creation of detailed quality reports are performed by custom components adressing the requirements of DCAT-AP. The EDP is well on track to become the core platform for European Open Data and fostered the acceptance of DCAT-AP. Our platform is available here: https://www.europeandataportal.eu."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -856,6 +1613,23 @@
         "group": {
           "type": "literal",
           "value": "Verantwortung und das Internet der Dinge"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/62"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The European Data Portal (EDP) is a central access point for metadata of Open Data published by public authorities in Europe and acquires data from more than 70 national data providers. The platform is a starting point in adopting the Linked Data specification DCAT-AP, aiming to increase interoperability and accessibility of Open Data. In this paper, we present the design of the central data management components of the platform, responsible for metadata storage, data harvesting and quality assessment. The core component is based on CKAN, which is extended by the support for native Linked Data replication to a triplestore to ensure legacy compatibility and the support for DCAT-AP. Regular data harvesting and the creation of detailed quality reports are performed by custom components adressing the requirements of DCAT-AP. The EDP is well on track to become the core platform for European Open Data and fostered the acceptance of DCAT-AP. Our platform is available here: https://www.europeandataportal.eu."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -874,6 +1648,23 @@
         "group": {
           "type": "literal",
           "value": "Verantwortung und das Internet der Dinge"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/62"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The European Data Portal (EDP) is a central access point for metadata of Open Data published by public authorities in Europe and acquires data from more than 70 national data providers. The platform is a starting point in adopting the Linked Data specification DCAT-AP, aiming to increase interoperability and accessibility of Open Data. In this paper, we present the design of the central data management components of the platform, responsible for metadata storage, data harvesting and quality assessment. The core component is based on CKAN, which is extended by the support for native Linked Data replication to a triplestore to ensure legacy compatibility and the support for DCAT-AP. Regular data harvesting and the creation of detailed quality reports are performed by custom components adressing the requirements of DCAT-AP. The EDP is well on track to become the core platform for European Open Data and fostered the acceptance of DCAT-AP. Our platform is available here: https://www.europeandataportal.eu."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -892,6 +1683,23 @@
         "group": {
           "type": "literal",
           "value": "Autonome Systeme & Selbstbestimmung"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/61"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Recently, a larger public has started to critically discuss scientific knowledge and its role in political decision making. In this discussion, scientific and civic epistemologies are put into connection with each other. Just as post-democratic theory argues in relation to political decisions, the production of scientific knowledge is criticized as a non-inclusive process, too. The Citizen Science movement tries to resolve this deficit by involving citizens into research. In this paper, we introduce agency as an analytical category into the discussion, focussing on how participants are represented in Citizen Science. We highlight the interdependencies between the degree of agency granted to the participants in Citizen Science projects and the degree of their representation in knowledge production."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -910,6 +1718,23 @@
         "group": {
           "type": "literal",
           "value": "Autonome Systeme & Selbstbestimmung"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/61"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "Recently, a larger public has started to critically discuss scientific knowledge and its role in political decision making. In this discussion, scientific and civic epistemologies are put into connection with each other. Just as post-democratic theory argues in relation to political decisions, the production of scientific knowledge is criticized as a non-inclusive process, too. The Citizen Science movement tries to resolve this deficit by involving citizens into research. In this paper, we introduce agency as an analytical category into the discussion, focussing on how participants are represented in Citizen Science. We highlight the interdependencies between the degree of agency granted to the participants in Citizen Science projects and the degree of their representation in knowledge production."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -928,6 +1753,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung & Nachhaltigkeit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/71"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Although measuring democratic deliberation is necessary for a valid measurement of the performance of democracies, it poses serious theoretical and methodological challenges. The most serious problem in the context of research on democratic performance is the need for a theoretical and methodological approach for \u201Cupscaling\u201D the measurement of deliberation from the micro and meso level to the macro level. The systemic approach offers a useful framework for this purpose. Building on this framework, this article offers a modular approach consisting of four parameters for conceptualization, measurement, and aggregation which can be adjusted to make the measurement of democratic deliberation compatible with the various general measurement approaches adopted by different scholars."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -946,6 +1788,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung & Nachhaltigkeit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/71"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Although measuring democratic deliberation is necessary for a valid measurement of the performance of democracies, it poses serious theoretical and methodological challenges. The most serious problem in the context of research on democratic performance is the need for a theoretical and methodological approach for \u201Cupscaling\u201D the measurement of deliberation from the micro and meso level to the macro level. The systemic approach offers a useful framework for this purpose. Building on this framework, this article offers a modular approach consisting of four parameters for conceptualization, measurement, and aggregation which can be adjusted to make the measurement of democratic deliberation compatible with the various general measurement approaches adopted by different scholars."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -964,6 +1823,23 @@
         "group": {
           "type": "literal",
           "value": "Digitalisierung & Nachhaltigkeit"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/71"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Although measuring democratic deliberation is necessary for a valid measurement of the performance of democracies, it poses serious theoretical and methodological challenges. The most serious problem in the context of research on democratic performance is the need for a theoretical and methodological approach for \u201Cupscaling\u201D the measurement of deliberation from the micro and meso level to the macro level. The systemic approach offers a useful framework for this purpose. Building on this framework, this article offers a modular approach consisting of four parameters for conceptualization, measurement, and aggregation which can be adjusted to make the measurement of democratic deliberation compatible with the various general measurement approaches adopted by different scholars."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -987,7 +1863,7 @@
       {
         "title": {
           "type": "literal",
-          "value": "Digital CitizenshipRevisited: The Impact of ICTs on Citizens Political Communication Beyond the Western State"
+          "value": "Digital Citizenship Revisited: The Impact of ICTs on Citizens Political Communication Beyond the Western State"
         },
         "author": {
           "type": "literal",
@@ -1000,12 +1876,29 @@
         "group": {
           "type": "literal",
           "value": "Digitale Technologien und Wohlbefinden"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/72"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The role of ICTs in political participation has been a core topic in political communication research for about two decades. Numerous studies have tested whether the enthusiasm about the mobilizing impact of ICTs holds true. Most have been conducted in Western countries and, therefore, reflect a Western-centric understanding of politics and participation. Although these studies have provided insight into the potential of ICTs for established democracies, political and cultural contexts from developing world regions such as sub-Saharan Africa (SSA) have thus far been neglected. However, given the rapid dissemination of ICTs (e.g., mobile phones) and their innovative application in everyday life in developing countries, regions like SSA should be of particular interest for research in this field. This article aims to highlight the shortcomings of Western research and to recommend adjustments in future efforts to investigate effects of ICTs, including developing world regions, in order to develop a more robust empirical grounding for theories of participation."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
         "title": {
           "type": "literal",
-          "value": "Digital CitizenshipRevisited: The Impact of ICTs on Citizens Political Communication Beyond the Western State"
+          "value": "Digital Citizenship Revisited: The Impact of ICTs on Citizens Political Communication Beyond the Western State"
         },
         "author": {
           "type": "literal",
@@ -1018,6 +1911,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Technologien und Wohlbefinden"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/72"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "The role of ICTs in political participation has been a core topic in political communication research for about two decades. Numerous studies have tested whether the enthusiasm about the mobilizing impact of ICTs holds true. Most have been conducted in Western countries and, therefore, reflect a Western-centric understanding of politics and participation. Although these studies have provided insight into the potential of ICTs for established democracies, political and cultural contexts from developing world regions such as sub-Saharan Africa (SSA) have thus far been neglected. However, given the rapid dissemination of ICTs (e.g., mobile phones) and their innovative application in everyday life in developing countries, regions like SSA should be of particular interest for research in this field. This article aims to highlight the shortcomings of Western research and to recommend adjustments in future efforts to investigate effects of ICTs, including developing world regions, in order to develop a more robust empirical grounding for theories of participation."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2018"
         }
       },
       {
@@ -1036,6 +1946,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/78"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "We test the mediating effect of media use on the effects of citizenship norms \u2013 shared\r\nideas of what a good citizen is \u2013 on political participation. We do so by comparing\r\nFrance and Finland, two countries with distinct media trust levels. Results support\r\nthe notion that Internet use works as a selective catalyst of political participation, as\r\nit is enhanced merely by engaged citizenship norms but not by dutiful citizenship\r\nnorms. Within the nexus of citizenship norms, media use, and political participation, this article contributes to a better understanding of the normative premises for\r\nthe Internet use to promote political engagement within differing media contexts."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1054,6 +1981,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/78"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "We test the mediating effect of media use on the effects of citizenship norms \u2013 shared\r\nideas of what a good citizen is \u2013 on political participation. We do so by comparing\r\nFrance and Finland, two countries with distinct media trust levels. Results support\r\nthe notion that Internet use works as a selective catalyst of political participation, as\r\nit is enhanced merely by engaged citizenship norms but not by dutiful citizenship\r\nnorms. Within the nexus of citizenship norms, media use, and political participation, this article contributes to a better understanding of the normative premises for\r\nthe Internet use to promote political engagement within differing media contexts."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1072,6 +2016,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/78"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "We test the mediating effect of media use on the effects of citizenship norms \u2013 shared\r\nideas of what a good citizen is \u2013 on political participation. We do so by comparing\r\nFrance and Finland, two countries with distinct media trust levels. Results support\r\nthe notion that Internet use works as a selective catalyst of political participation, as\r\nit is enhanced merely by engaged citizenship norms but not by dutiful citizenship\r\nnorms. Within the nexus of citizenship norms, media use, and political participation, this article contributes to a better understanding of the normative premises for\r\nthe Internet use to promote political engagement within differing media contexts."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1090,6 +2051,23 @@
         "group": {
           "type": "literal",
           "value": "Reorganisation von Wissenspraktiken"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/78"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "We test the mediating effect of media use on the effects of citizenship norms \u2013 shared\r\nideas of what a good citizen is \u2013 on political participation. We do so by comparing\r\nFrance and Finland, two countries with distinct media trust levels. Results support\r\nthe notion that Internet use works as a selective catalyst of political participation, as\r\nit is enhanced merely by engaged citizenship norms but not by dutiful citizenship\r\nnorms. Within the nexus of citizenship norms, media use, and political participation, this article contributes to a better understanding of the normative premises for\r\nthe Internet use to promote political engagement within differing media contexts."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1108,6 +2086,23 @@
         "group": {
           "type": "literal",
           "value": "Ungleichheit und digitale Souveränität"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/73"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Das Thema \"Social Bots\" besch\u00E4ftigte vor der Wahl 2017 die politische \u00D6ffentlichkeit. Eine empirische Untersuchung demonstriert den Umfang des Ph\u00E4nomens bei Twitter: Bei den Followern von deutschen Parteien spielen Bots jedenfalls keine relevante Rolle."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1126,6 +2121,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/85"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Die Auseinandersetzung mit transnationaler \u00D6ffentlichkeit ist eng mit zwei Diskursen verbunden. Zum einen wird \u00FCber transnationale \u00D6ffentlichkeit im Zusammenhang mit der Globalisierung gesprochen. Globalisierungsprozesse sind durch nie zuvor gekannte Vernetzung und Verflechtung auf unterschiedlichen Ebenen und in unterschiedlichen Lebensbereichen gekennzeichnet. In diesem Zusammenhang stellt sich die Frage, wie transnationale politische Prozesse und Problemlagen jenseits und zwischen Nationalstaaten kommunikativ verarbeitet und politisch adressiert werden k\u00F6nnen. Dagegen steht die Sicht auf \u00D6ffentlichkeit als unverzichtbarer Kommunikationsraum demokratischer Prozesse im Nationalstaat.1 Die Globalisierung hat auch zu der Frage gef\u00FChrt, ob die nationalstaatlichen Modelle von \u00D6ffentlichkeit auf die transnationale Ebene \u00FCbertragbar sind und zum anderen, wie und in welcher Form Demokratie jenseits des Nationalstaates legitim und m\u00F6glich ist und als Bezugsobjekt von \u00D6ffentlichkeit wirken kann (Br\u00FCggemann/ Wessler 2014). W\u00E4hrend sich die Diskussion \u00FCber transnationale \u00D6ffentlichkeit in den 2000er Jahren stark auf Fragen von Territorialit\u00E4t und Demokratie fokussierte, sind die konkreten Prozesse und Dynamiken der \u00F6ffentlichen Kommunikation mit wenigen Ausnahmen (wie z.B. Volkmer 2014) unber\u00FCcksichtigt geblieben. Dies hat sich in den vergangenen Jahren durch den Wandel der Kommunikation ver\u00E4ndert. D. h. die Relevanz von transnationaler \u00D6ffentlichkeit stellt sich nicht mehr nur in Bezug auf die Frage, wie die demokratischen Imperative von \u00D6ffentlichkeit in einer globalen Welt erf\u00FCllt werden k\u00F6nnen. In der gegenw\u00E4rtigen Diskussion richtet sich die Perspektive vielmehr auf den zweiten Diskurs, der die Form und die Qualit\u00E4t von \u00F6ffentlicher Kommunikation jenseits des Nationalstaates in den Mittelpunkt stellt."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1144,6 +2156,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/85"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Die Auseinandersetzung mit transnationaler \u00D6ffentlichkeit ist eng mit zwei Diskursen verbunden. Zum einen wird \u00FCber transnationale \u00D6ffentlichkeit im Zusammenhang mit der Globalisierung gesprochen. Globalisierungsprozesse sind durch nie zuvor gekannte Vernetzung und Verflechtung auf unterschiedlichen Ebenen und in unterschiedlichen Lebensbereichen gekennzeichnet. In diesem Zusammenhang stellt sich die Frage, wie transnationale politische Prozesse und Problemlagen jenseits und zwischen Nationalstaaten kommunikativ verarbeitet und politisch adressiert werden k\u00F6nnen. Dagegen steht die Sicht auf \u00D6ffentlichkeit als unverzichtbarer Kommunikationsraum demokratischer Prozesse im Nationalstaat.1 Die Globalisierung hat auch zu der Frage gef\u00FChrt, ob die nationalstaatlichen Modelle von \u00D6ffentlichkeit auf die transnationale Ebene \u00FCbertragbar sind und zum anderen, wie und in welcher Form Demokratie jenseits des Nationalstaates legitim und m\u00F6glich ist und als Bezugsobjekt von \u00D6ffentlichkeit wirken kann (Br\u00FCggemann/ Wessler 2014). W\u00E4hrend sich die Diskussion \u00FCber transnationale \u00D6ffentlichkeit in den 2000er Jahren stark auf Fragen von Territorialit\u00E4t und Demokratie fokussierte, sind die konkreten Prozesse und Dynamiken der \u00F6ffentlichen Kommunikation mit wenigen Ausnahmen (wie z.B. Volkmer 2014) unber\u00FCcksichtigt geblieben. Dies hat sich in den vergangenen Jahren durch den Wandel der Kommunikation ver\u00E4ndert. D. h. die Relevanz von transnationaler \u00D6ffentlichkeit stellt sich nicht mehr nur in Bezug auf die Frage, wie die demokratischen Imperative von \u00D6ffentlichkeit in einer globalen Welt erf\u00FCllt werden k\u00F6nnen. In der gegenw\u00E4rtigen Diskussion richtet sich die Perspektive vielmehr auf den zweiten Diskurs, der die Form und die Qualit\u00E4t von \u00F6ffentlicher Kommunikation jenseits des Nationalstaates in den Mittelpunkt stellt."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1162,6 +2191,23 @@
         "group": {
           "type": "literal",
           "value": "Digitale Integration"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/85"
+        },
+        "language": {
+          "type": "literal",
+          "value": "de"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "de",
+          "value": "Die Auseinandersetzung mit transnationaler \u00D6ffentlichkeit ist eng mit zwei Diskursen verbunden. Zum einen wird \u00FCber transnationale \u00D6ffentlichkeit im Zusammenhang mit der Globalisierung gesprochen. Globalisierungsprozesse sind durch nie zuvor gekannte Vernetzung und Verflechtung auf unterschiedlichen Ebenen und in unterschiedlichen Lebensbereichen gekennzeichnet. In diesem Zusammenhang stellt sich die Frage, wie transnationale politische Prozesse und Problemlagen jenseits und zwischen Nationalstaaten kommunikativ verarbeitet und politisch adressiert werden k\u00F6nnen. Dagegen steht die Sicht auf \u00D6ffentlichkeit als unverzichtbarer Kommunikationsraum demokratischer Prozesse im Nationalstaat.1 Die Globalisierung hat auch zu der Frage gef\u00FChrt, ob die nationalstaatlichen Modelle von \u00D6ffentlichkeit auf die transnationale Ebene \u00FCbertragbar sind und zum anderen, wie und in welcher Form Demokratie jenseits des Nationalstaates legitim und m\u00F6glich ist und als Bezugsobjekt von \u00D6ffentlichkeit wirken kann (Br\u00FCggemann/ Wessler 2014). W\u00E4hrend sich die Diskussion \u00FCber transnationale \u00D6ffentlichkeit in den 2000er Jahren stark auf Fragen von Territorialit\u00E4t und Demokratie fokussierte, sind die konkreten Prozesse und Dynamiken der \u00F6ffentlichen Kommunikation mit wenigen Ausnahmen (wie z.B. Volkmer 2014) unber\u00FCcksichtigt geblieben. Dies hat sich in den vergangenen Jahren durch den Wandel der Kommunikation ver\u00E4ndert. D. h. die Relevanz von transnationaler \u00D6ffentlichkeit stellt sich nicht mehr nur in Bezug auf die Frage, wie die demokratischen Imperative von \u00D6ffentlichkeit in einer globalen Welt erf\u00FCllt werden k\u00F6nnen. In der gegenw\u00E4rtigen Diskussion richtet sich die Perspektive vielmehr auf den zweiten Diskurs, der die Form und die Qualit\u00E4t von \u00F6ffentlicher Kommunikation jenseits des Nationalstaates in den Mittelpunkt stellt."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1180,6 +2226,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1198,6 +2261,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1216,6 +2296,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1234,6 +2331,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1252,6 +2366,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1270,6 +2401,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       },
       {
@@ -1288,6 +2436,23 @@
         "group": {
           "type": "literal",
           "value": "Nachrichten, Kampagnen und die Rationalität öffentlicher Diskurse"
+        },
+        "document": {
+          "type": "uri",
+          "value": "https://www.weizenbaum-library.de/rdf/resource/id/86"
+        },
+        "language": {
+          "type": "literal",
+          "value": "en"
+        },
+        "abstract": {
+          "type": "literal",
+          "xml:lang": "en",
+          "value": "This Opinion from the European Copyright Society (ECS) discusses the legal boundaries of the use of sound sampling under copyright law in the context of the currently pending CJEU case 476/17 (Pelham GmbH v. H\u00FCtter). The ECS recommends a careful interpretation of the scope of the phonogram producer\u2019s right. In the absence of any threshold or condition for protection, this right will extend to cover minimal parts of phonograms and will exceed the protection offered to works in copyright law. Sampling should only be covered by the phonogram producer\u2019s rights where it significantly prejudices the economic interests of the right holder. The ECS also argues that the quotation exception in Art. 5(3)(d) InfoSoc Directive should apply to sound sampling, even where it is not evident to the listener that another person\u2019s work or subject matter is being used in the form of a sound sample. However, such use requires that the source, including the author\u2019s name, should be given in the description of the work. In this regard, the ECS reiterates the duty of the CJEU to interpret the provisions of EU Directives in a manner that ensures compatibility with the Charter of Fundamental Rights of the European Union, especially the freedom of the arts (Art. 13) and the freedom of expression and information (Art. 11). In the introduction below, Advocate General Szpunar\u2019s Opinion (which takes a very different view on the issues referred by the national court) is also briefly considered."
+        },
+        "date": {
+          "type": "literal",
+          "value": "2019"
         }
       }
     ]
