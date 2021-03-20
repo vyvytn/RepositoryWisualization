@@ -20,8 +20,8 @@ export default class NetworkChart {
             let authorItems = d3.nest()
                 .key(d => d.author.value)
                 .key(d => d.title.value)
-                .key(d=> d.group.value)
-                .key(d=> d.area.value)
+                .key(d => d.group.value)
+                .key(d => d.area.value)
 
                 .entries(unsortedData);
             console.log(authorItems)
@@ -39,6 +39,7 @@ export default class NetworkChart {
                 .key(d => d.author.value)
                 .entries(unsortedData);
 
+            console.log(myNewData)
 
             /*  myNewData.map(area => {
                   area.values.map(group =>
@@ -65,24 +66,8 @@ export default class NetworkChart {
                 .hierarchy(packableItems, d => d.values);
             let nodes = hierarchy.descendants();
 
-            /*   nodes=nodes.map((el,i)=> {
-                   return el+={
-                       type: el.depth===0? 'root' : el.depth===1? 'area' :el.depth===2? 'group' : 'item'
-                   }
-               })*/
-
             //getting links
             let links = hierarchy.links();
-
-            /*  links.map((el, index) => {
-                      if (el.source.depth === 3) {
-                          let id = nodes.indexOf(el.target);
-                          console.log(id)
-                          links[index].target = nodes[id].parent.parent;
-                      }
-                  }
-              )*/
-
 
             let width = 805
             let height = 765
@@ -105,6 +90,7 @@ export default class NetworkChart {
                     "#c38a2b",
                     "#4e8a60"
                 ])
+
             let colors = [
                 "#beab90",
                 "#7d94b1",
@@ -114,12 +100,13 @@ export default class NetworkChart {
                 "#c38a2b",
                 "#4e8a60"
             ]
+
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink() // This force provides links between nodes
                     .id(d => d.id) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                    .distance(20) //DESIGN Abstand der Knoten zueinander
+                    .distance(30) //DESIGN Abstand der Knoten zueinander
                 )
-                .force("charge", d3.forceManyBody().strength(-400)) // DESIGN Absto?en- Abstand zwischen Nodes
+                .force("charge", d3.forceManyBody().strength(-500)) // DESIGN Absto?en- Abstand zwischen Nodes
                 .force("center", d3.forceCenter(width / 2, height / 2)); // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
 
             const svg = d3.select('#nwSVG')
@@ -150,7 +137,7 @@ export default class NetworkChart {
                 .enter()
                 .append("line")
                 .attr("class", "links")
-                .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
+            // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
 
 
             //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
@@ -170,7 +157,7 @@ export default class NetworkChart {
                 })
 
             // .style("pointer-events", "none");
-            const edgelabels = svg.selectAll(".edgelabel")
+            /*const edgelabels = svg.selectAll(".edgelabel")
                 .data(links)
                 .enter()
                 .append('text')
@@ -181,7 +168,7 @@ export default class NetworkChart {
                 })
                 .attr('font-size', 10)
                 .attr('fill', '#aaa');
-
+*/
 
             //Text f?r verbindungen/Pfeile
             /*            edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
@@ -205,6 +192,7 @@ export default class NetworkChart {
                     //.on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
                 )
 
+            //tooltip
             let tip = d3.tip()
                 .attr('class', 'd3-tip')
                 .style(function (d) {
@@ -216,27 +204,34 @@ export default class NetworkChart {
                 })
                 .style("background", colors[2])
                 .style("overflow-y", 'scroll')
-                .html(function (d,i) {
-                    console.log(d)
-                    leftMenuClicked(d,i)
+
+
+            //usage of tooltip
+            svg.call(tip)
+
+            node.on("click", function (d, i) {
+                    let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
+                    tip.style("background", color);
+                    leftMenuClicked(d, i)
                     let authorTitles = getItemsOfAuthor(d);
-                    console.log(authorTitles)
-                    if(d.depth<2){
-                        return "<div class=row> " +
-                            "<div class=col>" +
-                            "<h>show node</h>" +
-                            "</div>" +
-                            "       <div class=col>" +
-                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                            "       </div>" +
-                            "</div>"
-                            + d.children.map(el => {
-                                return "<div class=form-check>" +
-                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                    "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
-                            })
-                    }else{
-                        if(authorTitles.length>0){
+                    if (d.depth < 2) {
+                        tip.html(function (d) {
+                            return "<div class=row> " +
+                                "<div class=col>" +
+                                "<h>show node</h>" +
+                                "</div>" +
+                                "       <div class=col>" +
+                                "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                "       </div>" +
+                                "</div>"
+                                + d.children.map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                        "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
+                                })
+                        })
+                    } else {
+                        if (authorTitles.length > 0) {
                             return "<div class=row> " +
                                 "<div class=col>" +
                                 "<h>show node</h>" +
@@ -250,29 +245,32 @@ export default class NetworkChart {
                                         "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
                                         "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
                                 })
+                        } else {
+                            tip(d).hide
                         }
                     }
+                    tip.show(d, i)
+                }
+            )
 
 
-                })
-
-            function getItems(){
+            function getItems() {
 
             }
 
-            function getAuthors(d){
-                if(d.depth===2){
+            function getAuthors(d) {
+                if (d.depth === 2) {
 
                 }
 
             }
 
-            function getAuthor(){
+            function getAuthor() {
 
             }
 
 
-            function getAbstract(){
+            function getAbstract() {
 
             }
 
@@ -286,7 +284,7 @@ export default class NetworkChart {
                         let author = d.data.key
                         if (author === el.key) {
                             el.values.map(elem => {
-                                if(d.parent.data.key!==elem.key) items.push(elem)
+                                if (d.parent.data.key !== elem.key) items.push(elem)
                             })
                         }
                     })
@@ -295,30 +293,13 @@ export default class NetworkChart {
 
             }
 
-            function leftMenuClicked(d,i) {
+            function leftMenuClicked(d, i) {
                 $(document).ready(function () {
                     $('#leftMenuBtn').click(function () {
-                        tip.hide(d,i)
+                        tip.hide(d, i)
                     })
                 })
             }
-
-            // .offset([-10, 0])
-            // .html("<button id='but1'>Button 1</button><button  id='but2'>Button 2</button>")
-
-            /*<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="form-check-label" for="flexCheckDefault">
-    Default checkbox
-  </label>
-</div>*/
-
-            svg.call(tip)
-            node.on("mouseenter", tip.show)
-            node.on("mouseover", function (d) {
-                let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
-                tip.style("background", color)
-            })
 
 
             node.append("circle")
@@ -328,20 +309,9 @@ export default class NetworkChart {
                 .style("stroke-width", d => d.runtime / 10)
                 .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
                 .on("mouseover", function (d) {
-                    d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25)
                     if (d.depth === 0) {
-                        d3.select(this)
-                            .append("text")
-                            .attr("class", "fa")
-                            .attr('font-size', function (d) {
-                                return '20px'
-                            })
-                            .attr("dx", 30)
-                            .attr("dy", -30)
-                            .text(function (d, i) {
-                                if (i === 0) return "\uf055"
-                            })
                     }
+                    d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
                 })
                 .on('mouseout', function (d) {
                     d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
@@ -349,6 +319,7 @@ export default class NetworkChart {
                         d3.select(this).select('circle').attr("r", 50)
                     }
                 })
+
             /*for root node*/
             node.append("text")
                 .attr("class", "fa")
@@ -362,25 +333,9 @@ export default class NetworkChart {
                 })
 
 
-            node.on("click", function (d) {
-                if (d.depth === 0)
-                    d3.select(this).append("text")
-                        .text("root")
-            })
-
-
-            /*node.append("title")
-                .text(d => d.id + ": " + d.label + " - " + d.group +", runtime:"+ d.runtime+ "min");*/
-
-            node.append("title")
-                .text(d => d.data.key);
-
-
-            /*     node.append("text")
-                     .attr("dy", 4)
-                     .attr("dx", -33)
-                     .text(d =>'B');*/
-
+            //    title of nodes
+            /*    node.append("title")
+                    .text(d => d.data.key);*/
             node.append("text")
                 .attr("dy", 16)
                 .attr("dx", -17)
@@ -422,7 +377,7 @@ export default class NetworkChart {
                 d.fy = d3.event.y;
             }
 
-            /*the targeted node is released when the gesture ends
+            /*// the targeted node is released when the gesture ends
               function dragended(d) {
                 if (!d3.event.active) simulation.alphaTarget(0);
                 d.fx = null;
@@ -433,21 +388,25 @@ export default class NetworkChart {
 
                         drawing the legend*/
 
+            // legend for items
+
             const legend_g = svg.selectAll(".legend")
                 .data(colorScale.domain())
                 .enter().append("g")
-                .attr("transform", (d, i) => `translate(${width},${i * 20})`);
+                .attr("transform", (d, i) => `translate(${width},${i * 30})`);
 
             legend_g.append("circle")
-                .attr("cx", 0)
+                .attr("cx", -800)
                 .attr("cy", 0)
                 .attr("r", 5)
                 .attr("fill", colorScale);
 
             legend_g.append("text")
-                .attr("x", 10)
+                .attr("x", -790)
                 .attr("y", 5)
-                .text(d => d);
+                .text(d => d)
+                .style("font-size", "15px")
+                .style("font-family", "Times New Roman")
 
 
         })

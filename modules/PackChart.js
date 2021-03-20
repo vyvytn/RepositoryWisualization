@@ -67,6 +67,7 @@ export default class PackChart {
                 let newNav = document.createElement('li');
                 newNav.className = 'breadcrumb-item active';
                 newNav.setAttribute = ('aria-current', 'page');
+                newNav.style = ('font-family', 'Times New Roman');
                 newNav.innerHTML = 'Weizenbaum Institut';
                 navBar.appendChild(newNav);
 
@@ -102,7 +103,7 @@ export default class PackChart {
                     .attr('class', 'd3-tip')
                     // .offset([-10, 0])
                     .html(function (d) {
-                        return d.depth === 1 ? d.data.key : "show network chart of " + '<br>' + "'" + d.data.key + "'"
+                        return d.depth === 1 ? "Research topic: " +'<br>'+'<b>'+d.data.key + '<b>': "show network chart of " + '<br>' + "'" + d.data.key + "'"
                     });
 
                 svg
@@ -162,7 +163,7 @@ export default class PackChart {
 
                 function zoom(d) {
                     //stop zooming into group
-                    if(d.depth===2)return;
+                    if (d.depth === 2) return;
 
                     let focus0 = focus;
                     focus = d;
@@ -178,7 +179,11 @@ export default class PackChart {
                                 });
                             })
                             circle
-                                .on('mouseover', tip.show)
+                                .on('mouseover', function(d,i){
+                                    if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
+                                    tip.show(d,i)
+
+                                })
                                 .on('mouseout', tip.hide)
                                 .style("pointer-events", function (d) {
                                     if (d.depth === 2) return "all"
@@ -188,7 +193,6 @@ export default class PackChart {
                                 })
 
                             text.style("visibility", "hidden")
-                            if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
                             updateNavigation(2, focus.data.key)
                             break;
 
@@ -310,7 +314,7 @@ export default class PackChart {
                     deleteNavigation(2)
                 }
 
-                function resetMenu(network){
+                function resetMenu(network) {
                     $(document).ready(function () {
                             $('#returnBtn').click(function () {
                                 $('#chordMenuBtn').show()
@@ -320,11 +324,12 @@ export default class PackChart {
                                 $('#returnBtn').hide()
                                 $("#packContainer").show()
                                 $('#resetBtn').show()
-                                if(network) network.delete();
+                                if (network) network.delete();
                             })
                         }
                     )
                 }
+
                 $(document).ready(function () {
                     $('#resetBtn').click(function () {
                         focus = root;
