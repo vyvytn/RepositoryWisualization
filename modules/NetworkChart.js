@@ -15,6 +15,7 @@ export default class NetworkChart {
         console.log(group)
 
         await d3.json("./public/libraryItems.json", function (data) {
+            var link, edgepaths, nodes, node
 
             let unsortedData = data.results.bindings;
             let authorItems = d3.nest()
@@ -61,23 +62,17 @@ export default class NetworkChart {
                 })
             })
             let packableItems = {key: group, values: groupData};
+
+
             //creating hierarchy
-            let hierarchy = d3
-                .hierarchy(packableItems, d => d.values);
-            let nodes = hierarchy.descendants();
+            let hierarchy = d3.hierarchy(packableItems, d => d.values);
 
-            //getting links
-            let links = hierarchy.links();
 
-            let width = 805
-            let height = 765
-            let margin = {top: 30, right: 80, bottom: 5, left: 5}
 
             let groups = packableItems.values.map(el => {
                 return el.key
             });
             console.log(groups);
-            // let groups = [1, 2, 3, 4, 5]
 
             let colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
                 .domain(groups)
@@ -101,13 +96,21 @@ export default class NetworkChart {
                 "#4e8a60"
             ]
 
+
+            let width = 805
+            let height = 765
+            let margin = {top: 30, right: 80, bottom: 5, left: 5}
+
+
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink() // This force provides links between nodes
                     .id(d => d.id) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
                     .distance(30) //DESIGN Abstand der Knoten zueinander
                 )
                 .force("charge", d3.forceManyBody().strength(-500)) // DESIGN Absto?en- Abstand zwischen Nodes
-                .force("center", d3.forceCenter(width / 2, height / 2)); // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
+                .force("center", d3.forceCenter(width / 2, height / 2)) // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
+                .on("tick", ticked);
+
 
             const svg = d3.select('#nwSVG')
                 .attr("width", width + margin.left + margin.right)
@@ -115,241 +118,289 @@ export default class NetworkChart {
                 .append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
 
-            //appending little triangles, path object, as arrowhead
-            //The <defs> element is used to store graphical objects that will be used at a later time
-            //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
-            svg.append('defs').append('marker')
-                .attr("id", 'arrowhead')
-                .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
-                .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
-                .attr('refY', 0)
-                .attr('orient', 'auto')
-                .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
-                .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
-                .attr('xoverflow', 'visible')
-                .append('svg:path')
-                .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-                .attr('fill', '#999')
-                .style('stroke', 'none');
+            update();
 
-            const link = svg.selectAll(".links")
-                .data(links)
-                .enter()
-                .append("line")
-                .attr("class", "links")
-            // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
+            function update() {
 
 
-            //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
-            //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
-            link.append("title")
-                .text(d => d.key); //DESIGN tooltip text
+                nodes = hierarchy.descendants();
 
-            const edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
-                .data(links)
-                .enter()
-                .append('path')
-                .attr('class', 'edgepath')
-                .attr('fill-opacity', 0)
-                .attr('stroke-opacity', 0)
-                .attr('id', function (d, i) {
-                    return 'edgepath' + i
-                })
+                //getting links
+                let links = hierarchy.links();
 
-            // .style("pointer-events", "none");
-            /*const edgelabels = svg.selectAll(".edgelabel")
-                .data(links)
-                .enter()
-                .append('text')
-                .style("pointer-events", "none")
-                .attr('class', 'edgelabel')
-                .attr('id', function (d, i) {
-                    return 'edgelabel' + i
-                })
-                .attr('font-size', 10)
-                .attr('fill', '#aaa');
-*/
+                //appending little triangles, path object, as arrowhead
+                //The <defs> element is used to store graphical objects that will be used at a later time
+                //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+                svg.append('defs').append('marker')
+                    .attr("id", 'arrowhead')
+                    .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
+                    .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
+                    .attr('refY', 0)
+                    .attr('orient', 'auto')
+                    .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
+                    .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
+                    .attr('xoverflow', 'visible')
+                    .append('svg:path')
+                    .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+                    .attr('fill', '#999')
+                    .style('stroke', 'none');
 
-            //Text f?r verbindungen/Pfeile
-            /*            edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
-                            .attr('xlink:href', function (d, i) {
-                                return '#edgepath' + i
-                            })
-                            .style("text-anchor", "middle")
-                            .style("pointer-events", "none")
-                            .attr("startOffset", "50%")
-                            .text(d => 'contains');*/
+                 link = svg.selectAll(".links")
+                    .data(links)
+                    .exit().remove();
 
-            // Initialize the nodes
-            const node = svg.selectAll(".nodes")
-                .data(nodes)
-                .enter()
-                .append("g")
-                .attr("class", "nodes")
-                .call(d3.drag() //sets the event listener for the specified typenames and returns the drag behavior.
+                const linksEnter = link
+                    .enter()
+                    .append("line")
+                    .attr("class", "links")
+
+                link = linksEnter.merge(link)
+                // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
+
+
+                //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
+                //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
+                link.append("title")
+                    .text(d => d.key); //DESIGN tooltip text
+
+                edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
+                    .data(links)
+                    .enter()
+                    .append('path')
+                    .attr('class', 'edgepath')
+                    .attr('fill-opacity', 0)
+                    .attr('stroke-opacity', 0)
+                    .attr('id', function (d, i) {
+                        return 'edgepath' + i
+                    })
+
+                // .style("pointer-events", "none");
+                /*const edgelabels = svg.selectAll(".edgelabel")
+                    .data(links)
+                    .enter()
+                    .append('text')
+                    .style("pointer-events", "none")
+                    .attr('class', 'edgelabel')
+                    .attr('id', function (d, i) {
+                        return 'edgelabel' + i
+                    })
+                    .attr('font-size', 10)
+                    .attr('fill', '#aaa');
+    */
+
+                //Text f?r verbindungen/Pfeile
+                /*            edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
+                                .attr('xlink:href', function (d, i) {
+                                    return '#edgepath' + i
+                                })
+                                .style("text-anchor", "middle")
+                                .style("pointer-events", "none")
+                                .attr("startOffset", "50%")
+                                .text(d => 'contains');*/
+
+                // Initialize the nodes
+                node = svg.selectAll(".nodes")
+                    .data(nodes)
+
+                let nodeEnter = node.enter()
+                    .append("g")
+                    .attr("class", "nodes")
+                    .on("click", function(d){click(d)})
+                    .call(d3.drag() //sets the event listener for the specified typenames and returns the drag behavior.
                         .on("start", dragstarted) //start - after a new pointer becomes active (on mousedown or touchstart).
                         .on("drag", dragged)      //drag - after an active pointer moves (on mousemove or touchmove).
-                    //.on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
-                )
+                        .on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
+                    )
 
-            //tooltip
-            let tip = d3.tip()
-                .attr('class', 'd3-tip')
-                .style(function (d) {
-                    if (d.depth === 0) {
-                        return "('display', 'inline')"
-                    } else {
-                        return "('display', 'none')"
-                    }
-                })
-                .style("background", colors[2])
-                .style("overflow-y", 'scroll')
+                node.exit().remove();
 
 
-            //usage of tooltip
-            svg.call(tip)
+                function zoomed() {
+                    svg.attr("transform", d3.event.transform);
+                }
 
-            node.on("click", function (d, i) {
-                    let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
-                    tip.style("background", color);
-                    leftMenuClicked(d, i)
-                    let authorTitles = getItemsOfAuthor(d);
-                    if (d.depth < 2) {
-                        tip.html(function (d) {
-                            return "<div class=row> " +
-                                "<div class=col>" +
-                                "<h>show node</h>" +
-                                "</div>" +
-                                "       <div class=col>" +
-                                "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                "       </div>" +
-                                "</div>"
-                                + d.children.map(el => {
-                                    return "<div class=form-check>" +
-                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                        "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
-                                })
-                        })
-                    } else {
-                        if (authorTitles.length > 0) {
-                            return "<div class=row> " +
-                                "<div class=col>" +
-                                "<h>show node</h>" +
-                                "</div>" +
-                                "       <div class=col>" +
-                                "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                "       </div>" +
-                                "</div>"
-                                + authorTitles.map(el => {
-                                    return "<div class=form-check>" +
-                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                        "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
-                                })
+                //tooltip
+                let tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .style(function (d) {
+                        if (d.depth === 0) {
+                            return "('display', 'inline')"
                         } else {
-                            tip(d).hide
+                            return "('display', 'none')"
                         }
-                    }
-                    tip.show(d, i)
-                }
-            )
+                    })
+                    .style("background", colors[2])
+                    .style("overflow-y", 'scroll')
 
 
-            function getItems() {
+                //usage of tooltip
+                svg.call(tip)
 
-            }
-
-            function getAuthors(d) {
-                if (d.depth === 2) {
-
-                }
-
-            }
-
-            function getAuthor() {
-
-            }
-
-
-            function getAbstract() {
-
-            }
-
-            //year type
-
-
-            function getItemsOfAuthor(d) {
-                if (d.depth === 2) {
-                    let items = [];
-                    authorItems.map(el => {
-                        let author = d.data.key
-                        if (author === el.key) {
-                            el.values.map(elem => {
-                                if (d.parent.data.key !== elem.key) items.push(elem)
+               /* node.on("click", function (d, i) {
+                        let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
+                        tip.style("background", color);
+                        leftMenuClicked(d, i)
+                        let authorTitles = getItemsOfAuthor(d);
+                        if (d.depth < 2) {
+                            tip.html(function (d) {
+                                return "<div class=row> " +
+                                    "<div class=col>" +
+                                    "<h>show node</h>" +
+                                    "</div>" +
+                                    "       <div class=col>" +
+                                    "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                    "       </div>" +
+                                    "</div>"
+                                    + d.children.map(el => {
+                                        return "<div class=form-check>" +
+                                            "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                            "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
+                                    })
                             })
+                        } else {
+                            if (authorTitles.length > 0) {
+                                return "<div class=row> " +
+                                    "<div class=col>" +
+                                    "<h>show node</h>" +
+                                    "</div>" +
+                                    "       <div class=col>" +
+                                    "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                    "       </div>" +
+                                    "</div>"
+                                    + authorTitles.map(el => {
+                                        return "<div class=form-check>" +
+                                            "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                            "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
+                                    })
+                            } else {
+                                tip(d).hide
+                            }
                         }
-                    })
-                    return items
+                        tip.show(d, i)
+                    }
+                )*/
+
+
+                function getItems() {
+
                 }
 
-            }
+                function getAuthors(d) {
+                    if (d.depth === 2) {
 
-            function leftMenuClicked(d, i) {
-                $(document).ready(function () {
-                    $('#leftMenuBtn').click(function () {
-                        tip.hide(d, i)
+                    }
+
+                }
+
+                function getAuthor() {
+
+                }
+
+
+                function getAbstract() {
+
+                }
+
+                //year type
+
+
+                function getItemsOfAuthor(d) {
+                    if (d.depth === 2) {
+                        let items = [];
+                        authorItems.map(el => {
+                            let author = d.data.key
+                            if (author === el.key) {
+                                el.values.map(elem => {
+                                    if (d.parent.data.key !== elem.key) items.push(elem)
+                                })
+                            }
+                        })
+                        return items
+                    }
+
+                }
+
+                function leftMenuClicked(d, i) {
+                    $(document).ready(function () {
+                        $('#leftMenuBtn').click(function () {
+                            tip.hide(d, i)
+                        })
                     })
-                })
+                }
+
+
+                nodeEnter.append("circle")
+                    .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                    .style("stroke", "grey")
+                    .style("stroke-opacity", 0.3)
+                    .style("stroke-width", d => d.runtime / 10)
+                    .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
+                    .on("mouseover", function (d) {
+                        if (d.depth === 0) {
+                        }
+                        d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
+                    })
+                    .on('mouseout', function (d) {
+                        d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                        if (d.depth === 0) {
+                            d3.select(this).select('circle').attr("r", 50)
+                        }
+                    })
+
+                /*for root node*/
+                node.append("text")
+                    .attr("class", "fa")
+                    .attr('font-size', function (d) {
+                        return '20px'
+                    })
+                    .attr("dx", 30)
+                    .attr("dy", -30)
+                    .text(function (d, i) {
+                        if (i === 0) return "\uf055"
+                    })
+
+
+                //    title of nodes
+                /*    node.append("title")
+                        .text(d => d.data.key);*/
+                node.append("text")
+                    .attr("dy", 16)
+                    .attr("dx", -17)
+                    .text(d => d.data.key);
+
+                node = nodeEnter.merge(node);
+
+
+                //Listen for tick events to render the nodes as they update in your Canvas or SVG.
+                simulation
+                    .nodes(nodes)
+
+                simulation.force("link")
+                    .links(links);
+
+
+                // legend for items
+
+                const legend_g = svg.selectAll(".legend")
+                    .data(colorScale.domain())
+                    .enter().append("g")
+                    .attr("transform", (d, i) => `translate(${width},${i * 30})`);
+
+                legend_g.append("circle")
+                    .attr("cx", -800)
+                    .attr("cy", 0)
+                    .attr("r", 5)
+                    .attr("fill", colorScale);
+
+                legend_g.append("text")
+                    .attr("x", -790)
+                    .attr("y", 5)
+                    .text(d => d)
+                    .style("font-size", "15px")
+                    .style("font-family", "Times New Roman")
+
+
             }
-
-
-            node.append("circle")
-                .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
-                .style("stroke", "grey")
-                .style("stroke-opacity", 0.3)
-                .style("stroke-width", d => d.runtime / 10)
-                .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
-                .on("mouseover", function (d) {
-                    if (d.depth === 0) {
-                    }
-                    d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
-                })
-                .on('mouseout', function (d) {
-                    d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
-                    if (d.depth === 0) {
-                        d3.select(this).select('circle').attr("r", 50)
-                    }
-                })
-
-            /*for root node*/
-            node.append("text")
-                .attr("class", "fa")
-                .attr('font-size', function (d) {
-                    return '20px'
-                })
-                .attr("dx", 30)
-                .attr("dy", -30)
-                .text(function (d, i) {
-                    if (i === 0) return "\uf055"
-                })
-
-
-            //    title of nodes
-            /*    node.append("title")
-                    .text(d => d.data.key);*/
-            node.append("text")
-                .attr("dy", 16)
-                .attr("dx", -17)
-                .text(d => d.data.key);
-
-
-            //Listen for tick events to render the nodes as they update in your Canvas or SVG.
-            simulation
-                .nodes(nodes)
-                .on("tick", ticked);
-
-            simulation.force("link")
-                .links(links);
-
 
             // This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).
             function ticked() {
@@ -367,6 +418,7 @@ export default class NetworkChart {
             //The simulation is temporarily ?heated? during interaction by setting the target alpha to a non-zero value.
             function dragstarted(d) {
                 if (!d3.event.active) simulation.alphaTarget(0.3).restart();//sets the current target alpha to the specified number in the range [0,1].
+
                 d.fy = d.y; //fx - the node?s fixed x-position. Original is null.
                 d.fx = d.x; //fy - the node?s fixed y-position. Original is null.
             }
@@ -377,36 +429,41 @@ export default class NetworkChart {
                 d.fy = d3.event.y;
             }
 
-            /*// the targeted node is released when the gesture ends
+            // the targeted node is released when the gesture ends
               function dragended(d) {
                 if (!d3.event.active) simulation.alphaTarget(0);
                 d.fx = null;
                 d.fy = null;
-
-                console.log("dataset after dragged is ...",dataset);
               }
 
-                        drawing the legend*/
+            function click (d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                    update();
+                    simulation.restart();
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                    update();
+                    simulation.restart();
+                }
+                update()
+            }
 
-            // legend for items
+            function flatten (root) {
+                // hierarchical data to flat data for force layout
+                var nodes = [];
+                function recurse(node) {
+                    if (node.children) node.children.forEach(recurse);
+                    if (!node.id) node.id = ++i;
+                    else ++i;
+                    nodes.push(node);
+                }
+                recurse(root);
+                return nodes;
+            }
 
-            const legend_g = svg.selectAll(".legend")
-                .data(colorScale.domain())
-                .enter().append("g")
-                .attr("transform", (d, i) => `translate(${width},${i * 30})`);
-
-            legend_g.append("circle")
-                .attr("cx", -800)
-                .attr("cy", 0)
-                .attr("r", 5)
-                .attr("fill", colorScale);
-
-            legend_g.append("text")
-                .attr("x", -790)
-                .attr("y", 5)
-                .text(d => d)
-                .style("font-size", "15px")
-                .style("font-family", "Times New Roman")
 
 
         })
