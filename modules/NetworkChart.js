@@ -112,7 +112,7 @@ export default class NetworkChart {
                 }))
                 .append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
-            
+
 
             //appending little triangles, path object, as arrowhead
             //The <defs> element is used to store graphical objects that will be used at a later time
@@ -130,6 +130,7 @@ export default class NetworkChart {
                 .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
                 .attr('fill', '#999')
                 .style('stroke', 'none');
+
 
 
             update(true)
@@ -405,11 +406,13 @@ export default class NetworkChart {
             function openTip(tip, d, i) {
                 let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                 tip.style("background", color);
+                tip.direction('e')
+                leftMenuClicked(tip,d,i)
                 tip.html(function (d) {
                     switch (d.depth) {
                         case 0:
                             return "<div class=row> " +
-                                "<div class=col>" +
+                                "<div class=col col='9'>" +
                                 "<p style='color:white; font-family: Monospace'>show publications by title:</p>" +
                                 "</div>" +
                                 "       <div class=col>" +
@@ -526,11 +529,10 @@ export default class NetworkChart {
                 if ($("#flexCheckDefault").is(':checked')) console.log("CHECKED")
             }
 
-            function leftMenuClicked(d, i) {
+            function leftMenuClicked(tip, d, i) {
                 $(document).ready(function () {
                     $('#leftMenuBtn').click(function () {
-                        // tip.hide(d, i)
-                        d3.select(this).style("display", "none")
+                        tip.hide(d, i)
                     })
                 })
             }
