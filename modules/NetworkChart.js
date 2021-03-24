@@ -25,12 +25,16 @@ export default class NetworkChart {
                 .key(d => d.area.value)
 
                 .entries(unsortedData);
-            console.log(authorItems)
+            console.log(unsortedData)
 
-            let test = d3.nest()
-                .entries(authorItems);
-            console.log(test)
+            let metaData = d3.nest()
+                .key(d => d.title.value)
+                .key(d => {
+                    return d.date ? d.date.value : null
+                })
+                .entries(unsortedData)
 
+            console.log(metaData)
 
             //nesting data
             let myNewData = d3.nest()
@@ -66,7 +70,6 @@ export default class NetworkChart {
 
             //creating hierarchy
             let hierarchy = d3.hierarchy(packableItems, d => d.values);
-
 
 
             let groups = packableItems.values.map(el => {
@@ -117,42 +120,46 @@ export default class NetworkChart {
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
+            //appending little triangles, path object, as arrowhead
+            //The <defs> element is used to store graphical objects that will be used at a later time
+            //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+            svg.append('defs').append('marker')
+                .attr("id", 'arrowhead')
+                .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
+                .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
+                .attr('refY', 0)
+                .attr('orient', 'auto')
+                .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
+                .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
+                .attr('xoverflow', 'visible')
+                .append('svg:path')
+                .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+                .attr('fill', '#999')
+                .style('stroke', 'none');
 
-            update();
+            update(true)
 
-            function update() {
+            function update(i) {
 
+                let init = i;
 
                 nodes = hierarchy.descendants();
 
                 //getting links
                 let links = hierarchy.links();
 
-                //appending little triangles, path object, as arrowhead
-                //The <defs> element is used to store graphical objects that will be used at a later time
-                //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
-                svg.append('defs').append('marker')
-                    .attr("id", 'arrowhead')
-                    .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
-                    .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
-                    .attr('refY', 0)
-                    .attr('orient', 'auto')
-                    .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
-                    .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
-                    .attr('xoverflow', 'visible')
-                    .append('svg:path')
-                    .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-                    .attr('fill', '#999')
-                    .style('stroke', 'none');
 
-                 link = svg.selectAll(".links")
+                link = svg.selectAll(".links")
                     .data(links)
                     .exit().remove();
 
-                const linksEnter = link
-                    .enter()
-                    .append("line")
-                    .attr("class", "links")
+                const linksEnter =
+                    link.enter()
+                        .append('line')
+                        .attr("class", "links")
+                        .style('stroke', 'black')
+                        .style('opacity', '1')
+                        .style('stroke-width', 10)
 
                 link = linksEnter.merge(link)
                 // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
@@ -202,10 +209,11 @@ export default class NetworkChart {
                 node = svg.selectAll(".nodes")
                     .data(nodes)
 
+
                 let nodeEnter = node.enter()
                     .append("g")
                     .attr("class", "nodes")
-                    .on("click", function(d){click(d)})
+                    // .on("click", function(d){click(nodeEnter,d)})
                     .call(d3.drag() //sets the event listener for the specified typenames and returns the drag behavior.
                         .on("start", dragstarted) //start - after a new pointer becomes active (on mousedown or touchstart).
                         .on("drag", dragged)      //drag - after an active pointer moves (on mousemove or touchmove).
@@ -235,14 +243,106 @@ export default class NetworkChart {
 
                 //usage of tooltip
                 svg.call(tip)
+                /*node.append("text")
+                     .attr("class", "fa")
+                     .attr('font-size', function (d) {
+                         return '20px'
+                     })
+                     .attr("dx", 30)
+                     .attr("dy", -30)
+                     .text(function (d, i) {
+                         if (i === 0) return "\uf055"
+                     })
 
-               /* node.on("click", function (d, i) {
+
+ */
+
+                nodeEnter.on("click", function (d, i) {
+                        console.log(d)
                         let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                         tip.style("background", color);
-                        leftMenuClicked(d, i)
-                        let authorTitles = getItemsOfAuthor(d);
-                        if (d.depth < 2) {
+                        switch (d.depth) {
+                            case 0:
+                                console.log(d)
+                                console.log(getYears(d))
+                                d3.select(this)
+                                    .append("foreignObject")
+                                    .attr("dx", 30)
+                                    .attr("dy", -30)
+                                    .attr("width", 300)
+                                    .attr("height", 300)
+                                    .style("background", color)
+                                    .style("overflow-y", "scroll")
+                                    .html(function () {
+                                        return "<div class=row> " +
+                                            "<div class=col>" +
+                                            "<p style='color:white; font-family: Monospaced'>show publications by title:</p>" +
+                                            "</div>" +
+                                            "       <div class=col>" +
+                                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                            "       </div>" +
+                                            "</div>"
+                                            + d.children.map(el => {
+                                                return "<div class=form-check>" +
+                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                                    "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
+                                            })
+                                            + "<p style='color:white; font-family: Monospaced'>show publications by author:</p>"
+                                            + getAuthors(d).map(el => {
+                                                return "<div class=form-check>" +
+                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                                    "<label class=form-check-label for=flexCheckDefault>" + el + "</label> </div>"
+                                            })
+                                            + "<p style='color:white; font-family: Monospaced'>show publications by year:</p>"
+                                            + getYears(d).map(el => {
+                                                return "<div class=form-check>" +
+                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                                    "<label class=form-check-label for=flexCheckDefault>" + el.key+ "</label> </div>"
+                                            })
+                                    })
+                                    .on("mouseenter", function (d) {
+                                        d3.select(this).style("display", "inline")
+                                    })
+                                    .on("mouseleave", function (d) {
+                                        d3.select(this).style("display", "none")
+                                    })
+                                break;
+                            case 1:
+                                let authorTitles = getItemsOfAuthor(d);
+                                d3.select(this)
+                                    .append("foreignObject")
+                                    .attr("dx", 30)
+                                    .attr("dy", -30)
+                                    .attr("width", 300)
+                                    .attr("height", 300)
+                                    .style("background", color)
+                                    .style("overflow-y", "scroll")
+                                    .html(function () {
+                                        return "<div class=row> " +
+                                            "<div class=col>" +
+                                            "<h>show node</h>" +
+                                            "</div>" +
+                                            "       <div class=col>" +
+                                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                            "       </div>" +
+                                            "</div>"
+                                            + authorTitles.map(el => {
+                                                return "<div class=form-check>" +
+                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                                    "<label class=form-check-label for=flexCheckDefault>" + el + "</label> </div>"
+                                            })
+                                    })
+                                    .on("mouseenter", function (d) {
+                                        d3.select(this).style("display", "inline")
+                                    })
+                                    .on("mouseleave", function (d) {
+                                        d3.select(this).style("display", "none")
+                                    })
+                                break;
+                        }
+                        /*if (d.depth < 2) {
                             tip.html(function (d) {
+                                checked()
                                 return "<div class=row> " +
                                     "<div class=col>" +
                                     "<h>show node</h>" +
@@ -259,37 +359,73 @@ export default class NetworkChart {
                             })
                         } else {
                             if (authorTitles.length > 0) {
-                                return "<div class=row> " +
-                                    "<div class=col>" +
-                                    "<h>show node</h>" +
-                                    "</div>" +
-                                    "       <div class=col>" +
-                                    "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                    "       </div>" +
-                                    "</div>"
-                                    + authorTitles.map(el => {
-                                        return "<div class=form-check>" +
-                                            "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                            "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
-                                    })
+                                tip.html(function () {
+                                    checked()
+                                    return "<div class=row> " +
+                                        "<div class=col>" +
+                                        "<h>show node</h>" +
+                                        "</div>" +
+                                        "       <div class=col>" +
+                                        "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                        "       </div>" +
+                                        "</div>"
+                                        + authorTitles.map(el => {
+                                            return "<div class=form-check>" +
+                                                "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                                "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
+                                        })
+                                })
                             } else {
                                 tip(d).hide
                             }
                         }
-                        tip.show(d, i)
+                        tip.show(d, i)*/
+
+
                     }
-                )*/
+                )
 
 
                 function getItems() {
 
                 }
 
+                function getYears(d) {
+                    let years = []
+                    d.children.map(item => {
+                        let itemName = item.data.key;
+                        metaData.map(title => {
+                            if (itemName === title.key) {
+                                title.values.map(year => {
+                                    years.push(year.key)
+                                })
+                            }
+                        })
+                    })
+                    let result = Object.values(years.reduce((c, v) => {
+                        c[v] = c[v] || [v, 0];
+                        c[v][1]++;
+                        return c;
+                    }, {})).map(o => ({[o[0]]: o[1]}));
+
+                    return result
+                }
+
                 function getAuthors(d) {
-                    if (d.depth === 2) {
-
+                    let authorList = []
+                    if (d.children) {
+                        console.log(d)
+                        d.children.map(child => {
+                            child.data.values.map(author => {
+                                authorList.push(author.key)
+                            })
+                        })
+                    } else {
+                        d.data.values.map(author => {
+                            authorList.push(author)
+                        })
                     }
-
+                    return authorList
                 }
 
                 function getAuthor() {
@@ -305,19 +441,18 @@ export default class NetworkChart {
 
 
                 function getItemsOfAuthor(d) {
-                    if (d.depth === 2) {
-                        let items = [];
-                        authorItems.map(el => {
-                            let author = d.data.key
-                            if (author === el.key) {
-                                el.values.map(elem => {
-                                    if (d.parent.data.key !== elem.key) items.push(elem)
-                                })
-                            }
+                    let children = []
+                    if (d.children) {
+                        d.children.map(child => {
+                            children.push(child.data.key)
                         })
-                        return items
+                        console.log(children)
+                        return children
                     }
+                }
 
+                function checked() {
+                    if ($("#flexCheckDefault").is(':checked')) console.log("CHECKED")
                 }
 
                 function leftMenuClicked(d, i) {
@@ -328,24 +463,56 @@ export default class NetworkChart {
                     })
                 }
 
+                if (init) {
+                    nodeEnter
+                        .append("circle")
+                        .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                        .style("stroke", "grey")
+                        .style("stroke-opacity", 0.3)
+                        .style("stroke-width", d => d.runtime / 10)
+                        .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
+                        .on("mouseover", function (d) {
+                            if (d.depth === 0) {
+                            }
+                            d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
 
-                nodeEnter.append("circle")
-                    .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
-                    .style("stroke", "grey")
-                    .style("stroke-opacity", 0.3)
-                    .style("stroke-width", d => d.runtime / 10)
-                    .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
-                    .on("mouseover", function (d) {
-                        if (d.depth === 0) {
-                        }
-                        d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
-                    })
-                    .on('mouseout', function (d) {
-                        d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
-                        if (d.depth === 0) {
-                            d3.select(this).select('circle').attr("r", 50)
-                        }
-                    })
+                        })
+                        .on('mouseout', function (d) {
+                            d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                            if (d.depth === 0) {
+                                d3.select(this).select('circle').attr("r", 50)
+                            }
+                        })
+
+                    nodeEnter
+                        .filter(function (d) {
+                            if (d.depth > 1) return d
+                        })
+                        .style("display", "none")
+
+                } else {
+                    nodeEnter
+                        .append("circle")
+                        .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                        .style("display", "inline")
+                        .style("stroke", "grey")
+                        .style("stroke-opacity", 0.3)
+                        .style("stroke-width", d => d.runtime / 10)
+                        .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
+                        .on("mouseover", function (d) {
+                            if (d.depth === 0) {
+                            }
+                            d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
+                        })
+                        .on('mouseout', function (d) {
+                            d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
+                            if (d.depth === 0) {
+                                d3.select(this).select('circle').attr("r", 50)
+                            }
+                        })
+
+                }
+
 
                 /*for root node*/
                 node.append("text")
@@ -430,40 +597,32 @@ export default class NetworkChart {
             }
 
             // the targeted node is released when the gesture ends
-              function dragended(d) {
+            function dragended(d) {
                 if (!d3.event.active) simulation.alphaTarget(0);
                 d.fx = null;
                 d.fy = null;
-              }
+            }
 
-            function click (d) {
+            function click(node, d) {
+                node
+                    .filter(function (d) {
+                        if (d.depth > 1) return d
+                    })
+                    .style("display", "inline")
                 if (d.children) {
+                    console.log('d._children')
+                    console.log(d._children)
                     d._children = d.children;
                     d.children = null;
-                    update();
+                    update(false);
                     simulation.restart();
                 } else {
                     d.children = d._children;
                     d._children = null;
-                    update();
+                    update(false);
                     simulation.restart();
                 }
-                update()
             }
-
-            function flatten (root) {
-                // hierarchical data to flat data for force layout
-                var nodes = [];
-                function recurse(node) {
-                    if (node.children) node.children.forEach(recurse);
-                    if (!node.id) node.id = ++i;
-                    else ++i;
-                    nodes.push(node);
-                }
-                recurse(root);
-                return nodes;
-            }
-
 
 
         })

@@ -147,10 +147,10 @@ export default class ChordChart {
 
             // initialize the chord configuration variables
             var config = {
-                width: 800,
-                height: 800,
+                width: 1000,
+                height: 1000,
                 rotation: 0,
-                textgap: 0,
+                textgap: 10,
                 colors: ["#7fc97f", "#beaed4", "#fdc086", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666", "#ffff99", "#386cb0", "#f0027f", "#bf5b17", "#666666"]
             };
 
@@ -198,8 +198,8 @@ export default class ChordChart {
                 .attr("id", "visual")
                 .attr("viewBox", viewBoxDimensions)
                 .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio
-                .attr("width", width - 100)
-                .attr("height", height - 100)
+                .attr("width", width)
+                .attr("height", height)
                 .append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -220,13 +220,17 @@ export default class ChordChart {
                 })
                 .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius).startAngle(startAngle).endAngle(endAngle))
                 .on("mouseover", fade(.1))
-                .on("mouseout", fade(1));
+                .on("mouseout", fade(1))
+                .on('click', function(d){
+                    console.log( gnames[d.index])})
 
             g.append("svg:text")
+                .style('font-size', '12px')
+                .style('font-family', 'Monospace')
                 .each(function (d) {
                     d.angle = ((d.startAngle + d.endAngle) / 2) + offset;
                 })
-                .attr("dy", ".35em")
+                // .attr("dy", ".35em")
                 .attr("text-anchor", function (d) {
                     return d.angle > Math.PI ? "end" : null;
                 })
