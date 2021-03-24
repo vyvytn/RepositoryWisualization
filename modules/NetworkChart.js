@@ -46,19 +46,6 @@ export default class NetworkChart {
 
             console.log(myNewData)
 
-            /*  myNewData.map(area => {
-                  area.values.map(group =>
-                      group.values.map(title =>
-                          title.values.map((author, i) =>
-                              authorItems.map(item => {
-                                  if (author.key === item.key) console.log(item)
-                                  //author.push(item.values)
-                              })
-                          )))
-              })
-              console.log(myNewData)*/
-
-
             let groupData = [];
             myNewData.map(el => {
                 el.values.map(elem => {
@@ -105,6 +92,7 @@ export default class NetworkChart {
             let margin = {top: 30, right: 80, bottom: 5, left: 5}
 
 
+            //d3 network simulation
             let simulation = d3.forceSimulation()
                 .force("link", d3.forceLink() // This force provides links between nodes
                     .id(d => d.id) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
@@ -115,11 +103,17 @@ export default class NetworkChart {
                 .on("tick", ticked);
 
 
+
             const svg = d3.select('#nwSVG')
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
+                .call(d3.zoom().on("zoom", function () {
+                    svg.attr("transform", d3.event.transform)
+                }))
                 .append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
+            
+
             //appending little triangles, path object, as arrowhead
             //The <defs> element is used to store graphical objects that will be used at a later time
             //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
@@ -136,6 +130,7 @@ export default class NetworkChart {
                 .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
                 .attr('fill', '#999')
                 .style('stroke', 'none');
+
 
             update(true)
 
@@ -154,12 +149,14 @@ export default class NetworkChart {
                     .exit().remove();
 
                 const linksEnter =
-                    link.enter()
-                        .append('line')
-                        .attr("class", "links")
-                        .style('stroke', 'black')
-                        .style('opacity', '1')
-                        .style('stroke-width', 10)
+                    link.enter();
+
+                linksEnter
+                    .append('line')
+                    .attr("class", "links")
+                    .style('stroke', 'black')
+                    .style('opacity', '100')
+                    .style('stroke-width', 100)
 
                 link = linksEnter.merge(link)
                 // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
@@ -167,7 +164,7 @@ export default class NetworkChart {
 
                 //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
                 //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
-                link.append("title")
+                linksEnter.append("title")
                     .text(d => d.key); //DESIGN tooltip text
 
                 edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
@@ -222,261 +219,17 @@ export default class NetworkChart {
 
                 node.exit().remove();
 
-
-                function zoomed() {
-                    svg.attr("transform", d3.event.transform);
-                }
-
-                //tooltip
-                let tip = d3.tip()
-                    .attr('class', 'd3-tip')
-                    .style(function (d) {
-                        if (d.depth === 0) {
-                            return "('display', 'inline')"
-                        } else {
-                            return "('display', 'none')"
-                        }
-                    })
-                    .style("background", colors[2])
-                    .style("overflow-y", 'scroll')
-
-
-                //usage of tooltip
-                svg.call(tip)
-                /*node.append("text")
-                     .attr("class", "fa")
-                     .attr('font-size', function (d) {
-                         return '20px'
-                     })
-                     .attr("dx", 30)
-                     .attr("dy", -30)
-                     .text(function (d, i) {
-                         if (i === 0) return "\uf055"
-                     })
-
-
- */
-
-                nodeEnter.on("click", function (d, i) {
-                        console.log(d)
-                        let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
-                        tip.style("background", color);
-                        switch (d.depth) {
-                            case 0:
-                                console.log(d)
-                                console.log(getYears(d))
-                                d3.select(this)
-                                    .append("foreignObject")
-                                    .attr("dx", 30)
-                                    .attr("dy", -30)
-                                    .attr("width", 300)
-                                    .attr("height", 300)
-                                    .style("background", color)
-                                    .style("overflow-y", "scroll")
-                                    .html(function () {
-                                        return "<div class=row> " +
-                                            "<div class=col>" +
-                                            "<p style='color:white; font-family: Monospaced'>show publications by title:</p>" +
-                                            "</div>" +
-                                            "       <div class=col>" +
-                                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                            "       </div>" +
-                                            "</div>"
-                                            + d.children.map(el => {
-                                                return "<div class=form-check>" +
-                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                                    "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
-                                            })
-                                            + "<p style='color:white; font-family: Monospaced'>show publications by author:</p>"
-                                            + getAuthors(d).map(el => {
-                                                return "<div class=form-check>" +
-                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                                    "<label class=form-check-label for=flexCheckDefault>" + el + "</label> </div>"
-                                            })
-                                            + "<p style='color:white; font-family: Monospaced'>show publications by year:</p>"
-                                            + getYears(d).map(el => {
-                                                return "<div class=form-check>" +
-                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                                    "<label class=form-check-label for=flexCheckDefault>" + el.key+ "</label> </div>"
-                                            })
-                                    })
-                                    .on("mouseenter", function (d) {
-                                        d3.select(this).style("display", "inline")
-                                    })
-                                    .on("mouseleave", function (d) {
-                                        d3.select(this).style("display", "none")
-                                    })
-                                break;
-                            case 1:
-                                let authorTitles = getItemsOfAuthor(d);
-                                d3.select(this)
-                                    .append("foreignObject")
-                                    .attr("dx", 30)
-                                    .attr("dy", -30)
-                                    .attr("width", 300)
-                                    .attr("height", 300)
-                                    .style("background", color)
-                                    .style("overflow-y", "scroll")
-                                    .html(function () {
-                                        return "<div class=row> " +
-                                            "<div class=col>" +
-                                            "<h>show node</h>" +
-                                            "</div>" +
-                                            "       <div class=col>" +
-                                            "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                            "       </div>" +
-                                            "</div>"
-                                            + authorTitles.map(el => {
-                                                return "<div class=form-check>" +
-                                                    "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                                    "<label class=form-check-label for=flexCheckDefault>" + el + "</label> </div>"
-                                            })
-                                    })
-                                    .on("mouseenter", function (d) {
-                                        d3.select(this).style("display", "inline")
-                                    })
-                                    .on("mouseleave", function (d) {
-                                        d3.select(this).style("display", "none")
-                                    })
-                                break;
-                        }
-                        /*if (d.depth < 2) {
-                            tip.html(function (d) {
-                                checked()
-                                return "<div class=row> " +
-                                    "<div class=col>" +
-                                    "<h>show node</h>" +
-                                    "</div>" +
-                                    "       <div class=col>" +
-                                    "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                    "       </div>" +
-                                    "</div>"
-                                    + d.children.map(el => {
-                                        return "<div class=form-check>" +
-                                            "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                            "<label class=form-check-label for=flexCheckDefault>" + el.data.key + "</label> </div>"
-                                    })
-                            })
-                        } else {
-                            if (authorTitles.length > 0) {
-                                tip.html(function () {
-                                    checked()
-                                    return "<div class=row> " +
-                                        "<div class=col>" +
-                                        "<h>show node</h>" +
-                                        "</div>" +
-                                        "       <div class=col>" +
-                                        "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
-                                        "       </div>" +
-                                        "</div>"
-                                        + authorTitles.map(el => {
-                                            return "<div class=form-check>" +
-                                                "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
-                                                "<label class=form-check-label for=flexCheckDefault>" + el.key + "</label> </div>"
-                                        })
-                                })
-                            } else {
-                                tip(d).hide
-                            }
-                        }
-                        tip.show(d, i)*/
-
-
-                    }
-                )
-
-
-                function getItems() {
-
-                }
-
-                function getYears(d) {
-                    let years = []
-                    d.children.map(item => {
-                        let itemName = item.data.key;
-                        metaData.map(title => {
-                            if (itemName === title.key) {
-                                title.values.map(year => {
-                                    years.push(year.key)
-                                })
-                            }
-                        })
-                    })
-                    let result = Object.values(years.reduce((c, v) => {
-                        c[v] = c[v] || [v, 0];
-                        c[v][1]++;
-                        return c;
-                    }, {})).map(o => ({[o[0]]: o[1]}));
-
-                    return result
-                }
-
-                function getAuthors(d) {
-                    let authorList = []
-                    if (d.children) {
-                        console.log(d)
-                        d.children.map(child => {
-                            child.data.values.map(author => {
-                                authorList.push(author.key)
-                            })
-                        })
-                    } else {
-                        d.data.values.map(author => {
-                            authorList.push(author)
-                        })
-                    }
-                    return authorList
-                }
-
-                function getAuthor() {
-
-                }
-
-
-                function getAbstract() {
-
-                }
-
-                //year type
-
-
-                function getItemsOfAuthor(d) {
-                    let children = []
-                    if (d.children) {
-                        d.children.map(child => {
-                            children.push(child.data.key)
-                        })
-                        console.log(children)
-                        return children
-                    }
-                }
-
-                function checked() {
-                    if ($("#flexCheckDefault").is(':checked')) console.log("CHECKED")
-                }
-
-                function leftMenuClicked(d, i) {
-                    $(document).ready(function () {
-                        $('#leftMenuBtn').click(function () {
-                            tip.hide(d, i)
-                        })
-                    })
-                }
-
                 if (init) {
                     nodeEnter
                         .append("circle")
                         .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
-                        .style("stroke", "grey")
-                        .style("stroke-opacity", 0.3)
-                        .style("stroke-width", d => d.runtime / 10)
-                        .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
-                        .on("mouseover", function (d) {
-                            if (d.depth === 0) {
-                            }
-                            d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
+                        .style("fill", d => d.depth === 0 ? 'lightgrey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : d.depth>=3? 'black':colorScale(d.parent.parent.data.key))
+                        /* .on("mouseover", function (d) {
+                             if (d.depth === 0) {
+                             }
+                             d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
 
-                        })
+                         })*/
                         .on('mouseout', function (d) {
                             d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
                             if (d.depth === 0) {
@@ -495,15 +248,10 @@ export default class NetworkChart {
                         .append("circle")
                         .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
                         .style("display", "inline")
-                        .style("stroke", "grey")
-                        .style("stroke-opacity", 0.3)
-                        .style("stroke-width", d => d.runtime / 10)
                         .style("fill", d => d.depth === 0 ? 'white' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key))
-                        .on("mouseover", function (d) {
-                            if (d.depth === 0) {
-                            }
-                            d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
-                        })
+                        /* .on("mouseover", function (d) {
+                             d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
+                         })*/
                         .on('mouseout', function (d) {
                             d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
                             if (d.depth === 0) {
@@ -514,26 +262,57 @@ export default class NetworkChart {
                 }
 
 
-                /*for root node*/
-                node.append("text")
-                    .attr("class", "fa")
-                    .attr('font-size', function (d) {
-                        return '20px'
+
+                //tooltip
+                let tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .style(function (d) {
+                        if (d.depth === 0) {
+                            return "('display', 'inline')"
+                        } else {
+                            return "('display', 'none')"
+                        }
                     })
-                    .attr("dx", 30)
-                    .attr("dy", -30)
-                    .text(function (d, i) {
-                        if (i === 0) return "\uf055"
-                    })
+                    .style("background", colors[2])
+                    .style("overflow-y", 'scroll')
+
+
+                //usage of tooltip
+                svg.call(tip)
+
+
 
 
                 //    title of nodes
                 /*    node.append("title")
                         .text(d => d.data.key);*/
-                node.append("text")
-                    .attr("dy", 16)
-                    .attr("dx", -17)
-                    .text(d => d.data.key);
+
+                //filterbutton
+                nodeEnter.append("text")
+                    .attr('id', 'filterbutton')
+                    .attr("class", "fa")
+                    .attr('font-family', 'FontAwesome')
+                    .style('display', 'inline')
+                    .attr("dx", 30)
+                    .attr("dy", -30)
+                    .text(function (d, i) {
+                        // if (i === 0) return "\uf055"
+                        return "\uf055"
+                    })
+                    .style('pointer-events', 'auto')
+                    .on('click', function (d, i) {
+                        openTip(tip, d, i)
+                    })
+
+
+
+
+                nodeEnter.append("text")
+                    .attr("dy", 0)
+                    .attr("dx", 0)
+                    .text(function (d) {
+                        if (d.depth === 0) return d.data.key
+                    });
 
                 node = nodeEnter.merge(node);
 
@@ -604,15 +383,14 @@ export default class NetworkChart {
             }
 
             function click(node, d) {
-                node
+               /* node
                     .filter(function (d) {
                         if (d.depth > 1) return d
                     })
-                    .style("display", "inline")
+                    .style("display", "inline")*/
                 if (d.children) {
-                    console.log('d._children')
-                    console.log(d._children)
                     d._children = d.children;
+                    console.log(d._children)
                     d.children = null;
                     update(false);
                     simulation.restart();
@@ -622,6 +400,139 @@ export default class NetworkChart {
                     update(false);
                     simulation.restart();
                 }
+            }
+
+            function openTip(tip, d, i) {
+                let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
+                tip.style("background", color);
+                tip.html(function (d) {
+                    switch (d.depth) {
+                        case 0:
+                            return "<div class=row> " +
+                                "<div class=col>" +
+                                "<p style='color:white; font-family: Monospace'>show publications by title:</p>" +
+                                "</div>" +
+                                "       <div class=col>" +
+                                "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                "       </div>" +
+                                "</div>"
+                                + d.children.map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                        "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault>" + el.data.key + "</label> </div>"
+                                })
+                                + "<br><p style='color:white; font-family: Monospace'>show publications by author:</p>"
+                                + getAuthors(d).map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                        "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault>" + el + "</label> </div>"
+                                })
+                                + "<br><p style='color:white; font-family: Monospace'>show publications by year:</p>"
+                                + getYears(d).map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                        "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault>" + el.key + "</label> </div>"
+                                })
+
+                            break;
+                        case 1:
+                            let authorTitles = getItemsOfAuthor(d);
+                            return "<div class=row> " +
+                                "<div class=col>" +
+                                "<h>show node</h>" +
+                                "</div>" +
+                                "       <div class=col>" +
+                                "           <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button>" +
+                                "       </div>" +
+                                "</div>"
+                                + authorTitles.map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault> " +
+                                        "<label class=form-check-label for=flexCheckDefault>" + el + "</label> </div>"
+                                })
+                            break;
+
+                    }
+                })
+                tip.show(d, i)
+
+            }
+
+            function getItems() {
+
+            }
+
+            function getYears(d) {
+                let years = []
+                d.children.map(item => {
+                    let itemName = item.data.key;
+                    metaData.map(title => {
+                        if (itemName === title.key) {
+                            title.values.map(year => {
+                                years.push(year.key)
+                            })
+                        }
+                    })
+                })
+                let result = Object.values(years.reduce((c, v) => {
+                    c[v] = c[v] || [v, 0];
+                    c[v][1]++;
+                    return c;
+                }, {})).map(o => ({[o[0]]: o[1]}));
+
+                return result
+            }
+
+            function getAuthors(d) {
+                let authorList = []
+                if (d.children) {
+                    console.log(d)
+                    d.children.map(child => {
+                        child.data.values.map(author => {
+                            authorList.push(author.key)
+                        })
+                    })
+                } else {
+                    d.data.values.map(author => {
+                        authorList.push(author)
+                    })
+                }
+                return authorList
+            }
+
+            function getAuthor() {
+
+            }
+
+
+            function getAbstract() {
+
+            }
+
+            //year type
+
+
+            function getItemsOfAuthor(d) {
+                let children = []
+                if (d.children) {
+                    d.children.map(child => {
+                        children.push(child.data.key)
+                    })
+                    return children
+                }
+            }
+
+            function checked() {
+                if ($("#flexCheckDefault").is(':checked')) console.log("CHECKED")
+            }
+
+            function leftMenuClicked(d, i) {
+                $(document).ready(function () {
+                    $('#leftMenuBtn').click(function () {
+                        // tip.hide(d, i)
+                        d3.select(this).style("display", "none")
+                    })
+                })
             }
 
 
