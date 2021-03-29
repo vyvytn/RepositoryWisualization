@@ -63,6 +63,31 @@ export default class PackChart {
                     }
                 }
 
+                function shortenName(d) {
+                    switch (d.data.key) {
+                        case "Weizenbaum Institut":
+                            return 'WI';
+
+                        case "Mensch - Arbeit - Wissen":
+                            return 'Mensch'
+                                + '<br/>' + '' +
+                                'Arbeit' + '<br/>'
+                                + 'Wissen';
+
+                        case "Markt - Wettbewerb - Ungleichheit":
+                            return "Markt - Wettbewerb - Ungleichheit";
+
+                        case "Demokratie – Partizipation – Öffentlichkeit":
+                            return "Demokratie – Partizipation – Öffentlichkeit";
+
+                        case "Verantwortung – Vertrauen – Governance":
+                            return "Verantwortung – Vertrauen – Governance";
+
+                        case  "Querschnittsformate":
+                            return "Querschnittsformate"
+                    }
+                }
+
                 let navBar = document.getElementById('navBar');
                 let newNav = document.createElement('li');
                 newNav.className = 'breadcrumb-item active';
@@ -103,7 +128,7 @@ export default class PackChart {
                     .attr('class', 'd3-tip')
                     // .offset([-10, 0])
                     .html(function (d) {
-                        return d.depth === 1 ? "Research topic: " +'<br>'+'<b>'+d.data.key + '<b>': "show network chart of " + '<br>' + "'" + d.data.key + "'"
+                        return d.depth === 1 ? "Research topic: " + '<br>' + '<b>' + d.data.key + '<b>' : "show network chart of " + '<br>' + "'" + d.data.key + "'"
                     });
 
                 svg
@@ -132,13 +157,13 @@ export default class PackChart {
                     .style("opacity", function (d) {
                         return d.depth === 0 ? 0.5 : d.depth === 1 ? 0.7 : d.depth === 2 ? 0.7 : 1
                     })
-                    .on("click", function (d) {
+                    .on("click", function (d, i) {
                         console.log(d)
                         if (d.depth >= 2) {
                             $("#returnBtn").show();
                             drawNetwork(d.data.key);
                         }
-                        if (focus !== d) zoom(d), d3.event.stopPropagation();
+                        if (focus !== d) zoom(d, i), d3.event.stopPropagation();
                     })
 
 
@@ -150,8 +175,10 @@ export default class PackChart {
                         return d.parent === root ? 1 : 0;
                     })
                     .style("display", function (d) {
-                        return d.parent === root ? "inline" : "none";
+                        return d.parent === root ? "block" : "none";
                     })
+                    .style('font-size',function(d){return d.r/10})
+                    .style( 'font-family', 'Monospace')
                     .text(function (d) {
                         return d.data.key;
                     });
@@ -161,9 +188,10 @@ export default class PackChart {
 
                 zoomTo([root.x, root.y, root.r * 2 + margin]);
 
-                function zoom(d) {
+                function zoom(d, i) {
+
                     //stop zooming into group
-                    if (d.depth === 2) return;
+
 
                     let focus0 = focus;
                     focus = d;
@@ -179,9 +207,9 @@ export default class PackChart {
                                 });
                             })
                             circle
-                                .on('mouseover', function(d,i){
+                                .on('mouseover', function (d, i) {
                                     if (d.depth === 1) tip.style("background", colorFIll(d.data.key))
-                                    tip.show(d,i)
+                                    tip.show(d, i)
 
                                 })
                                 .on('mouseout', tip.hide)
@@ -195,6 +223,7 @@ export default class PackChart {
                             text.style("visibility", "hidden")
                             updateNavigation(2, focus.data.key)
                             break;
+                        case 2: return
 
                     }
 
@@ -206,26 +235,29 @@ export default class PackChart {
                     let transition = d3.transition()
                         .duration(d3.event.altKey ? 50 : 500)
                         .tween("zoom", function (d) {
-                            let i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2.5 + margin]);
+                            let a = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2.5 + margin]);
                             return function (t) {
-                                zoomTo(i(t));
+                                zoomTo(a(t));
                             };
-                        });
+                        })
+
 
                     //label changing while zooming
                     transition.selectAll("text")
                         .filter(function (d) {
-                            return d.parent === focus || this.style.display === "inline";
+                            return d.parent === focus || this.style.display === "block";
                         })
                         .style("fill-opacity", function (d) {
                             return d.parent === focus ? 1 : 0;
                         })
                         .on("start", function (d) {
-                            if (d.parent === focus) this.style.display = "inline";
+                            if (d.parent === focus) this.style.display = "block";
                         })
                         .on("end", function (d) {
                             if (d.parent !== focus) this.style.display = "none";
                         });
+
+
                 }
 
 
@@ -267,6 +299,7 @@ export default class PackChart {
                     circle.attr("r", function (d) {
                         return d.r * k;
                     });
+
                 }
 
                 function drawChord(name) {
@@ -338,13 +371,13 @@ export default class PackChart {
 
                         d3.transition().selectAll("text")
                             .filter(function (d) {
-                                return d.parent === focus || this.style.display === "inline";
+                                return d.parent === focus || this.style.display === "block";
                             })
                             .style("fill-opacity", function (d) {
                                 return d.parent === focus ? 1 : 0;
                             })
                             .on("start", function (d) {
-                                if (d.parent === focus) this.style.display = "inline";
+                                if (d.parent === focus) this.style.display = "block";
                             })
                             .on("end", function (d) {
                                 if (d.parent !== focus) this.style.display = "none";

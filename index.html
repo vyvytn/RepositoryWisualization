@@ -45,7 +45,7 @@
             Weizenbaum Library
         </h1>
     </div>
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb" id="navBar">
             <li class="breadcrumb-item active" aria-current="page" style="font-family: 'Times New Roman'">Home</li>
         </ol>
@@ -72,10 +72,36 @@
         <!--   NETWORK CHART  -->
         <div class="col" id="networkContainer">
 
+            <!-- Akkordeon Legend with explaination Code: https://getbootstrap.com/docs/5.0/components/accordion/ -->
+            <div class="accordion" id="legendContainer">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="legendBtn">
+                            Legend
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                         data-bs-parent="#legendContainer">
+                        <div class="accordion-body">
+                            <svg id="legendSVG">
+
+                            </svg>
+                            <!--<strong>This is the first item's accordion body.</strong> It is hidden by default, until the
+                            collapse plugin adds the appropriate classes that we use to style each element. These
+                            classes control the overall appearance, as well as the showing and hiding via CSS
+                            transitions. You can modify any of this with custom CSS or overriding our default variables.
+                            It's also worth noting that just about any HTML can go within the
+                            <code>.accordion-body</code>, though the transition does limit overflow.-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <svg id="nwSVG">
 
             </svg>
-<!--            <div class="col" id="networkViz"></div>-->
+            <!--            <div class="col" id="networkViz"></div>-->
         </div>
 
 
@@ -91,14 +117,14 @@
                 </button>
             </div>
             <div class="row" id="chordMenuContainer">
-                <button class="btn btn-light" type="button" id="chordMenuBtn" >show
+                <button class="btn btn-light" type="button" id="chordMenuBtn">show
                     chord chart <i class="bi bi-pie-chart-fill"></i>
                 </button>
-<!--                COLLAPSE MENU-->
-               <!-- <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#chordMenu"
-                        aria-expanded="false" aria-controls="collapseExample">show
-                    chord chart <i class="bi bi-pie-chart-fill"></i>
-                </button>-->
+                <!--                COLLAPSE MENU-->
+                <!-- <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#chordMenu"
+                         aria-expanded="false" aria-controls="collapseExample">show
+                     chord chart <i class="bi bi-pie-chart-fill"></i>
+                 </button>-->
                 <!--<div id="chordMenu" class="collapse">
                     <div id="card-body">
                         &lt;!&ndash;   SELECT MENU &ndash;&gt;
@@ -112,11 +138,11 @@
                 </button>
             </div>-->
 
+            </div>
         </div>
-    </div>
 
-</div>
-<script type="module" src="./main.js">
-</script>
+    </div>
+    <script type="module" src="./main.js">
+    </script>
 </body>
 </html>

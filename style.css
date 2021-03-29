@@ -29,7 +29,6 @@
 }
 
 .label {
-    font: 15px "Monaco", "Monaco", Monospaced, Monospace;
     text-anchor: middle;
     /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
 }
@@ -131,4 +130,12 @@ text {
 svg {
     /*border:1px solid #000;*/
 }
+/*legend of network chart*/
+.accordion-item{
+    /*background-color: coral;*/
+}
+#legendBtn{
+    background-color: whitesmoke;
+    stroke:none
 
+}
