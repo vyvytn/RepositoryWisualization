@@ -1,0 +1,96 @@
+[
+  {
+    "area": "Mensch, Arbeit, Wissen",
+    "groups": [
+      {
+        "name": "Working in Highly Automated Digital-Hybrid Processes"
+      },
+      {
+        "name": "Critical Maker Culture"
+      },
+      {
+        "name": "Education and Advanced Training in the Digital Society"
+      },
+      {
+        "name": "Digital Technologies and Well-being"
+      },
+      {
+        "name": "Digitalisation and Science"
+      },
+      {
+        "name": "Reorganizing Knowledge Practices"
+      }
+      ]
+  },
+  {
+    "area": "Markt, Wettbewerb, Ungleichheit",
+    "groups": [
+      {
+        "name": "Work and Cooperation in the Sharing Economy"
+      },
+      {
+        "name": "Frameworks for Data Markets"
+      },
+      {
+        "name": "Data-Driven Business Model Innovations"
+      },
+      {
+        "name": "Inequality and Digital Sovereignty"
+      },
+      {
+        "name": "Digital Integration"
+      }
+    ]
+  },
+  {
+    "area": "Demokratie ? Partizipation ? ?ffentlichkeit",
+    "groups": [
+      {
+        "name": "Democracy and Digitalisation"
+      },
+      {
+        "name": "Digital Citizenship"
+      },
+      {
+        "name": "News, Campaigns and the Rationality of Public Discourse"
+      },
+      {
+        "name": "Digitalisation and the Transnational Public Sphere"
+      }
+    ]
+  },
+  {
+    "area": "Verantwortung ? Vertrauen ? Governance",
+    "groups": [
+      {
+        "name": "Responsibility and the Internet of Things"
+      },
+      {
+        "name": "Shifts in Norm Setting"
+      },
+      {
+        "name": "Trust in Distributed Environments"
+      },  {
+        "name": "Quantification and Social Regulation"
+      },  {
+        "name": "Digitalisation and Networked Security"
+      },  {
+        "name": "Criticality of AI-based Systems"
+      }
+    ]
+  },
+  {
+    "area": "Querschnittsformate",
+    "groups": [
+      {
+        "name": "Autonomous Systems & Self-Determination"
+      },
+      {
+        "name": "Security & Transparency"
+      },
+      {
+        "name": "Digitalisation & Sustainability"
+      }
+    ]
+  }
+]
