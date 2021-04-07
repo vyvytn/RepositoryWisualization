@@ -34,7 +34,7 @@ export default class ChordChart {
 
 
         //get data
-        await d3.json('/public/libraryItems.json', function (data) {
+        await d3.json('/public/new.json', function (data) {
             let unsortedData = data.results.bindings;
 
             //nesting data
@@ -55,7 +55,7 @@ export default class ChordChart {
             })
             console.log(group)
 
-           /* let groupNested = d3.nest()
+          /*  let groupNested = d3.nest()
                 .key(d => d.area.value)
                 .key(d => d.group.value)
                 .entries(unsortedData)
@@ -69,8 +69,7 @@ export default class ChordChart {
                     })
                 }
             })
-*/
-            console.log(group)
+            console.log(group)*/
 
 
             let packableItems = {key: "Weizenbaum Library", values: myNewData};

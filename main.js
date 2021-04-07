@@ -1,10 +1,9 @@
 import PackChart from './modules/PackChart.js'
 import sparqlRequest from "./modules/request/sparlRequest.js";
-
 // import ChordChart from "./modules/ChordChart.js";
 // import NetworkChart from "./modules/NetworkChart.js";
 
-let packChart = new PackChart("./public/libraryItems.json");
+let packChart = new PackChart("./public/new.json");
 // let chordChart = new ChordChart();
 // let nw = new NetworkChart();
 
@@ -21,8 +20,6 @@ async function init() {
     let req=new sparqlRequest();
     // console.log(req.decode())
     req.buildRequestURI()
-
-
 
 
     drawPack();
@@ -63,7 +60,6 @@ addNavRoute('network chart')
 }
 */
 
-
 function addNavRoute(areaName) {
     let navBar = document.getElementById('navBar');
     if (navBar.childElementCount > 1) navBar.removeChild(navBar.lastChild);
@@ -73,6 +69,7 @@ function addNavRoute(areaName) {
     newNav.innerHTML = areaName;
     navBar.appendChild(newNav);
 }
+
 
 
 function btnCLickFunctions() {

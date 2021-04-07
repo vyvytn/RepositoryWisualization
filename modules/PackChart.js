@@ -45,16 +45,16 @@ export default class PackChart {
                         case "Weizenbaum Institut":
                             return colors[1];
 
-                        case "Mensch - Arbeit - Wissen":
+                        case "Mensch, Arbeit, Wissen":
                             return colors[2];
 
-                        case "Markt - Wettbewerb - Ungleichheit":
+                        case "Markt, Wettbewerb, Ungleichheit":
                             return colors[3];
 
-                        case "Demokratie – Partizipation – Öffentlichkeit":
+                        case "Demokratie, Partizipation, ?ffentlichkeit":
                             return colors[4];
 
-                        case "Verantwortung – Vertrauen – Governance":
+                        case "Verantwortung, Vertrauen, Governance":
                             return colors[5];
 
                         case  "Querschnittsformate":
@@ -102,11 +102,11 @@ export default class PackChart {
 
                 //nesting data and creating a hierarchy
                 let rawData = data.results.bindings;
+                console.log(rawData)
                 let myNewData = d3.nest()
                     .key(d => d.area.value)
                     .key(d => d.group.value)
                     .key(d => d.title.value)
-
                     .entries(rawData);
                 let packable = {key: "Weizenbaum Institut", values: myNewData}
                 let root = d3.hierarchy(packable, d => d.values)
