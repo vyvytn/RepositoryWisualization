@@ -14,7 +14,7 @@ export default class NetworkChart {
         let group = this.group
 
         await d3.json("./public/new.json", function (data) {
-                var link, edgepaths, nodes, node
+                var link, edgepaths, nodes, node, simulation
                 let unsortedData = data.results.bindings;
 
                 let authorsList = d3.nest()
@@ -155,68 +155,68 @@ export default class NetworkChart {
                 /**
                  * Link definition here allows drawing lines and arrows
                  * */
-                let links = hierarchy.links();
+                /*  let links = hierarchy.links();
 
-                link = svg.selectAll(".links")
-                    .data(links)
-
-
-                const linksEnter =
-                    link.enter()
-                        .append('line')
-                        .attr("class", "links")
-                        .attr("stroke-width", 1)
-                        .style('stroke', 'black')
-                        .style('opacity', 0)
-
-                link = linksEnter.merge(link)
-                                 .attr('marker-end', 'url(#arrowhead)')
+                  link = svg.selectAll(".links")
+                      .data(links)
 
 
-                // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
-                // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
-               /* linksEnter.append("title")
-                    .text(d => d.key); //DESIGN tooltip text*/
+                  const linksEnter =
+                      link.enter()
+                          .append('line')
+                          .attr("class", "links")
+                          .attr("stroke-width", 1)
+                          .style('stroke', 'black')
+                          .style('opacity', 0)
 
-                //d3 network simulation
-                let simulation = d3.forceSimulation()
-                    .force("link", d3.forceLink().id(function(d) { return d.id; })
-                        // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                         //DESIGN Abstand der Knoten zueinander
-                        .distance(100).strength(1)
-
-                    )
-                    //abstand von Kind-Elternknoten
-                    .force('charge', d3.forceManyBody().strength(-150)
-                        // .theta(0.1)
-                    )
-                    .force('center', d3.forceCenter(width / 2, height / 2))
-                    .force('collision', d3.forceCollide().radius(20))
-                    // .force('collide', d3.forceCollide().radius(30))
-                    // .force("charge", d3.forceManyBody()
-                    //     .strength(-200)
-                    //     .theta(0.9)
-                    //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
-                    .on("tick", ticked);
+                  link = linksEnter.merge(link)
+                                   .attr('marker-end', 'url(#arrowhead)')
 
 
-                //appending little triangles, path object, as arrowhead
-                //The <defs> element is used to store graphical objects that will be used at a later time
-                //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
-                svg.append('defs').append('marker')
-                    .attr("id", 'arrowhead')
-                    .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
-                    .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
-                    .attr('refY', 0)
-                    .attr('orient', 'auto')
-                    .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
-                    .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
-                    .attr('xoverflow', 'visible')
-                    .append('svg:path')
-                    .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-                    .attr('fill', '#999')
-                    .style('stroke', 'none');
+                  // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
+                  // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
+                 /!* linksEnter.append("title")
+                      .text(d => d.key); //DESIGN tooltip text*!/
 
+                  //d3 network simulation
+                  let simulation = d3.forceSimulation()
+                      .force("link", d3.forceLink().id(function(d) { return d.id; })
+                          // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
+                           //DESIGN Abstand der Knoten zueinander
+                          .distance(100).strength(1)
+
+                      )
+                      //abstand von Kind-Elternknoten
+                      .force('charge', d3.forceManyBody().strength(-150)
+                          // .theta(0.1)
+                      )
+                      .force('center', d3.forceCenter(width / 2, height / 2))
+                      .force('collision', d3.forceCollide().radius(20))
+                      // .force('collide', d3.forceCollide().radius(30))
+                      // .force("charge", d3.forceManyBody()
+                      //     .strength(-200)
+                      //     .theta(0.9)
+                      //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
+                      .on("tick", ticked);
+
+
+                  //appending little triangles, path object, as arrowhead
+                  //The <defs> element is used to store graphical objects that will be used at a later time
+                  //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+                  svg.append('defs').append('marker')
+                      .attr("id", 'arrowhead')
+                      .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
+                      .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
+                      .attr('refY', 0)
+                      .attr('orient', 'auto')
+                      .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
+                      .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
+                      .attr('xoverflow', 'visible')
+                      .append('svg:path')
+                      .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+                      .attr('fill', '#999')
+                      .style('stroke', 'none');
+  */
 
                 // legend for items
                 let legendSVG = d3.select('#legendSVG')
@@ -241,31 +241,104 @@ export default class NetworkChart {
                     .style("font-size", "15px")
                     .style("font-family", "Times New Roman")
 
-
+                nodes = hierarchy.descendants();
+                nodes.map(n => {
+                    if (n.depth === 1) {
+                        n._children = n.children;
+                        n.children = null;
+                    }
+                })
                 update(true)
 
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(first) {
+                    let links = hierarchy.links();
 
-                    if (first === true) {
-                        nodes = hierarchy.descendants();
-                        nodes.map(n => {
-                            if (n.depth === 1) {
-                                n._children = n.children;
-                                n.children = null;
-                            }
-                        })
-                        // simulation.restart()
+                    link = svg.selectAll(".links")
+                        .data(links)
 
-                    } else {
-                        nodes = hierarchy.descendants();
-                    }
-                    // nodes = hierarchy.descendants();
+
+                    const linksEnter =
+                        link.enter()
+                            .append('line')
+                            .attr("class", "links")
+                            .attr("stroke-width", 1)
+                            .style('stroke', 'black')
+                            .style('opacity', 0)
+
+                    link = linksEnter.merge(link)
+                        .attr('marker-end', 'url(#arrowhead)')
+
+
+                    // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
+                    // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
+                    /* linksEnter.append("title")
+                         .text(d => d.key); //DESIGN tooltip text*/
+
+                    //d3 network simulation
+                    simulation = d3.forceSimulation()
+                        .force("link", d3.forceLink().id(function (d) {
+                                return d.id;
+                            })
+                                // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
+                                //DESIGN Abstand der Knoten zueinander
+                                .distance(100).strength(1)
+                        )
+                        //abstand von Kind-Elternknoten
+                        .force('charge', d3.forceManyBody().strength(-150)
+                            // .theta(0.1)
+                        )
+                        .force('center', d3.forceCenter(width / 2, height / 2))
+                        .force('collision', d3.forceCollide().radius(20))
+                        // .force('collide', d3.forceCollide().radius(30))
+                        // .force("charge", d3.forceManyBody()
+                        //     .strength(-200)
+                        //     .theta(0.9)
+                        //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
+                        .on("tick", ticked);
+
+
+                    //appending little triangles, path object, as arrowhead
+                    //The <defs> element is used to store graphical objects that will be used at a later time
+                    //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+                    svg.append('defs').append('marker')
+                        .attr("id", 'arrowhead')
+                        .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
+                        .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
+                        .attr('refY', 0)
+                        .attr('orient', 'auto')
+                        .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
+                        .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
+                        .attr('xoverflow', 'visible')
+                        .append('svg:path')
+                        .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+                        .attr('fill', '#999')
+                        .style('stroke', 'none');
+
+
+                    console.log(links)
+
+                    // if (first === true) {
+                    //     nodes = hierarchy.descendants();
+                    //     nodes.map(n => {
+                    //         if (n.depth === 1) {
+                    //             n._children = n.children;
+                    //             n.children = null;
+                    //         }
+                    //     })
+                    //     simulation.restart()
+                    //
+                    // } else {
+                    //     nodes = hierarchy.descendants();
+                    // }
+                    nodes = hierarchy.descendants();
 
                     // nodes= nodesData.filter(node=> node.depth<=1)
                     //getting links
                     // let links = hierarchy.links();
+
+
                     /*let links = hierarchy.links();
                     console.log(links)
 
@@ -294,9 +367,8 @@ export default class NetworkChart {
 */
 
 
-                    ///*
-                    // link defintion here draws line but does not links correctly; lonks after update missing*/
-                    link = svg.selectAll(".links")
+                    // link defintion here draws line but does not links correctly; lonks after update missing
+                    /*link = svg.selectAll(".links")
                         .data(links)
                         .exit().remove();
 
@@ -308,8 +380,12 @@ export default class NetworkChart {
                         .style('opacity', 10)
 
                     link = linksEnter.merge(link)
-                        .attr('marker-end', 'url(#arrowhead)')
+                        .attr('marker-end', 'url(#arrowhead)')*/
+
+
                     // Initialize the nodes
+
+
                     node = svg.selectAll(".nodes")
                         .data(nodes)
 
@@ -333,16 +409,16 @@ export default class NetworkChart {
 
                     node.exit().remove();
 
-                    edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
-                        .data(links)
-                        .enter()
-                        .append('path')
-                        .attr('class', 'edgepath')
-                        .attr('fill-opacity', 100)
-                        .attr('stroke-opacity', 10)
-                        .attr('id', function (d, i) {
-                            return 'edgepath' + i
-                        })
+                    // edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
+                    //     .data(links)
+                    //     .enter()
+                    //     .append('path')
+                    //     .attr('class', 'edgepath')
+                    //     .attr('fill-opacity', 100)
+                    //     .attr('stroke-opacity', 10)
+                    //     .attr('id', function (d, i) {
+                    //         return 'edgepath' + i
+                    //     })
 
                     /*  // .style("pointer-events", "none");
                       const edgelabels = svg.selectAll(".edgelabel")
@@ -493,22 +569,20 @@ export default class NetworkChart {
                 }
 
                 function click(node, d) {
+                    if (d3.event.defaultPrevented) return; // ignore drag
 
                     if (d.children) {
                         console.log(nodes)
                         d._children = d.children;
                         d.children = null;
-                        update(false);
-                        simulation.restart();
                     } else {
                         console.log(nodes)
                         simulation.force(d)
                         d.children = d._children;
                         d._children = null;
-                        update(false);
-                        simulation.restart();
-
                     }
+                    update()
+                    simulation.restart()
                 }
 
 
@@ -520,7 +594,7 @@ export default class NetworkChart {
                     checked()
                     submitFilter(tip, d, i)
                     tip.html(function (d) {
-                        return "<div class=row>" +
+                        return "<div class=row style='width: 300px; height: 500px'>" +
                             "<div class=col><p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
                             " <div class=col>" +
                             " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
@@ -604,6 +678,7 @@ export default class NetworkChart {
                         return c;
                     }, {})).map(o => ({[o[0]]: o[1]}));
 
+                    console.log(result)
                     return result
                 }
 
@@ -612,7 +687,7 @@ export default class NetworkChart {
                     if (d.children) {
                         d.children.map(child => {
                             child.data.values.map(author => {
-                                authorList.push(author.key)
+                                if (author.key !== undefined && author.key !== 'undefined') authorList.push(author.key)
                             })
                         })
                     } else {
@@ -620,6 +695,7 @@ export default class NetworkChart {
                             authorList.push(author)
                         })
                     }
+                    console.log(authorList)
                     return authorList
                 }
 
@@ -644,25 +720,6 @@ export default class NetworkChart {
                     return children
                 }
 
-                function showItemByAuthor() {
-
-                }
-
-                function showItemByYear() {
-
-                }
-
-                function showItemByType() {
-
-                }
-
-                function showConnectedGRoup() {
-
-                }
-
-                function openConnectedGroup() {
-
-                }
 
                 //-----------------------------------------------------------------------------------------------------------------
 
