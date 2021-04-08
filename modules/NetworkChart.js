@@ -152,71 +152,6 @@ export default class NetworkChart {
                     .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-                /**
-                 * Link definition here allows drawing lines and arrows
-                 * */
-                /*  let links = hierarchy.links();
-
-                  link = svg.selectAll(".links")
-                      .data(links)
-
-
-                  const linksEnter =
-                      link.enter()
-                          .append('line')
-                          .attr("class", "links")
-                          .attr("stroke-width", 1)
-                          .style('stroke', 'black')
-                          .style('opacity', 0)
-
-                  link = linksEnter.merge(link)
-                                   .attr('marker-end', 'url(#arrowhead)')
-
-
-                  // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
-                  // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
-                 /!* linksEnter.append("title")
-                      .text(d => d.key); //DESIGN tooltip text*!/
-
-                  //d3 network simulation
-                  let simulation = d3.forceSimulation()
-                      .force("link", d3.forceLink().id(function(d) { return d.id; })
-                          // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                           //DESIGN Abstand der Knoten zueinander
-                          .distance(100).strength(1)
-
-                      )
-                      //abstand von Kind-Elternknoten
-                      .force('charge', d3.forceManyBody().strength(-150)
-                          // .theta(0.1)
-                      )
-                      .force('center', d3.forceCenter(width / 2, height / 2))
-                      .force('collision', d3.forceCollide().radius(20))
-                      // .force('collide', d3.forceCollide().radius(30))
-                      // .force("charge", d3.forceManyBody()
-                      //     .strength(-200)
-                      //     .theta(0.9)
-                      //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
-                      .on("tick", ticked);
-
-
-                  //appending little triangles, path object, as arrowhead
-                  //The <defs> element is used to store graphical objects that will be used at a later time
-                  //The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
-                  svg.append('defs').append('marker')
-                      .attr("id", 'arrowhead')
-                      .attr('viewBox', '-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
-                      .attr('refX', 50) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
-                      .attr('refY', 0)
-                      .attr('orient', 'auto')
-                      .attr('markerWidth', 15) //DESIGN Pfeilspitzenbreite
-                      .attr('markerHeight', 15)//DESIGN Pfeilspitzenh?he
-                      .attr('xoverflow', 'visible')
-                      .append('svg:path')
-                      .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-                      .attr('fill', '#999')
-                      .style('stroke', 'none');
-  */
 
                 // legend for items
                 let legendSVG = d3.select('#legendSVG')
@@ -248,33 +183,43 @@ export default class NetworkChart {
                         n.children = null;
                     }
                 })
+            let links = hierarchy.links();
+
+            link = svg.selectAll(".links")
+                .data(links)
+
+
+
                 update(true)
 
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(first) {
-                    let links = hierarchy.links();
 
-                    link = svg.selectAll(".links")
-                        .data(links)
-
-
-                    const linksEnter =
-                        link.enter()
-                            .append('line')
-                            .attr("class", "links")
-                            .attr("stroke-width", 1)
-                            .style('stroke', 'black')
-                            .style('opacity', 0)
-
-                    link = linksEnter.merge(link)
-                        .attr('marker-end', 'url(#arrowhead)')
 
 
                     // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
                     // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
                     /* linksEnter.append("title")
                          .text(d => d.key); //DESIGN tooltip text*/
+
+                    let links = hierarchy.links();
+
+                    link = svg.selectAll(".links")
+                        .data(links)
+                        
+                    const linksEnter =
+                        link.enter()
+                            .append('line')
+                            .attr("class", "links")
+                            .attr("stroke-width", 1)
+                            .style('stroke', 'black')
+                            .style('opacity', 10)
+                    link.exit().remove();
+
+                    link = linksEnter.merge(link)
+                        .attr('marker-end', 'url(#arrowhead)')
+
 
                     //d3 network simulation
                     simulation = d3.forceSimulation()
@@ -283,7 +228,7 @@ export default class NetworkChart {
                             })
                                 // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
                                 //DESIGN Abstand der Knoten zueinander
-                                .distance(100).strength(1)
+                                .distance(100).strength(0.8)
                         )
                         //abstand von Kind-Elternknoten
                         .force('charge', d3.forceManyBody().strength(-150)
@@ -317,8 +262,22 @@ export default class NetworkChart {
                         .style('stroke', 'none');
 
 
-                    console.log(links)
-
+                    // let links = hierarchy.links();
+                    //
+                    // link = svg.selectAll(".links")
+                    //     .data(links)
+                    //
+                    //
+                    // const linksEnter =
+                    //     link.enter()
+                    //         .append('line')
+                    //         .attr("class", "links")
+                    //         .attr("stroke-width", 1)
+                    //         .style('stroke', 'black')
+                    //         .style('opacity', 0)
+                    //
+                    // link = linksEnter.merge(link)
+                    //     .attr('marker-end', 'url(#arrowhead)')
                     // if (first === true) {
                     //     nodes = hierarchy.descendants();
                     //     nodes.map(n => {
@@ -338,33 +297,12 @@ export default class NetworkChart {
                     //getting links
                     // let links = hierarchy.links();
 
-
-                    /*let links = hierarchy.links();
-                    console.log(links)
-
-
+/*
                     link = svg.selectAll(".links")
                         .data(links)
-                        .exit().remove();
-
-                    const linksEnter =
-                        link.enter()
-                            .append('line')
-                            .attr("class", "links")
-                            .attr("stroke-width", 10)
-                            .style('stroke', 'black')
-                    /!*.style('opacity', 100)
-                    .style('stroke-width', 100)*!/
-
-                    link = linksEnter.merge(link)
-                    // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
+                        .exit().remove();*/
 
 
-                    //The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
-                    //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
-                    linksEnter.append("title")
-                        .text(d => d.key); //DESIGN tooltip text
-*/
 
 
                     // link defintion here draws line but does not links correctly; lonks after update missing
