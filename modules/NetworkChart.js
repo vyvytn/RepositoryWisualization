@@ -228,14 +228,14 @@ export default class NetworkChart {
                             })
                                 // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
                                 //DESIGN Abstand der Knoten zueinander
-                                .distance(100).strength(0.8)
+                                .distance(70).strength(0.1)
                         )
                         //abstand von Kind-Elternknoten
-                        .force('charge', d3.forceManyBody().strength(-150)
-                            // .theta(0.1)
+                        .force('charge', d3.forceManyBody().strength(-250)
+                            // .theta(-50)
                         )
                         .force('center', d3.forceCenter(width / 2, height / 2))
-                        .force('collision', d3.forceCollide().radius(20))
+                        // .force('collision', d3.forceCollide().radius(20))
                         // .force('collide', d3.forceCollide().radius(30))
                         // .force("charge", d3.forceManyBody()
                         //     .strength(-200)
