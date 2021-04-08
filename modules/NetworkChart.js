@@ -17,6 +17,7 @@ export default class NetworkChart {
                 var link, edgepaths, nodes, node, simulation
                 let unsortedData = data.results.bindings;
 
+                console.log(unsortedData)
                 let authorsList = d3.nest()
                     .key(d => d.author.value)
                     .key(d => d.title.value)
@@ -58,6 +59,19 @@ export default class NetworkChart {
                     .key(d => d.author.value)
                     .entries(unsortedData);
 
+                allData.map(area => {
+                    area.type = 'area'
+                    area.values.map(group => {
+                        group.type = 'group'
+                        group.values.map(title => {
+                            title.type = 'title'
+                            title.values.map(author => {
+                                author.type = 'author'
+                            })
+                        })
+                    })
+                })
+
                 let groupData = [];
 
                 //load groupspecific data
@@ -91,6 +105,7 @@ export default class NetworkChart {
                           }
                       })
                   })*/
+
 
                 itemsList.map(item => {
                     groupData.map(i => {
@@ -177,17 +192,17 @@ export default class NetworkChart {
                     .style("font-family", "Times New Roman")
 
                 nodes = hierarchy.descendants();
+                console.log(nodes)
                 nodes.map(n => {
                     if (n.depth === 1) {
                         n._children = n.children;
                         n.children = null;
                     }
                 })
-            let links = hierarchy.links();
+                let links = hierarchy.links();
 
-            link = svg.selectAll(".links")
-                .data(links)
-
+                link = svg.selectAll(".links")
+                    .data(links)
 
 
                 update(true)
@@ -195,7 +210,6 @@ export default class NetworkChart {
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(first) {
-
 
 
                     // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
@@ -207,7 +221,7 @@ export default class NetworkChart {
 
                     link = svg.selectAll(".links")
                         .data(links)
-                        
+
                     const linksEnter =
                         link.enter()
                             .append('line')
@@ -261,72 +275,11 @@ export default class NetworkChart {
                         .attr('fill', '#999')
                         .style('stroke', 'none');
 
-
-                    // let links = hierarchy.links();
-                    //
-                    // link = svg.selectAll(".links")
-                    //     .data(links)
-                    //
-                    //
-                    // const linksEnter =
-                    //     link.enter()
-                    //         .append('line')
-                    //         .attr("class", "links")
-                    //         .attr("stroke-width", 1)
-                    //         .style('stroke', 'black')
-                    //         .style('opacity', 0)
-                    //
-                    // link = linksEnter.merge(link)
-                    //     .attr('marker-end', 'url(#arrowhead)')
-                    // if (first === true) {
-                    //     nodes = hierarchy.descendants();
-                    //     nodes.map(n => {
-                    //         if (n.depth === 1) {
-                    //             n._children = n.children;
-                    //             n.children = null;
-                    //         }
-                    //     })
-                    //     simulation.restart()
-                    //
-                    // } else {
-                    //     nodes = hierarchy.descendants();
-                    // }
-                    nodes = hierarchy.descendants();
-
-                    // nodes= nodesData.filter(node=> node.depth<=1)
-                    //getting links
-                    // let links = hierarchy.links();
-
-/*
-                    link = svg.selectAll(".links")
-                        .data(links)
-                        .exit().remove();*/
-
-
-
-
-                    // link defintion here draws line but does not links correctly; lonks after update missing
-                    /*link = svg.selectAll(".links")
-                        .data(links)
-                        .exit().remove();
-
-                    linksEnter
-                        .append('line')
-                        .attr("class", "links")
-                        .attr("stroke-width", 1)
-                        .style('stroke', 'black')
-                        .style('opacity', 10)
-
-                    link = linksEnter.merge(link)
-                        .attr('marker-end', 'url(#arrowhead)')*/
-
-
                     // Initialize the nodes
-
+                    nodes = hierarchy.descendants();
 
                     node = svg.selectAll(".nodes")
                         .data(nodes)
-
 
                     let nodeEnter = node.enter()
                         .append("g")
@@ -347,42 +300,41 @@ export default class NetworkChart {
 
                     node.exit().remove();
 
-                    // edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
-                    //     .data(links)
-                    //     .enter()
-                    //     .append('path')
-                    //     .attr('class', 'edgepath')
-                    //     .attr('fill-opacity', 100)
-                    //     .attr('stroke-opacity', 10)
-                    //     .attr('id', function (d, i) {
-                    //         return 'edgepath' + i
-                    //     })
-
-                    /*  // .style("pointer-events", "none");
-                      const edgelabels = svg.selectAll(".edgelabel")
+                    /*  edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
                           .data(links)
                           .enter()
-                          .append('text')
-                          .style("pointer-events", "none")
-                          .attr('class', 'edgelabel')
+                          .append('path')
+                          .attr('class', 'edgepath')
+                          .attr('fill-opacity', 100)
+                          .attr('stroke-opacity', 10)
                           .attr('id', function (d, i) {
-                              return 'edgelabel' + i
-                          })
-                          .attr('font-size', 10)
-                          .attr('fill', '#aaa');
+                              return 'edgepath' + i
+                          })*/
 
-                      //Text f?r verbindungen/Pfeile
-                      edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
-                          .attr('xlink:href', function (d, i) {
-                              return '#edgepath' + i
-                          })
-                          .style("text-anchor", "middle")
-                          .style("pointer-events", "none")
-                          .attr("startOffset", "50%")
-                          .text(d => 'contains');
+                    /* // .style("pointer-events", "none");
+                     const edgelabels = svg.selectAll(".edgelabel")
+                         .data(links)
+                         .enter()
+                         .append('text')
+                         .style("pointer-events", "none")
+                         .attr('class', 'edgelabel')
+                         .attr('id', function (d, i) {
+                             return 'edgelabel' + i
+                         })
+                         .attr('font-size', 10)
+                         .attr('fill', '#aaa');
 
+                     //Text f?r verbindungen/Pfeile
+                     edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
+                         .attr('xlink:href', function (d, i) {
+                             return '#edgepath' + i
+                         })
+                         .style("text-anchor", "middle")
+                         .style("pointer-events", "none")
+                         .attr("startOffset", "50%")
+                         .text(d => 'contains');
+*/
 
-                  */
                     //tooltip
                     let tip = d3.tip()
                         .attr('class', 'd3-tip')
@@ -397,14 +349,16 @@ export default class NetworkChart {
                         .style("overflow-y", 'scroll')
 
 
-                    nodeEnter
+                    nodeEnter.filter(function (d) {
+                        if (d.depth === 0 || d.depth === 1) return d;
+                    })
                         .append("circle")
                         .attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
                         .style("display", "inline")
                         .style("fill", d => d.depth === 0 ? 'lightgrey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : 'black')
-                        /* .on("mouseover", function (d) {
-                             d3.select(this).attr("r", d => d.depth === 0 ? 70 : d.depth === 1 ? 50 : d.depth === 3 ? 20 : 25);
-                         })*/
+                        .on("mouseover", function (d) {
+                            d3.select(this).attr("r", d.depth === 1 ? 50 : d.depth === 3 ? 20 : d.depth === 0 ? 50 : 25);
+                        })
                         .on('mouseout', function (d) {
                             d3.select(this).attr("r", d => d.depth === 0 ? 50 : d.depth === 1 ? 30 : d.depth === 3 ? 10 : 15)
                             if (d.depth === 0) {
@@ -412,8 +366,19 @@ export default class NetworkChart {
                             }
                         })
 
-
-                    //-----------------------------------------------------------------------------------------------------------------
+                    //author icons
+                    nodeEnter.filter(function (d) {
+                        if (d.data.type==='author') return d;
+                    }).append("svg:image")
+                        .attr("xlink:href", 'https://simpleicon.com/wp-content/uploads/user1.png')
+                        .attr("x", function (d) {
+                            return -25;
+                        })
+                        .attr("y", function (d) {
+                            return -25;
+                        })
+                        .attr("height", 50)
+                        .attr("width", 50);
 
 
                     //usage of tooltip
@@ -515,7 +480,18 @@ export default class NetworkChart {
                         d.children = null;
                     } else {
                         console.log(nodes)
-                        simulation.force(d)
+
+                        // simulation.force(d)
+
+                        function simulateForce(node) {
+                            simulation.force('center', function (d) {
+                                if (d === node) {
+                                    return d3.forceCenter(width / 2, height / 7)
+                                }
+                            })
+                        }
+
+                        // simulateForce(d)
                         d.children = d._children;
                         d._children = null;
                     }
