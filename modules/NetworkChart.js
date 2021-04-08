@@ -14,411 +14,8 @@ export default class NetworkChart {
         let group = this.group
 
         await d3.json("./public/new.json", function (data) {
-                /* d3.json("./public/beispieltext.json", function (d) {
-                     let o = [];
-                     console.log(d.length)
-                     console.log(d.length)
-                     d.map(item => {
-                         let title = ''
-                         let author = []
-                         let rg = ''
-                         let lang = ''
-                         let abstract = ''
-                         let date = ''
-                         let type = ''
-                         item.map(field => {
-                             if (field.key === 'dc.title') title = field.value;
-                             if (field.key === 'dc.contributor.author') author.push(field.value);
-                             // if(field.key==='dc.contributor.other') author.push(field.value);
-                             if (field.key === 'local.researchgroup') rg = field.value.substring(3);
-                             if (field.key === 'dc.language.iso') lang = field.value;
-                             if (field.key === 'dc.description.abstract') abstract = field.value;
-                             if (field.key === 'dc.date.issued') date = field.value;
-                             if (field.key === 'dc.type') type = field.value;
-                         })
-
-                         if (author.length > 1) {
-                             author.map(a => {
-                                 createO(title, a, rg, '', lang, abstract, date)
-                             })
-
-                         } else {
-                             createO(title, author[0], rg, '', lang, abstract, date)
-                         }
-
-                         function createO(t, a, g, u, l, abst, d) {
-                             o.push({
-                                 // title: {title,
-                                 // author: author,
-                                 // researchgroup: rg,
-                                 // language: lang,
-                                 // abstract: abstract,
-                                 // date: date,
-                                 // type: type
-                                 title: {
-                                     type: 'literal',
-                                     value: t
-                                 },
-                                 author: {
-                                     type: 'literal',
-                                     value: a
-                                 },
-                                 area: {
-                                     type: 'literal',
-                                     value: ''
-                                 },
-                                 group: {
-                                     type: 'literal',
-                                     value: g
-                                 },
-                                 document: {
-                                     type: 'literal',
-                                     value: u
-                                 },
-                                 language: {
-                                     type: 'literal',
-                                     value: l
-                                 },
-                                 abstract: {
-                                     type: 'literal',
-                                     value: abst
-
-                                 },
-                                 date: {
-                                     type: 'literal',
-                                     value: d
-                                 }
-                             })
-                         }
-
-                         function createNewO(t, a, g, u, l, abst, d) {
-                             o.push({
-                                 // title: {title,
-                                 // author: author,
-                                 // researchgroup: rg,
-                                 // language: lang,
-                                 // abstract: abstract,
-                                 // date: date,
-                                 // type: type
-                                 title: {
-                                     type: 'literal',
-                                     value: t
-                                 },
-                                 author: {
-                                     type: 'literal',
-                                     value: a
-                                 },
-                                 area: {
-                                     type: 'literal',
-                                     value: ''
-                                 },
-                                 group: {
-                                     type: 'literal',
-                                     value: g
-                                 },
-                                 document: {
-                                     type: 'literal',
-                                     value: u
-                                 },
-                                 language: {
-                                     type: 'literal',
-                                     value: l
-                                 },
-                                 abstract: {
-                                     type: 'literal',
-                                     value: abst
-
-                                 },
-                                 date: {
-                                     type: 'literal',
-                                     value: d
-                                 }
-                             })
-                         }
-
-                     })
-                     $.getJSON("./public/groupArea.json", function (areas) {
-                         areas.map(a => {
-                             a.groups.map(g => {
-                                 o.map(o => {
-                                     if (o.group.value === g.name) {
-                                         o.area.value = a.area
-                                     }
-                                 })
-                             })
-                         })
-                         o.map(item => {
-                             switch (item.group.value) {
-                                 case "Working in Highly Automated Digital-Hybrid Processes":
-                                     item.group.value = "Arbeiten in hochautomatisierten, digital-hybriden Prozessen"
-                                     break;
-                                 case "Critical Maker Culture":
-                                     item.group.value = "Kritische Maker-Kultur"
-                                     break;
-                                 case "Education and Advanced Training in the Digital Society":
-                                     item.group.value = "Bildung und Weiterbildung in der digitalen Gesellschaft"
-                                     break;
-                                 case "Digital Technologies and Well-being":
-                                     item.group.value = "Digitale Technologien und Wohlbefinden"
-                                     break;
-                                 case "Digitalisation and Science":
-                                     item.group.value = "Digitalisierung der Wissenschaft"
-                                     break;
-                                 case "Reorganizing Knowledge Practices":
-                                     item.group.value = "Reorganisation von Wissenspraktiken"
-                                     break;
-                                 case "Work and Cooperation in the Sharing Economy":
-                                     item.group.value = "Arbeiten und Kooperieren in der Sharing Economy"
-                                     break;
-                                 case "Frameworks for Data Markets":
-                                     item.group.value = "Rahmenbedingungen f?r Datenm?rkte"
-                                     break;
-                                 case "Data-Driven Business Model Innovations":
-                                     item.group.value = "Datenbasierte Gesch?ftsmodellinnovationen"
-                                     break;
-                                 case "Inequality and Digital Sovereignty":
-                                     item.group.value = "Ungleichheit und digitale Souver?nit?t"
-                                     break;
-                                 case"Digital Integration":
-                                     item.group.value = "Digitale Integration"
-                                     break;
-                                 case"Democracy and Digitalisation":
-                                     item.group.value = "Demokratie und Digitalisierung"
-                                     break;
-                                 case "Digital Citizenship":
-                                     item.group.value = "Digital Citizenship"
-                                     break;
-                                 case "News, Campaigns and the Rationality of Public Discourse":
-                                     item.group.value = "Nachrichten, Kampagnen und die Rationalit?t ?ffentlicher Diskurse"
-                                     break;
-                                 case "Digitalisation and the Transnational Public Sphere":
-                                     item.group.value = "Digitalisierung und transnationale ?ffentlichkeit"
-                                     break;
-                                 case "Responsibility and the Internet of Things":
-                                     item.group.value = "Verantwortung und das Internet der Dinge"
-                                     break;
-                                 case "Shifts in Norm Setting":
-                                     item.group.value = "Verlagerung in der Normsetzung"
-                                     break;
-                                 case "Trust in Distributed Environments":
-                                     item.group.value = "Vertrauen in verteilten Umgebungen"
-                                     break;
-                                 case "Quantification and Social Regulation":
-                                     item.group.value = "Quantifizierung und gesellschaftliche Regulierung"
-                                     break;
-                                 case "Digitalisation and Networked Security":
-                                     item.group.value = "Digitalisierung und vernetzte Sicherheit"
-                                     break;
-                                 case "Criticality of AI-based Systems":
-                                     item.group.value = "Kritikalit?t KI-basierter Systeme"
-                                     break;
-                                 case "Autonomous Systems & Self-Determination":
-                                     item.group.value = "Autonome Systeme & Selbstbestimmung"
-                                     break;
-                                 case "Security & Transparency":
-                                     item.group.value = "Sicherheit & Offenheit"
-                                     break;
-                                 case "Digitalisation & Sustainability":
-                                     item.group.value = "Digitalisierung & Nachhaltigkeit"
-                                     break;
-                             }
-                         })
-                         console.log(o)
-                     });
-
-                 })*/
-              /*  $.getJSON("./public/newLibraryItems.json", function (newData) {
-                    let list= [
-                        {
-                            title: "Mensch, Arbeit, Wissen",
-                            "color": "#A69D82",
-                            children: [
-                                {
-                                    name: "Arbeiten in hochautomatisierten, digital-hybriden Prozessen"
-                                },
-                                {
-                                    name: "Kritische Maker-Kultur"
-                                },
-                                {
-                                    name: "Bildung und Weiterbildung in der digitalen Gesellschaft"
-                                },
-                                {
-                                    name: "Digitale Technologien und Wohlbefinden"
-                                },
-                                {
-                                    name: "Digitalisierung der Wissenschaft"
-                                },
-                                {
-                                    name: "Reorganisation von Wissenspraktiken"
-                                }
-                            ]
-                        },
-                        {
-                            title: "Markt, Wettbewerb, Ungleichheit",
-                            children: [
-                                {
-                                    name: "Arbeiten und Kooperieren in der Sharing Economy"
-                                },
-                                {
-                                    name: "Rahmenbedingungen f?r Datenm?rkte"
-                                },
-                                {
-                                    name: "Datenbasierte Gesch?ftsmodellinnovationen"
-                                },  {
-                                    name: "Ungleichheit und digitale Souver?nit?t"
-                                },  {
-                                    name: "Digitale Integration"
-                                }
-                            ]
-                        },
-                        {
-                            title: "Demokratie ? Partizipation ? ?ffentlichkeit",
-                            children: [
-                                {
-                                    name: "Demokratie und Digitalisierung"
-                                },
-                                {
-                                    name: "Digital Citizenship"
-                                },
-                                {
-                                    name: "Nachrichten, Kampagnen und die Rationalit?t ?ffentlicher Diskurse"
-                                },
-                                {
-                                    name: "Digitalisierung und transnationale ?ffentlichkeit"
-                                }
-                            ]
-                        },
-                        {
-                            title: "Verantwortung ? Vertrauen ? Governance",
-                            children: [
-                                {
-                                    name: "Verantwortung und das Internet der Dinge"
-                                },
-                                {
-                                    name: "Verlagerung in der Normsetzung"
-                                },
-                                {
-                                    name: "Vertrauen in verteilten Umgebungen"
-                                },  {
-                                    name: "Quantifizierung und gesellschaftliche Regulierung"
-                                },  {
-                                    name: "Digitalisierung und vernetzte Sicherheit"
-                                },  {
-                                    name: "Kritikalit?t KI-basierter Systeme"
-                                }
-                            ]
-                        },
-                        {
-                            title: "Querschnittsformate",
-                            "amount": 3,
-                            children: [
-                                {
-                                    name: "Autonome Systeme & Selbstbestimmung"
-                                },
-                                {
-                                    name: "Sicherheit & Offenheit"
-                                },
-                                {
-                                    name: "Digitalisierung & Nachhaltigkeit"
-                                }
-                            ]
-                        }
-                    ]
-
-                    function getRandomGroup(){
-                        let grouplist= list[Math.floor(Math.random() * list.length)].children
-                        return grouplist[Math.floor(Math.random() * grouplist.length)].name
-                    }
-
-                    function getAreaToGroup(g){
-                        let ar=''
-                        list.map(area=>{
-                            area.children.map(group=>{
-                                if(group.name===g){
-                                    ar=area.title
-                                }
-                            })
-                        })
-                        return ar
-                    }
-
-                    console.log(newData.length)
-
-                    let oldData = data.results.bindings;
-                    console.log(oldData.length)
-                    const result = newData.filter(e => !oldData.some(o => o.title.value === e.title.value && o.author.value === e.author.value));
-                    result.forEach(item=>{
-                        let g= getRandomGroup()
-                        let ar=getAreaToGroup(g)
-                        console.log(ar)
-                        oldData.push(
-                            {
-                                title: {
-                                    type: "literal",
-                                    value: item.title.value
-                                },
-                                author: {
-                                    type: "literal",
-                                    value: item.author.value
-                                },
-                                area: {
-                                    type: "literal",
-                                    value: item.area.value ==="" ? ar : item.area.value
-                                },
-                                group: {
-                                    type: "literal",
-                                    value:  item.area.value ==="" ? g : item.group.value
-                                },
-                                document: {
-                                    type: "literal",
-                                    value: ""
-                                },
-                                language: {
-                                    type: "literal",
-                                    value: item.language.value
-                                },
-                                abstract: {
-                                    type: "literal",
-
-                                    value: item.abstract.value
-                                },
-                                date: {
-                                    type: "literal",
-                                    value: item.date.value
-                                }
-                            }
-                        )
-                    })
-                    console.log(oldData)
-/!*
-                    oldData.map(old => {
-                        let t, auth, area, gr, lang, ab, da;
-                        newData.map((newD,i) => {
-                            if (old.title.value === newD.title.value && old.author.value === newD.author.value ) {
-                                old.group.value = newD.group.value
-                                old.area.value = newD.area.value
-                                // console.log(old)
-
-                            } else {
-                                // t = newD.title.value
-                                // auth = newD.author.value
-                                // area = newD.area.value
-                                // gr = newD.group.value
-                                // lang = newD.language.value
-                                // ab = newD.abstract.value
-                                // da = newD.date.value
-                                // console.log(i)
-                            }
-                        })
-
-                    })*!/
-                })*/
                 var link, edgepaths, nodes, node
-
                 let unsortedData = data.results.bindings;
-                unsortedData.forEach(el=>{
-                    console.log(el.group.value)
-                })
 
                 let authorsList = d3.nest()
                     .key(d => d.author.value)
@@ -468,8 +65,8 @@ export default class NetworkChart {
                     el.values.map(elem => {
                         if (elem.key === group) {
                             groupData = elem.values
-                        }else{
-                            console.log(elem.key)
+                        } else {
+                            // console.log(elem.key)
                         }
                     })
                 })
@@ -498,7 +95,6 @@ export default class NetworkChart {
                 itemsList.map(item => {
                     groupData.map(i => {
                         if (i.key === item.key) {
-                            console.log(item.values[0])
                             i.values.push(item.values[0].abstract ? item.values[0].abstract : 'No abstract')
                             i.values.push(item.values[0].date ? item.values[0].date : 'No date')
                             i.values.push(item.values[0].language ? item.values[0].language : 'No language')
@@ -508,14 +104,13 @@ export default class NetworkChart {
                         }
                     })
                 })
-                console.log(groupData)
 
 
                 let packableItems = {key: group, values: groupData};
 
                 //creating hierarchy
                 let hierarchy = d3.hierarchy(packableItems, d => d.values);
-
+                // nodes = hierarchy.descendants();
                 let groups = packableItems.values.map(el => {
                     return el.key
                 });
@@ -544,22 +139,10 @@ export default class NetworkChart {
                 ]
 
 
+                //set SVG attributes
                 let width = 805
                 let height = 765
                 let margin = {top: 30, right: 80, bottom: 5, left: 5}
-
-
-                //d3 network simulation
-                let simulation = d3.forceSimulation()
-                    .force("link", d3.forceLink() // This force provides links between nodes
-                        .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                        .distance(70) //DESIGN Abstand der Knoten zueinander
-                    )
-                    .force("charge", d3.forceManyBody().strength(-500)) // DESIGN Absto?en- Abstand zwischen Nodes
-                    .force("center", d3.forceCenter(width / 2, height / 2)) // This force attracts nodes to the center of the svg area - Chart ist mittig ausgerichtet
-                    .on("tick", ticked);
-
-
                 const svg = d3.select('#nwSVG')
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
@@ -568,6 +151,53 @@ export default class NetworkChart {
                     }))
                     .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`);
+
+                /**
+                 * Link definition here allows drawing lines and arrows
+                 * */
+                let links = hierarchy.links();
+
+                link = svg.selectAll(".links")
+                    .data(links)
+
+
+                const linksEnter =
+                    link.enter()
+                        .append('line')
+                        .attr("class", "links")
+                        .attr("stroke-width", 1)
+                        .style('stroke', 'black')
+                        .style('opacity', 0)
+
+                link = linksEnter.merge(link)
+                                 .attr('marker-end', 'url(#arrowhead)')
+
+
+                // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
+                // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
+               /* linksEnter.append("title")
+                    .text(d => d.key); //DESIGN tooltip text*/
+
+                //d3 network simulation
+                let simulation = d3.forceSimulation()
+                    .force("link", d3.forceLink().id(function(d) { return d.id; })
+                        // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
+                         //DESIGN Abstand der Knoten zueinander
+                        .distance(100).strength(1)
+
+                    )
+                    //abstand von Kind-Elternknoten
+                    .force('charge', d3.forceManyBody().strength(-150)
+                        // .theta(0.1)
+                    )
+                    .force('center', d3.forceCenter(width / 2, height / 2))
+                    .force('collision', d3.forceCollide().radius(20))
+                    // .force('collide', d3.forceCollide().radius(30))
+                    // .force("charge", d3.forceManyBody()
+                    //     .strength(-200)
+                    //     .theta(0.9)
+                    //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
+                    .on("tick", ticked);
 
 
                 //appending little triangles, path object, as arrowhead
@@ -589,10 +219,9 @@ export default class NetworkChart {
 
 
                 // legend for items
-
                 let legendSVG = d3.select('#legendSVG')
                     .attr('width', 800)
-                    .attr('height', 100)
+                    .attr('height', 800)
 
                 const legend_g = legendSVG.selectAll(".legend")
                     .data(colorScale.domain())
@@ -613,17 +242,31 @@ export default class NetworkChart {
                     .style("font-family", "Times New Roman")
 
 
-                update()
+                update(true)
 
                 //-----------------------------------------------------------------------------------------------------------------
 
-                function update() {
+                function update(first) {
 
-                    nodes = hierarchy.descendants();
+                    if (first === true) {
+                        nodes = hierarchy.descendants();
+                        nodes.map(n => {
+                            if (n.depth === 1) {
+                                n._children = n.children;
+                                n.children = null;
+                            }
+                        })
+                        // simulation.restart()
+
+                    } else {
+                        nodes = hierarchy.descendants();
+                    }
+                    // nodes = hierarchy.descendants();
+
                     // nodes= nodesData.filter(node=> node.depth<=1)
-                    console.log(nodes)
                     //getting links
-                    let links = hierarchy.links();
+                    // let links = hierarchy.links();
+                    /*let links = hierarchy.links();
                     console.log(links)
 
 
@@ -637,8 +280,8 @@ export default class NetworkChart {
                             .attr("class", "links")
                             .attr("stroke-width", 10)
                             .style('stroke', 'black')
-                    /*.style('opacity', 100)
-                    .style('stroke-width', 100)*/
+                    /!*.style('opacity', 100)
+                    .style('stroke-width', 100)*!/
 
                     link = linksEnter.merge(link)
                     // .attr('marker-end', 'url(#arrowhead)') //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
@@ -648,11 +291,28 @@ export default class NetworkChart {
                     //Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
                     linksEnter.append("title")
                         .text(d => d.key); //DESIGN tooltip text
+*/
 
 
+                    ///*
+                    // link defintion here draws line but does not links correctly; lonks after update missing*/
+                    link = svg.selectAll(".links")
+                        .data(links)
+                        .exit().remove();
+
+                    linksEnter
+                        .append('line')
+                        .attr("class", "links")
+                        .attr("stroke-width", 1)
+                        .style('stroke', 'black')
+                        .style('opacity', 10)
+
+                    link = linksEnter.merge(link)
+                        .attr('marker-end', 'url(#arrowhead)')
                     // Initialize the nodes
                     node = svg.selectAll(".nodes")
                         .data(nodes)
+
 
                     let nodeEnter = node.enter()
                         .append("g")
@@ -770,13 +430,14 @@ export default class NetworkChart {
                             openTip(tip, d, i)
                         })
 
-
+                    ///*Titel auf Knoten
+                    // */
                     nodeEnter.append("text")
                         .attr("dy", 0)
                         .attr("dx", 0)
                         .text(function (d) {
-                            // if (d.depth === 0) return d.data.key
-                            return d.data.key ? d.data.key : d.data.value
+                            if (d.depth !== 1)
+                                return d.data.key ? d.data.key : d.data.value
                         });
 
                     node = nodeEnter.merge(node);
@@ -801,9 +462,12 @@ export default class NetworkChart {
                         .attr("x2", d => d.target.x)
                         .attr("y2", d => d.target.y);
 
-                    node.attr("transform", d => `translate(${d.x},${d.y})`);
-
-                    edgepaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
+                    // node.attr("transform", d => `translate(${d.x},${d.y})`);
+                    node.attr("transform",
+                        function (d) {
+                            return "translate(" + d.x + ", " + d.y + ")";
+                        });
+                    // edgepaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
                 }
 
                 //When the drag gesture starts, the targeted node is fixed to the pointer
@@ -831,16 +495,17 @@ export default class NetworkChart {
                 function click(node, d) {
 
                     if (d.children) {
-
+                        console.log(nodes)
                         d._children = d.children;
                         d.children = null;
-                        update();
+                        update(false);
                         simulation.restart();
                     } else {
+                        console.log(nodes)
                         simulation.force(d)
                         d.children = d._children;
                         d._children = null;
-                        update();
+                        update(false);
                         simulation.restart();
 
                     }
@@ -945,7 +610,6 @@ export default class NetworkChart {
                 function getAuthors(d) {
                     let authorList = []
                     if (d.children) {
-                        console.log(d)
                         d.children.map(child => {
                             child.data.values.map(author => {
                                 authorList.push(author.key)
@@ -1013,8 +677,6 @@ export default class NetworkChart {
                     $(document).ready(function () {
                         $('#submitFilter').click(function () {
                             let name = $('.form-check-input:checked').val();
-                            console.log(name)
-                            console.log(authorsList)
                             tip.hide(d, i)
                         })
                     })
