@@ -72,7 +72,7 @@ export default class NetworkChart {
                     })
                 })
 
-            console.log(allData)
+                console.log(allData)
 
                 let groupData = [];
 
@@ -193,8 +193,7 @@ export default class NetworkChart {
                     .style("font-size", "15px")
                     .style("font-family", "Times New Roman")
 
-                nodes = hierarchy.descendants();
-                console.log(nodes)
+                nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                 nodes.map(n => {
                     if (n.depth === 1) {
                         n._children = n.children;
@@ -203,6 +202,7 @@ export default class NetworkChart {
                 })
                 let links = hierarchy.links();
 
+                console.log(links)
                 link = svg.selectAll(".links")
                     .data(links)
 
@@ -278,7 +278,8 @@ export default class NetworkChart {
                         .style('stroke', 'none');
 
                     // Initialize the nodes
-                    nodes = hierarchy.descendants();
+                    // nodes = hierarchy.descendants();
+                    nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
 
                     node = svg.selectAll(".nodes")
                         .data(nodes)
@@ -370,7 +371,7 @@ export default class NetworkChart {
 
                     //author icons
                     nodeEnter.filter(function (d) {
-                        if (d.data.type==='author') return d;
+                        if (d.data.type === 'author') return d;
                     }).append("svg:image")
                         .attr("xlink:href", 'https://simpleicon.com/wp-content/uploads/user1.png')
                         .attr("x", function (d) {
@@ -384,9 +385,8 @@ export default class NetworkChart {
 
                     // rectangle for literals
                     nodeEnter.filter(function (d) {
-                        if (d.data.type==='literal') return d;
+                        if (d.data.type === 'literal') return d;
                     }).append("rectangle")
-
 
 
                     //usage of tooltip
@@ -501,23 +501,26 @@ export default class NetworkChart {
                         d.children = d._children;
                         d._children = null;
                     }
+                    //allows just one node expanding
+                    //source :https://stackoverflow.com/questions/19167890/d3-js-tree-layout-collapsing-other-nodes-when-expanding-one
                     if (d.parent) {
-                        d.parent.children.forEach(function(element) {
+                        d.parent.children.forEach(function (element) {
                             if (d !== element) {
                                 collapse(element);
                             }
                         });
                     }
                     update()
-                    simulation.restart()
+                    // simulation.alpha(50).restart()
                 }
-            function collapse(d) {
-                if (d.children) {
-                    d._children = d.children;
-                    d._children.forEach(collapse);
-                    d.children = null;
+
+                function collapse(d) {
+                    if (d.children) {
+                        d._children = d.children;
+                        d._children.forEach(collapse);
+                        d.children = null;
+                    }
                 }
-            }
 
                 function openTip(tip, d, i) {
                     let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
