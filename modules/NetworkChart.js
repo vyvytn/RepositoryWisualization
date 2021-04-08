@@ -14,7 +14,7 @@ export default class NetworkChart {
         let group = this.group
 
         await d3.json("./public/new.json", function (data) {
-                var link, edgepaths, nodes, node, simulation
+                var link, edgepaths, nodes, node, simulation, clickedNode
                 let unsortedData = data.results.bindings;
 
                 console.log(unsortedData)
@@ -71,6 +71,8 @@ export default class NetworkChart {
                         })
                     })
                 })
+
+            console.log(allData)
 
                 let groupData = [];
 
@@ -380,6 +382,12 @@ export default class NetworkChart {
                         .attr("height", 50)
                         .attr("width", 50);
 
+                    // rectangle for literals
+                    nodeEnter.filter(function (d) {
+                        if (d.data.type==='literal') return d;
+                    }).append("rectangle")
+
+
 
                     //usage of tooltip
                     svg.call(tip)
@@ -479,10 +487,8 @@ export default class NetworkChart {
                         d._children = d.children;
                         d.children = null;
                     } else {
-                        console.log(nodes)
 
                         // simulation.force(d)
-
                         function simulateForce(node) {
                             simulation.force('center', function (d) {
                                 if (d === node) {
@@ -495,10 +501,23 @@ export default class NetworkChart {
                         d.children = d._children;
                         d._children = null;
                     }
+                    if (d.parent) {
+                        d.parent.children.forEach(function(element) {
+                            if (d !== element) {
+                                collapse(element);
+                            }
+                        });
+                    }
                     update()
                     simulation.restart()
                 }
-
+            function collapse(d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d._children.forEach(collapse);
+                    d.children = null;
+                }
+            }
 
                 function openTip(tip, d, i) {
                     let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
