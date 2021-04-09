@@ -28,6 +28,7 @@ export default class NetworkChart {
                 let authors = d3.nest()
                     .key(d => d.author.value)
                     .key(d => d.title.value)
+                    .key(d => d.group.value)
                     .entries(unsortedData);
 
                 let itemsList = d3.nest()
