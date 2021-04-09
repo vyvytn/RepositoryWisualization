@@ -88,17 +88,17 @@ export default class NetworkChart {
                 })
 
                 //match author with its metadata
-                /*  groupData.map(item => {
-                      item.values.map(author => {
-                          authors.map(a => {
-                              if (a.key === author.key) {
-                                  author.values=a.values
-                              }
-                          })
-                      })
-                  })
+                groupData.map(item => {
+                    item.values.map(author => {
+                        authors.map(a => {
+                            if (a.key === author.key) {
+                                author.values = a.values
+                            }
+                        })
+                    })
+                })
+            
 
-              */
                 /*  abstractList.map(abstract=>{
                       groupData.map(item=>{
                           if(item.key===abstract.key){
@@ -481,9 +481,8 @@ export default class NetworkChart {
 
                 function click(node, d) {
                     if (d3.event.defaultPrevented) return; // ignore drag
-
+                    console.log(d)
                     if (d.children) {
-                        console.log(nodes)
                         d._children = d.children;
                         d.children = null;
                     } else {
