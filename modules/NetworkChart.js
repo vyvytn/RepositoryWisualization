@@ -5,6 +5,7 @@ export default class NetworkChart {
 
     links;
     data;
+    newNodes;
 
 
     constructor(group) {
@@ -20,7 +21,7 @@ export default class NetworkChart {
         }
 
         await d3.json("./public/new.json", function (data) {
-                var link, edgepaths, nodes, node, simulation, clickedNode
+                var link, edgepaths, nodes, node, simulation, clickedNode, links
                 let unsortedData = data.results.bindings;
 
                 // console.log(unsortedData)
@@ -210,8 +211,10 @@ export default class NetworkChart {
                     .style("font-size", "15px")
                     .style("font-family", "Times New Roman")
 
-                nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                 console.log(nodes)
+                nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+
+
                 nodes.map(n => {
                     if (n.depth === 1) {
                         // n._children = n.children;
@@ -224,25 +227,29 @@ export default class NetworkChart {
                        link = svg.selectAll(".links")
                            .data(links)
     */
-                update(true)
+                update(true, hierarchy)
 
                 //-----------------------------------------------------------------------------------------------------------------
 
-                function update(first) {
+                function update(newGroup, h) {
 
+                    console.log('NODES')
+                    console.log()
+                    // link.exit().remove();
+                    // node.exit().remove();
 
                     // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
                     // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
                     /* linksEnter.append("title")
                          .text(d => d.key); //DESIGN tooltip text*/
 
-                    let links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
-                    console.log(nodes)
+                    links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
                     // console.log(links)
 
-                    // if(links)
+
                     link = svg.selectAll(".links")
                         .data(links)
+
 
                     const linksEnter =
                         link.enter()
@@ -251,9 +258,9 @@ export default class NetworkChart {
                             .attr("stroke-width", 1)
                             .style('stroke', 'black')
                             .style('opacity', 10)
-                            .on('click', function(d){
-                                console.log(d)
-                            })
+                    /*  .on('click', function(d){
+                          console.log(d)
+                      })*/
                     link.exit().remove();
 
                     link = linksEnter.merge(link)
@@ -302,6 +309,13 @@ export default class NetworkChart {
 
                     // Initialize the nodes
                     // nodes = hierarchy.descendants();
+                    // if(newGroup){
+                    //     nodes=newNodes
+                    //
+                    // }else{
+                    //     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    //
+                    // }
                     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
 
                     node = svg.selectAll(".nodes")
@@ -401,19 +415,6 @@ export default class NetworkChart {
                             }
                         })
 
-                    //author icons
-                    nodeEnter.filter(function (d) {
-                        if (d.data.type === 'author') return d;
-                    }).append("svg:image")
-                        .attr("xlink:href", 'https://simpleicon.com/wp-content/uploads/user1.png')
-                        .attr("x", function (d) {
-                            return -25;
-                        })
-                        .attr("y", function (d) {
-                            return -25;
-                        })
-                        .attr("height", 50)
-                        .attr("width", 50)
 
                     // rectangle for literals
                     nodeEnter.filter(function (d) {
@@ -461,13 +462,26 @@ export default class NetworkChart {
                             // if (d.depth === 2) {
                             //     return d.parent.color
                             // }
-                            return  d.depth === 2 ?  d.parent.color:d.depth === 3 ?d.parent.parent.color:d.depth === 4 ?d.parent.parent.parent.color:d.parent.parent.parent.parent.color
+                            return d.depth === 2 ? d.parent.color : d.depth === 3 ? d.parent.parent.color : d.depth === 4 ? d.parent.parent.parent.color : d.parent.parent.parent.parent.color
                             // nodes.forEach(el=>{
                             //     if (el.depth === 2) {
                             //         return el.parent.color
                             //     }
                             // })
                         });
+                    //author icons
+                    nodeEnter.filter(function (d) {
+                        if (d.data.type === 'author') return d;
+                    }).append("svg:image")
+                        .attr("xlink:href", 'https://simpleicon.com/wp-content/uploads/user1.png')
+                        .attr("x", function (d) {
+                            return -25;
+                        })
+                        .attr("y", function (d) {
+                            return -25;
+                        })
+                        .attr("height", 50)
+                        .attr("width", 50)
 
                     function getColorNode(d) {
                         if (d.depth === 2) {
@@ -482,7 +496,9 @@ export default class NetworkChart {
                         if (d.depth === 4) return d;
                     })
                         .on('click', function (d) {
-                            console.log('CLICK')
+                            console.log('CLICK' + d.data.key)
+                            openNewGroup(d.data.key)
+
                         })
 
                     node = nodeEnter.merge(node);
@@ -494,14 +510,17 @@ export default class NetworkChart {
                         .attr("dy", 0)
                         .attr("dx", 20)
                         .attr("text-anchor", "start")
+                        // .style("fill", "whitesmoke")
                         .text(function (d) {
                             // console.log(d.data.key ? d.data.key : d.data.value)
                             if (d.depth !== 1)
-                                return d.data.key ? d.data.key : d.data.value
+                                return d.type + d.data.key ? d.data.key : d.data.value
                         }).call(wrap, 200);
 
                     nodeEnter.selectAll('rectangle')
-                        .attr("width", function(d) {return this.parentNode.getBBox().width;})
+                        .attr("width", function (d) {
+                            return this.parentNode.getBBox().width;
+                        })
 
                     //Listen for tick events to render the nodes as they update in your Canvas or SVG.
                     simulation
@@ -740,19 +759,6 @@ export default class NetworkChart {
                 }
 
 
-                function wordwrap2(str, width, brk, cut) {
-                    brk = brk || '\n';
-                    width = width || 75;
-                    cut = cut || false;
-                    if (!str) {
-                        return str;
-                    }
-                    var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)');
-                    console.log(str.match(RegExp(regex, 'g')).join(brk))
-                    return str.match(RegExp(regex, 'g')).join(brk);
-                }
-
-
                 //-----------------------------------------------------------------------------------------------------------------
 
 
@@ -779,54 +785,56 @@ export default class NetworkChart {
                     })
                 }
 
-                /* function openNewGroup(newGroup) {
+                function openNewGroup(newGroup) {
 
-                     //load groupspecific data
-                     let newGroupData=[];
-                     allData.map(el => {
+                    //load groupspecific data
+                    let newGroupData = [];
+                    allData.map(el => {
                         return el.values.map(elem => {
-                             if (elem.key === newGroup) {
-                                newGroupData= elem.values
-                             } else {
-                                 // console.log(elem.key)
-                             }
-                         })
-                     })
-                     console.log(newGroupData)
-                     //match author with its metadata
-                     newGroupData.map(item => {
-                         item.values.map(author => {
-                             authors.map(a => {
-                                 if (a.key === author.key) {
-                                     author.values = a.values
-                                 }
-                             })
-                         })
-                     })
+                            if (elem.key === newGroup) {
+                                newGroupData = elem.values
+                            } else {
+                                // console.log(elem.key)
+                            }
+                        })
+                    })
+                    console.log(newGroupData)
+                    //match author with its metadata
+                    newGroupData.map(item => {
+                        item.values.map(author => {
+                            authors.map(a => {
+                                if (a.key === author.key) {
+                                    author.values = a.values
+                                }
+                            })
+                        })
+                    })
 
-                      let newPackableItems = {key: newGroup, values: newGroupData};
+                    let newPackableItems = {key: newGroup, values: newGroupData};
 
-                     //creating hierarchy
-                     let  newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
-                     // nodes = hierarchy.descendants();
-                      groups = newPackableItems.values.map(el => {
-                         return el.key
-                     });
+                    //creating hierarchy
+                    let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
+                    // nodes = hierarchy.descendants();
+                    groups = newPackableItems.values.map(el => {
+                        return el.key
+                    });
 
-                     nodes = newHierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                     nodes.map(n => {
-                         if (n.depth === 1) {
-                             // n._children = n.children;
-                             // n.children = null;
-                             collapse(n)
-                         }
-                     })
-                     console.log(nodes)
+                    let newN = newHierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    newN.map(n => {
+                        if (n.depth === 1) {
+                            // n._children = n.children;
+                            // n.children = null;
+                            collapse(n)
+                        }
+                    })
+                    console.log(newN)
 
-                     update()
-                     simulation.restart()
+                    // let l = newHierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
 
-                 }*/
+
+                    update(true, newHierarchy)
+
+                }
 
 
             }
