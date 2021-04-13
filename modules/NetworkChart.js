@@ -236,7 +236,8 @@ export default class NetworkChart {
                     /* linksEnter.append("title")
                          .text(d => d.key); //DESIGN tooltip text*/
 
-                    let links = hierarchy.links();
+                    let links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
+                    console.log(nodes)
                     // console.log(links)
 
                     // if(links)
@@ -250,6 +251,9 @@ export default class NetworkChart {
                             .attr("stroke-width", 1)
                             .style('stroke', 'black')
                             .style('opacity', 10)
+                            .on('click', function(d){
+                                console.log(d)
+                            })
                     link.exit().remove();
 
                     link = linksEnter.merge(link)
@@ -263,14 +267,14 @@ export default class NetworkChart {
                             })
                                 // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
                                 //DESIGN Abstand der Knoten zueinander
-                                .distance(70).strength(0.1)
+                                .distance(50).strength(0.7)
                         )
                         //abstand von Kind-Elternknoten
-                        .force('charge', d3.forceManyBody().strength(-250)
-                            // .theta(-50)
+                        .force('charge', d3.forceManyBody().strength(-50)
+                            .theta(-950)
                         )
                         .force('center', d3.forceCenter(width / 2, height / 2))
-                        // .force('collision', d3.forceCollide().radius(20))
+                        .force('collision', d3.forceCollide().radius(100))
                         // .force('collide', d3.forceCollide().radius(30))
                         // .force("charge", d3.forceManyBody()
                         //     .strength(-200)
@@ -449,14 +453,15 @@ export default class NetworkChart {
                         if (d.depth >= 2) return d;
                     })
                         .append("rect")
-                        .attr("width", 40)
-                        .attr("height", 20)
-                        .attr("y", -10)
-                        .attr("x", 20)
+                        .attr("width", 200)
+                        .attr("height", 50)
+                        .attr("dy", -10)
+                        .attr("dx", -40)
                         .style("fill", function (d) {
-                            if (d.depth === 2) {
-                                return d.parent.color
-                            }
+                            // if (d.depth === 2) {
+                            //     return d.parent.color
+                            // }
+                            return  d.depth === 2 ?  d.parent.color:d.depth === 3 ?d.parent.parent.color:d.depth === 4 ?d.parent.parent.parent.color:d.parent.parent.parent.parent.color
                             // nodes.forEach(el=>{
                             //     if (el.depth === 2) {
                             //         return el.parent.color
@@ -488,12 +493,15 @@ export default class NetworkChart {
                     nodeEnter.append("text")
                         .attr("dy", 0)
                         .attr("dx", 20)
+                        .attr("text-anchor", "start")
                         .text(function (d) {
                             // console.log(d.data.key ? d.data.key : d.data.value)
                             if (d.depth !== 1)
                                 return d.data.key ? d.data.key : d.data.value
                         }).call(wrap, 200);
 
+                    nodeEnter.selectAll('rectangle')
+                        .attr("width", function(d) {return this.parentNode.getBBox().width;})
 
                     //Listen for tick events to render the nodes as they update in your Canvas or SVG.
                     simulation
