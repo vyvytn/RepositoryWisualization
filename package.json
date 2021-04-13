@@ -15,6 +15,7 @@
     "bootstrap": "4.6.0",
     "bootstrap-icons": "1.4.0",
     "d3": "6.5.0",
+    "d3-textwrap": "3.0.0",
     "d3-tip": "0.9.1",
     "live-server": "1.2.1"
   },
