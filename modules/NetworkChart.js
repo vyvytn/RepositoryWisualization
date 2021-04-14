@@ -228,11 +228,13 @@ export default class NetworkChart {
                 // link = svg.selectAll(".links")
                 //     .data(links)
                 //
-                update(hierarchy)
+                update(hierarchy, false)
 
                 //-----------------------------------------------------------------------------------------------------------------
 
-                function update(hier) {
+                function update(hier, collap) {
+
+
 
                     /* linksEnter.append("title")
                          .text(d => d.key); //DESIGN tooltip text*/
@@ -301,7 +303,7 @@ export default class NetworkChart {
 
 
                     nodes = hier.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                    console.log(nodes)
+                    console.log(collap)
 
                     node = svg.selectAll(".nodes")
                         .data(nodes)
@@ -475,13 +477,15 @@ export default class NetworkChart {
                     })
                         .on('click', function (d) {
                             console.log('CLICK' + d.data.key)
-                            // link.exit().remove();
-                            // node.exit().remove();
                             let s = d3.select('#nwSVG');
                             s.selectAll(".nodes").remove();
                             s.selectAll(".links").remove();
+                            let leg = d3.select('#legendSVG');
+                            leg.selectAll(".text").remove();
+                            leg.selectAll(".circle").remove();
 
                             hierarchy = getNewHierarchy(d.data.key)
+                            nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                             nodes.map(n => {
                                 if (n.depth === 1) {
                                     // n._children = n.children;
@@ -489,13 +493,8 @@ export default class NetworkChart {
                                     collapse(n)
                                 }
                             })
-                            console.log(hierarchy)
-                            // hierarchy = null
-                            // nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
 
-                            // links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
-                            update(hierarchy)
-
+                            update(hierarchy, true)
                             simulation.restart()
                         })
 
@@ -642,7 +641,7 @@ export default class NetworkChart {
                             // console.log(element)
                         });
                     }
-                    update(hierarchy)
+                    update(hierarchy, false)
                     simulation.restart()
                 }
 
