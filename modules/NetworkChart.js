@@ -476,7 +476,22 @@ export default class NetworkChart {
                         if (d.depth === 4) return d;
                     })
                         .on('click', function (d) {
-                            console.log('CLICK' + d.data.key)
+                            console.log( d)
+                            let navBar = document.getElementById('navBar');
+                            while (navBar.childElementCount > 2) {
+                                navBar.removeChild(navBar.lastChild)
+                            }
+                            let newArea = document.createElement('li');
+                            newArea.className = 'breadcrumb-item active';
+                            newArea.setAttribute = ('aria-current', 'page');
+                            newArea.innerHTML = d.data.values[0].area.value
+                            navBar.appendChild(newArea);
+                            let newNav = document.createElement('li');
+                            newNav.className = 'breadcrumb-item active';
+                            newNav.setAttribute = ('aria-current', 'page');
+                            newNav.innerHTML = d.data.key;
+                            navBar.appendChild(newNav);
+
                             let s = d3.select('#nwSVG');
                             s.selectAll(".nodes").remove();
                             s.selectAll(".links").remove();
