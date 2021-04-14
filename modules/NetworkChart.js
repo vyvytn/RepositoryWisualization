@@ -21,6 +21,7 @@ export default class NetworkChart {
         }
 
         await d3.json("./public/new.json", function (data) {
+
                 var link, edgepaths, nodes, node, simulation, clickedNode, links
                 let unsortedData = data.results.bindings;
 
@@ -222,29 +223,22 @@ export default class NetworkChart {
                         collapse(n)
                     }
                 })
-                /*       let links = hierarchy.links();
+                links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
 
-                       link = svg.selectAll(".links")
-                           .data(links)
-    */
-                update(true, hierarchy)
+                // link = svg.selectAll(".links")
+                //     .data(links)
+                //
+                update(hierarchy)
 
                 //-----------------------------------------------------------------------------------------------------------------
 
-                function update(newGroup, h) {
+                function update(hier) {
 
-                    console.log('NODES')
-                    console.log()
-                    // link.exit().remove();
-                    // node.exit().remove();
-
-                    // The <title> element provides an accessible, short-text description of any SVG container element or graphics element.
-                    // Text in a <title> element is not rendered as part of the graphic, but browsers usually display it as a tooltip.
                     /* linksEnter.append("title")
                          .text(d => d.key); //DESIGN tooltip text*/
 
-                    links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
-                    // console.log(links)
+                    links = hier.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
+                    console.log(links)
 
 
                     link = svg.selectAll(".links")
@@ -258,9 +252,7 @@ export default class NetworkChart {
                             .attr("stroke-width", 1)
                             .style('stroke', 'black')
                             .style('opacity', 10)
-                    /*  .on('click', function(d){
-                          console.log(d)
-                      })*/
+
                     link.exit().remove();
 
                     link = linksEnter.merge(link)
@@ -307,16 +299,9 @@ export default class NetworkChart {
                         .attr('fill', '#999')
                         .style('stroke', 'none');
 
-                    // Initialize the nodes
-                    // nodes = hierarchy.descendants();
-                    // if(newGroup){
-                    //     nodes=newNodes
-                    //
-                    // }else{
-                    //     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                    //
-                    // }
-                    nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+
+                    nodes = hier.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    console.log(nodes)
 
                     node = svg.selectAll(".nodes")
                         .data(nodes)
@@ -459,16 +444,9 @@ export default class NetworkChart {
                         .attr("dy", -10)
                         .attr("dx", -40)
                         .style("fill", function (d) {
-                            // if (d.depth === 2) {
-                            //     return d.parent.color
-                            // }
                             return d.depth === 2 ? d.parent.color : d.depth === 3 ? d.parent.parent.color : d.depth === 4 ? d.parent.parent.parent.color : d.parent.parent.parent.parent.color
-                            // nodes.forEach(el=>{
-                            //     if (el.depth === 2) {
-                            //         return el.parent.color
-                            //     }
-                            // })
                         });
+
                     //author icons
                     nodeEnter.filter(function (d) {
                         if (d.data.type === 'author') return d;
@@ -497,8 +475,28 @@ export default class NetworkChart {
                     })
                         .on('click', function (d) {
                             console.log('CLICK' + d.data.key)
-                            openNewGroup(d.data.key)
+                            // link.exit().remove();
+                            // node.exit().remove();
+                            let s = d3.select('#nwSVG');
+                            s.selectAll(".nodes").remove();
+                            s.selectAll(".links").remove();
 
+                            hierarchy = getNewHierarchy(d.data.key)
+                            nodes.map(n => {
+                                if (n.depth === 1) {
+                                    // n._children = n.children;
+                                    // n.children = null;
+                                    collapse(n)
+                                }
+                            })
+                            console.log(hierarchy)
+                            // hierarchy = null
+                            // nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+
+                            // links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
+                            update(hierarchy)
+
+                            simulation.restart()
                         })
 
                     node = nodeEnter.merge(node);
@@ -531,31 +529,7 @@ export default class NetworkChart {
                 }
 
                 //-----------------------------------------------------------------------------------------------------------------
-                // wrapping long text
-                // source: https://bl.ocks.org/mbostock/7555321
-                // function wrap(text, width) {
-                //     text.each(function () {
-                //         var text = d3.select(this),
-                //             words = text.text().split(/\s+/).reverse(),
-                //             word,
-                //             line = [],
-                //             lineNumber = 0,
-                //             lineHeight = 0.5, // ems
-                //             y = text.attr("y"),
-                //             dy = parseFloat(text.attr("dy")),
-                //             tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-                //         while (word = words.pop()) {
-                //             line.push(word);
-                //             tspan.text(line.join(" "));
-                //             if (tspan.node().getComputedTextLength() > width) {
-                //                 line.pop();
-                //                 tspan.text(line.join(" "));
-                //                 line = [word];
-                //                 tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-                //             }
-                //         }
-                //     });
-                // }
+
                 function wrap(text, width) {
                     text.each(function () {
                         var text = d3.select(this),
@@ -668,7 +642,7 @@ export default class NetworkChart {
                             // console.log(element)
                         });
                     }
-                    update()
+                    update(hierarchy)
                     simulation.restart()
                 }
 
@@ -785,7 +759,7 @@ export default class NetworkChart {
                     })
                 }
 
-                function openNewGroup(newGroup) {
+                function getNewHierarchy(newGroup) {
 
                     //load groupspecific data
                     let newGroupData = [];
@@ -819,20 +793,21 @@ export default class NetworkChart {
                         return el.key
                     });
 
-                    let newN = newHierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                    newN.map(n => {
-                        if (n.depth === 1) {
-                            // n._children = n.children;
-                            // n.children = null;
-                            collapse(n)
-                        }
-                    })
-                    console.log(newN)
+                    console.log(newHierarchy)
+                    return newHierarchy
 
-                    // let l = newHierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
+                    /* let newN = newHierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                     newN.map(n => {
+                         if (n.depth === 1) {
+                             // n._children = n.children;
+                             // n.children = null;
+                             collapse(n)
+                         }
+                     })
+                     console.log(newN)
 
+                     let l = newHierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")*/
 
-                    update(true, newHierarchy)
 
                 }
 
