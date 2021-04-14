@@ -176,8 +176,8 @@ export default class NetworkChart {
 
 
                 //set SVG attributes
-                let width = 805
-                let height = 765
+                let width = 1200
+                let height = 1200
                 let margin = {top: 30, right: 80, bottom: 5, left: 5}
                 const svg = d3.select('#nwSVG')
                     .attr("width", width + margin.left + margin.right)
@@ -235,7 +235,6 @@ export default class NetworkChart {
                 function update(hier, collap) {
 
 
-
                     /* linksEnter.append("title")
                          .text(d => d.key); //DESIGN tooltip text*/
 
@@ -268,15 +267,16 @@ export default class NetworkChart {
                             })
                                 // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
                                 //DESIGN Abstand der Knoten zueinander
-                                .distance(50).strength(0.7)
+                                .distance(50).strength(0.1)
                         )
                         //abstand von Kind-Elternknoten
-                        .force('charge', d3.forceManyBody().strength(-50)
-                            .theta(-950)
+                        .force('charge', d3.forceManyBody()
+                            // .strength(-50)
+                            // .theta(-950)
                         )
                         .force('center', d3.forceCenter(width / 2, height / 2))
-                        .force('collision', d3.forceCollide().radius(100))
-                        // .force('collide', d3.forceCollide().radius(30))
+                        // .force('collision', d3.forceCollide().radius(100))
+                        .force('collide', d3.forceCollide().radius(100))
                         // .force("charge", d3.forceManyBody()
                         //     .strength(-200)
                         //     .theta(0.9)
@@ -433,7 +433,7 @@ export default class NetworkChart {
                             return "\uf055"
                         })
                         .style('pointer-events', 'auto')
-                        .on('d3.select(d).attr(\'fill\')', function (d, i) {
+                        .on('click', function (d, i) {
                             openTip(tip, d, i)
                         })
 
@@ -463,20 +463,12 @@ export default class NetworkChart {
                         .attr("height", 50)
                         .attr("width", 50)
 
-                    function getColorNode(d) {
-                        if (d.depth === 2) {
-                            // console.log(d.parent.color)
-                            return d.color
-                        } else {
-                            getColorNode(d.parent)
-                        }
-                    }
 
                     nodeEnter.filter(function (d) {
                         if (d.depth === 4) return d;
                     })
                         .on('click', function (d) {
-                            console.log( d)
+                            console.log(d)
                             let navBar = document.getElementById('navBar');
                             while (navBar.childElementCount > 2) {
                                 navBar.removeChild(navBar.lastChild)
@@ -499,7 +491,7 @@ export default class NetworkChart {
                             leg.selectAll(".text").remove();
                             leg.selectAll(".circle").remove();
 
-                            hierarchy = getNewHierarchy(d.data.key)
+                            hierarchy = getNewHierarchyByGroup(d.data.key)
                             nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                             nodes.map(n => {
                                 if (n.depth === 1) {
@@ -524,7 +516,6 @@ export default class NetworkChart {
                         .attr("text-anchor", "start")
                         // .style("fill", "whitesmoke")
                         .text(function (d) {
-                            // console.log(d.data.key ? d.data.key : d.data.value)
                             if (d.depth !== 1)
                                 return d.type + d.data.key ? d.data.key : d.data.value
                         }).call(wrap, 200);
@@ -635,8 +626,6 @@ export default class NetworkChart {
                             })
                         }
 
-                        // simulateForce(d)
-                        // console.log(d)
                         d.children = d._children;
                         d._children = null;
 
@@ -645,15 +634,21 @@ export default class NetworkChart {
                         //source :https://stackoverflow.com/questions/19167890/d3-js-tree-layout-collapsing-other-nodes-when-expanding-one
                     }
                     if (d.parent) {
+                        console.log(d.parent.children)
+                        console.log(d)
                         d.parent.children.forEach(function (element) {
-                            if (d !== element && element.children) {
+                            if (d !== element && element.children!==null) {
                                 // console.log('closed automatically')
                                 // console.log(element)                                // collapse(element)
                                 element._children = element.children;
                                 element.children = null;
-                                // collapse(element)
+                                let s = d3.select('#nwSVG');
+                                s.selectAll(".nodes").remove();
+                                s.selectAll(".links").remove();
+                                let leg = d3.select('#legendSVG');
+                                leg.selectAll(".text").remove();
+                                leg.selectAll(".circle").remove();
                             }
-                            // console.log(element)
                         });
                     }
                     update(hierarchy, false)
@@ -676,7 +671,7 @@ export default class NetworkChart {
                     checked()
                     submitFilter(tip, d, i)
                     tip.html(function (d) {
-                        return "<div class=row style='width: 300px; height: 500px'>" +
+                        return "<div class=row >" +
                             "<div class=col><p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
                             " <div class=col>" +
                             " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
@@ -687,18 +682,18 @@ export default class NetworkChart {
                                     "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el + "'> " +
                                     "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el + ">" + el + "</label> </div>"
                             })
-                            + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by year:</p>"
-                            + getYears(d).map(el => {
-                                return "<div class=form-check>" +
-                                    "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
-                                    "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
-                            })
-                            + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by type:</p>"
-                            /*+ getYears(d).map(el => {
-                                return "<div class=form-check>" +
-                                    "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
-                                    "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
-                            })*/
+                            /* + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by year:</p>"
+                             + getYears(d).map(el => {
+                                 return "<div class=form-check>" +
+                                     "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
+                                     "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
+                             })
+                             + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by type:</p>"
+                             /!*+ getYears(d).map(el => {
+                                 return "<div class=form-check>" +
+                                     "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
+                                     "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
+                             })*!/*/
                             + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div>"
 
                     })
@@ -746,6 +741,56 @@ export default class NetworkChart {
                     return authorList
                 }
 
+                function showNodesByAuthor(author) {
+                    // let s = d3.select('#nwSVG');
+                    // s.selectAll(".nodes").remove();
+                    //
+                    // hierarchy = getNewHierarchyByAuthor(author)
+                    // console.log(getNewHierarchyByAuthor(author))
+                    nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    nodes.map(n => {
+                        if (n.depth === 0) {
+                            n._children = n.children[1];
+                            n.children = n.children[2];
+                            // collapse(n)
+                        }
+                    })
+                    update(hierarchy)
+                    // nodes.map(n => {
+                    //     if (n.depth === 1) {
+                    //         collapse(n)
+                    //     }
+                    // })
+
+                    // update(hierarchy)
+                    // simulation.restart()
+                    console.log(nodes)
+                    // let resultNodes = [];
+                    // nodes.forEach(n => {
+                    //         n.data.values.forEach(meta => {
+                    //             if (meta.type == 'author') {
+                    //                 if (meta.key === author) {
+                    //                     resultNodes.push(n)
+                    //                 }
+                    //             }
+                    //         })
+                    //     }
+                    // )
+                    // resultNodes.forEach(rn => {
+                    //         nodes.map(n => {
+                    //             if (n.depth === 0) {
+                    //                 n.children.map((childNodes, i) => {
+                    //                     if (childNodes !== rn) {
+                    //                         collapse(n.children[i])
+                    //                     }
+                    //                 })
+                    //             }
+                    //         })
+                    //     }
+                    // )
+
+                    console.log(nodes)
+                }
 
                 //-----------------------------------------------------------------------------------------------------------------
 
@@ -760,6 +805,8 @@ export default class NetworkChart {
                     $(document).ready(function () {
                         $('#submitFilter').click(function () {
                             let name = $('.form-check-input:checked').val();
+                            showNodesByAuthor(name)
+                            console.log(name)
                             tip.hide(d, i)
                         })
                     })
@@ -773,7 +820,7 @@ export default class NetworkChart {
                     })
                 }
 
-                function getNewHierarchy(newGroup) {
+                function getNewHierarchyByGroup(newGroup) {
 
                     //load groupspecific data
                     let newGroupData = [];
@@ -821,6 +868,34 @@ export default class NetworkChart {
                      console.log(newN)
 
                      let l = newHierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")*/
+
+
+                }
+
+                function getNewHierarchyByAuthor(author) {
+                    let newHierarchy;
+                    let tempList = [];
+                    hierarchy.children.forEach(item => {
+                        item._children.map(data => {
+                            if (data.data.type === 'author') {
+                                if (data.data.key === author) {
+                                    tempList.push(item)
+                                }
+                            }
+                        })
+                    })
+
+
+                    let newPackableItems = {key: group, values: groupData};
+
+                    //creating hierarchy
+                    newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
+                    newHierarchy.children = tempList;
+
+                    //
+                    console.log(newHierarchy)
+                    return newHierarchy
+                    //
 
 
                 }
