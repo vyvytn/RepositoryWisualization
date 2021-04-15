@@ -189,6 +189,7 @@ export default class NetworkChart {
 
                 function update(hier, collap) {
 
+
                     //initialize links between nodes
                     links = hier.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
                     link = svg.selectAll(".links")
@@ -279,15 +280,7 @@ export default class NetworkChart {
                     //tooltip created as filter
                     let tip = d3.tip()
                         .attr('class', 'd3-tip')
-                        .style(function (d) {
-                            if (d.depth === 0) {
-                                return "('display', 'inline')"
-                            } else {
-                                return "('display', 'none')"
-                            }
-                        })
                         .style("background", colors[2])
-                    // .style("overflow", 'scroll')
 
                     //usage of tooltip
                     svg.call(tip)
@@ -338,21 +331,47 @@ export default class NetworkChart {
                             return "\uf055"
                         })
                         .style('pointer-events', 'auto')
+                        .on('mouseover', function (d) {
+                            d3.select(this).style('font-size', 17)
+                        })
+                        .on('mouseout', function (d) {
+                            d3.select(this).style('font-size', 10)
+                        })
                         .on('click', function (d, i) {
-                            openTip(tip, d, i)
+                            console.log(d)
+                            openTip(tip, d, i, collap)
                         })
 
                     //rectangle for literals
                     nodeEnter.filter(function (d) {
-                        if (d.depth >= 2) return d;
+                        if (d.depth >= 2 && d.depth < 4) return d;
                     })
                         .append("rect")
                         .attr("width", 200)
                         .attr("height", 50)
                         .attr("dy", -10)
                         .attr("dx", -40)
+                        .style('opacity', 0.85)
                         .style("fill", function (d) {
                             return d.depth === 2 ? d.parent.color : d.depth === 3 ? d.parent.parent.color : d.depth === 4 ? d.parent.parent.parent.color : d.parent.parent.parent.parent.color
+                        })
+
+
+                    //visual nodes for new researchgroup
+                    nodeEnter.filter(function (d) {
+                        if (d.depth === 4) return d;
+                    })
+                        .append("circle")
+                        .attr("r", 30)
+                        // .style("display", "inline")
+                        .on("mouseover", function (d) {
+                            d3.select(this).attr("r", 50)
+                        })
+                        .on('mouseout', function (d) {
+                            d3.select(this).attr("r", 30)
+                        })
+                        .style("fill", function (d) {
+                            return d.parent.parent.parent.color
                         });
 
                     //author icons for author nodes
@@ -368,6 +387,16 @@ export default class NetworkChart {
                         })
                         .attr("height", 50)
                         .attr("width", 50)
+                        .on("mouseover", function (d) {
+                            console.log('OVER')
+                            d3.select(this).attr("width", 80);
+                            d3.select(this).attr("height", 80)
+                        })
+                        .on('mouseout', function (d) {
+                            console.log('OUT')
+                            d3.select(this).attr("width", 50);
+                            d3.select(this).attr("height", 50)
+                        })
 
                     //opens new group as rootnode when clicking on group node
                     //updates navigation
@@ -409,7 +438,7 @@ export default class NetworkChart {
                             })
                             console.log('hierarchy')
                             console.log(hierarchy)
-                            update(hierarchy, true)
+                            update(hierarchy, false)
                             simulation.restart()
                         })
 
@@ -513,8 +542,9 @@ export default class NetworkChart {
                     console.log(d)
                     if (d3.event.defaultPrevented) return; // ignore drag
                     if (d.children) {
-                        d._children = d.children;
-                        d.children = null;
+                        // d._children = d.children;
+                        // d.children = null;
+                        collapse(d)
                     } else {
                         function simulateForce(node) {
                             simulation.force('center', function (d) {
@@ -557,46 +587,85 @@ export default class NetworkChart {
                 }
 
                 //creates html element for filtering
-                function openTip(tip, d, i) {
+                function openTip(tip, d, i, bool) {
+                    console.log(tip)
+                    console.log(d)
                     let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                     tip.style("background", color);
                     tip.direction('e')
-                    leftMenuClicked(tip, d, i)
-                    checked()
-                    submitFilter(tip, d, i)
-                    tip.html(function (d) {
-                        return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' ><div class=row >" +
-                            "<div class=col> <p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
-                            " <div class=col>" +
-                            " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
-                            "</div>"
+                    // checked()
+                    // submitFilter(tip, d, i)
+                    // leftMenuClicked(tip, d, i)
 
-                            + getAuthors(d).map(el => {
-                                return "<div class=form-check>" +
-                                    "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el + "'> " +
-                                    "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el + ">" + el + "</label> </div>"
-                            })
-                            /* + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by year:</p>"
-                             + getYears(d).map(el => {
-                                 return "<div class=form-check>" +
-                                     "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
-                                     "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
-                             })
-                             + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by type:</p>"
-                             /!*+ getYears(d).map(el => {
-                                 return "<div class=form-check>" +
-                                     "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
-                                     "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
-                             })*!/*/
-                            + "<div class=form-check>" +
-                            "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
-                            "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'>ALL PUBLICATIONS</label> </div>"
-                            + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div> </div>"
+                    if (bool) {
+                        tip.html(function (d) {
+                            return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' >" +
+                                "<div class=row >" +
+                                " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
+                                "</div>"
+                                + "<div class=form-check>" +
+                                "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
+                                "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'> show all publications</label> </div>"
+                                + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div> " +
+                                "</div>"
 
-                    })
+                        })
+                    } else {
+                        tip.html(function (d) {
+                            return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' ><div class=row >" +
+                                "<div class=col> <p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
+                                " <div class=col>" +
+                                " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
+                                "</div>"
+
+                                + getAuthors(d).map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el + "'> " +
+                                        "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el + ">" + el + "</label> </div>"
+                                })
+                                /* + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by year:</p>"
+                                 + getYears(d).map(el => {
+                                     return "<div class=form-check>" +
+                                         "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
+                                         "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
+                                 })
+                                 + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by type:</p>"
+                                 /!*+ getYears(d).map(el => {
+                                     return "<div class=form-check>" +
+                                         "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
+                                         "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
+                                 })*!/*/
+                                + "<div class=form-check>" +
+                                "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
+                                "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'>ALL PUBLICATIONS</label> </div>"
+                                + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div> </div>"
+
+                        })
+                    }
                     if (d.depth === 0) {
                         tip.show(d, i)
                     }
+                    $(document).ready(function () {
+                        $('#submitFilter').click(function () {
+                            let name = $('.form-check-input:checked').val();
+                            if (name === 'all') {
+                                showNodesByGroup(d.data.key)
+                            } else {
+                                showNodesByAuthor(d, name)
+                            }
+                            tip.hide(d, i)
+                        })
+                    })
+                    $(document).ready(function () {
+                        $('#leftMenuBtn').click(function () {
+                            tip.hide(d, i)
+                        })
+                    })
+                    $(document).on('click', '.form-check-input:checked', function () {
+                        $(".form-check-input").prop("disabled", true);
+                    });
+
+
                 }
 
                 //return list of all authors in chosen researchgroup
@@ -616,20 +685,7 @@ export default class NetworkChart {
                     return authorList
                 }
 
-                function showNodesByAuthor(author) {
-                    // let s = d3.select('#nwSVG');
-                    // s.selectAll(".nodes").remove();
-                    //
-                    // hierarchy = getNewHierarchyByAuthor(author)
-                    // // console.log(getNewHierarchyByAuthor(author))
-                    // nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                    // nodes.map(n => {
-                    //     if (n.depth === 0) {
-                    //         n._children = n.children[1];
-                    //         n.children = n.children[2];
-                    //         // collapse(n)
-                    //     }
-                    // })
+                function showNodesByAuthor(d, author) {
 
                     let s = d3.select('#nwSVG');
                     s.selectAll(".nodes").remove();
@@ -637,115 +693,44 @@ export default class NetworkChart {
                     let leg = d3.select('#legendSVG');
                     leg.selectAll(".text").remove();
                     leg.selectAll(".circle").remove();
+                    let t = d3.selectAll('.d3-tip')
+                    t.remove()
 
-                    hierarchy = getNewHierarchyByAuthor(author)
+
+                    hierarchy = getNewHierarchyByAuthor(d, author)
                     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                     nodes.map(n => {
                         if (n.depth === 1) {
-                            // n._children = n.children;
-                            // n.children = null;
                             collapse(n)
                         }
                     })
-                    console.log(hierarchy.links())
 
                     update(hierarchy, true)
                     simulation.restart()
 
-                    // update(hierarchy)
-                    // nodes.map(n => {
-                    //     if (n.depth === 1) {
-                    //         collapse(n)
-                    //     }
-                    // })
-
-                    // update(hierarchy)
-                    // simulation.restart()
-                    // let resultNodes = [];
-                    // nodes.forEach(n => {
-                    //         n.data.values.forEach(meta => {
-                    //             if (meta.type == 'author') {
-                    //                 if (meta.key === author) {
-                    //                     resultNodes.push(n)
-                    //                 }
-                    //             }
-                    //         })
-                    //     }
-                    // )
-                    // resultNodes.forEach(rn => {
-                    //         nodes.map(n => {
-                    //             if (n.depth === 0) {
-                    //                 n.children.map((childNodes, i) => {
-                    //                     if (childNodes !== rn) {
-                    //                         collapse(n.children[i])
-                    //                     }
-                    //                 })
-                    //             }
-                    //         })
-                    //     }
-                    // )
-
                 }
 
-                async function showNodesByGroup(group){
+                function showNodesByGroup(group) {
                     let s = d3.select('#nwSVG');
                     s.selectAll(".nodes").remove();
                     s.selectAll(".links").remove();
                     let leg = d3.select('#legendSVG');
                     leg.selectAll(".text").remove();
                     leg.selectAll(".circle").remove();
+                    let t = d3.selectAll('.d3-tip')
+                    t.remove()
+
 
                     hierarchy = getNewHierarchyByGroup(group)
-                    console.log(hierarchy)
                     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                     nodes.map(n => {
                         if (n.depth === 1) {
-                            // n._children = n.children;
-                            // n.children = null;
                             collapse(n)
                         }
                     })
 
-                    await update(hierarchy, true)
+                    update(hierarchy, false)
                     simulation.restart()
-
-                }
-
-                // jquery functions for listing on button clicks
-                //-----------------------------------------------------------------------------------------------------------------
-
-
-                //disables all other filter options when checking one checkbox
-                function checked() {
-                    $(document).on('click', '.form-check-input:checked', function () {
-                        $(".form-check-input").prop("disabled", true);
-                    });
-                }
-
-                //shows only nodes of specific author when clicking submit button in filter
-                function submitFilter(tip, d, i) {
-                    console.log(d)
-                    $(document).ready(function () {
-                        $('#submitFilter').click(function () {
-                            let name = $('.form-check-input:checked').val();
-                            if(name==='all'){
-                                showNodesByGroup(d.data.key)
-                            }else{
-                                showNodesByAuthor(name)
-                            }
-                            console.log(name)
-                            tip.hide(d, i)
-                        })
-                    })
-                }
-
-                //closes filter window when clicking cross button in filter
-                function leftMenuClicked(tip, d, i) {
-                    $(document).ready(function () {
-                        $('#leftMenuBtn').click(function () {
-                            tip.hide(d, i)
-                        })
-                    })
                 }
 
                 //returns new hierarchy of new researchgroup
@@ -796,30 +781,68 @@ export default class NetworkChart {
 
                 //creates hierarchy for filterd nodes
                 //updates whole network chart
-                function getNewHierarchyByAuthor(author) {
-                    let newHierarchy;
-                    let tempList = [];
-                    hierarchy.children.forEach(item => {
-                        item._children.map(data => {
-                            if (data.data.type === 'author') {
-                                if (data.data.key === author) {
-                                    tempList.push(item)
-                                }
+                function getNewHierarchyByAuthor(d, author) {
+                    let groupname = d.data.key
+                    console.log(d)
+                    //load groupspecific data
+                    let newGroupData = [];
+                    allData.map(el => {
+                        el.values.map(elem => {
+                            if (elem.key === groupname) {
+                                elem.values.map(item => {
+                                    item.values.map(meta => {
+                                        if (meta.key === author) {
+                                            console.log(meta)
+                                            newGroupData.push(item)
+                                        }
+                                    })
+                                })
                             }
                         })
                     })
-
-
-                    let newPackableItems = {key: group, values: groupData};
-
+                    console.log(newGroupData)
+                    let newPackableItems = {key: groupname, values: newGroupData};
                     //creating hierarchy
-                    newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
-                    newHierarchy.children = tempList;
+                    let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
+                    console.log(newHierarchy)
                     return newHierarchy
-
-
                 }
 
+
+                // jquery functions for listing on button clicks
+                //-----------------------------------------------------------------------------------------------------------------
+
+
+                /*//disables all other filter options when checking one checkbox
+                function checked() {
+                    $(document).on('click', '.form-check-input:checked', function () {
+                        $(".form-check-input").prop("disabled", true);
+                    });
+                }
+
+                //shows only nodes of specific author when clicking submit button in filter
+                function submitFilter(tip, d, i) {
+                    $(document).ready(function () {
+                        $('#submitFilter').click(function () {
+                            let name = $('.form-check-input:checked').val();
+                            if (name === 'all') {
+                                showNodesByGroup(d.data.key)
+                            } else {
+                                showNodesByAuthor(d, name)
+                            }
+                            tip.hide(d, i)
+                        })
+                    })
+                }
+
+                //closes filter window when clicking cross button in filter
+                function leftMenuClicked(tip, d, i) {
+                    $(document).ready(function () {
+                        $('#leftMenuBtn').click(function () {
+                            tip.hide(d, i)
+                        })
+                    })
+                }*/
 
             }
         )
