@@ -599,15 +599,18 @@ export default class NetworkChart {
 
                     if (bool) {
                         tip.html(function (d) {
-                            return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' >" +
-                                "<div class=row >" +
-                                " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
-                                "</div>"
-                                + "<div class=form-check>" +
-                                "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
-                                "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'> show all publications</label> </div>"
-                                + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div> " +
-                                "</div>"
+                            return "<div style='height: auto; overflow-x: hidden; overflow-y: auto' >" +
+                                        "<div class=row >" +
+                                            " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> " +
+                                        "</div>" +
+                                        "<div class=form-check>" +
+                                            "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
+                                            "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'> show all publications</label> " +
+                                        "</div>"+
+                                         "<div class=\"d-grid gap-2\">" +
+                                            "<button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button>" +
+                                         " </div>" +
+                                    "</div>"
 
                         })
                     } else {
@@ -647,13 +650,13 @@ export default class NetworkChart {
                     }
                     $(document).ready(function () {
                         $('#submitFilter').click(function () {
+                            tip.hide(d, i)
                             let name = $('.form-check-input:checked').val();
                             if (name === 'all') {
                                 showNodesByGroup(d.data.key)
                             } else {
                                 showNodesByAuthor(d, name)
                             }
-                            tip.hide(d, i)
                         })
                     })
                     $(document).ready(function () {
@@ -722,7 +725,8 @@ export default class NetworkChart {
 
 
                     hierarchy = getNewHierarchyByGroup(group)
-                    nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    console.log(getNewHierarchyByGroup(group))
+                   nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                     nodes.map(n => {
                         if (n.depth === 1) {
                             collapse(n)
