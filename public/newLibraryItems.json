@@ -3401,7 +3401,42 @@
       "value": "A Question of Power: How Task Instructions Shape Training Data"
     },
     "author": {
-      "type": "literal"
+      "type": "literal",
+      "value": "Miceli, Milagros"
+    },
+    "area": {
+      "type": "literal",
+      "value": "Verantwortung ? Vertrauen ? Governance"
+    },
+    "group": {
+      "type": "literal",
+      "value": "Kritikalit?t KI-basierter Systeme"
+    },
+    "document": {
+      "type": "literal",
+      "value": ""
+    },
+    "language": {
+      "type": "literal",
+      "value": "en"
+    },
+    "abstract": {
+      "type": "literal",
+      "value": ""
+    },
+    "date": {
+      "type": "literal",
+      "value": ""
+    }
+  },
+  {
+    "title": {
+      "type": "literal",
+      "value": "A Question of Power: How Task Instructions Shape Training Data"
+    },
+    "author": {
+      "type": "literal",
+      "value": "Posada, Julian"
     },
     "area": {
       "type": "literal",

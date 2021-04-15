@@ -25,14 +25,6 @@ export default class NetworkChart {
                 var link, edgepaths, nodes, node, simulation, clickedNode, links
                 let unsortedData = data.results.bindings;
 
-                // console.log(unsortedData)
-                let authorsList = d3.nest()
-                    .key(d => d.author.value)
-                    .key(d => d.title.value)
-                    .key(d => d.group.value)
-                    .key(d => d.area.value)
-                    .entries(unsortedData);
-
                 let authors = d3.nest()
                     .key(d => d.author.value)
                     .key(d => d.title.value)
@@ -42,24 +34,6 @@ export default class NetworkChart {
                 let itemsList = d3.nest()
                     .key(d => d.title.value)
                     .entries(unsortedData);
-
-
-                let abstractList = d3.nest()
-                    .key(d => d.title.value)
-                    .key(function (d) {
-                        return d.abstract ? d.abstract.value : 'No abstract'
-                    })
-                    .entries(unsortedData);
-
-                abstractList.map(i => {
-                    i.values.map(abstract => {
-                        abstract.values = null
-                    })
-                })
-
-
-                let items = {key: 'items', values: itemsList};
-                let itemsHierarchy = d3.hierarchy(items, d => d.values)
 
                 let allData = d3.nest()
                     .key(d => d.area.value)
@@ -91,7 +65,6 @@ export default class NetworkChart {
                     })
                 })
 
-                // console.log(allData)
 
                 let groupData = [];
 
@@ -100,8 +73,6 @@ export default class NetworkChart {
                     el.values.map(elem => {
                         if (elem.key === group) {
                             groupData = elem.values
-                        } else {
-                            // console.log(elem.key)
                         }
                     })
                 })
@@ -116,17 +87,6 @@ export default class NetworkChart {
                         })
                     })
                 })
-
-
-                /*  abstractList.map(abstract=>{
-                      groupData.map(item=>{
-                          if(item.key===abstract.key){
-                              console.log(item)
-                            item.values.push(abstract.values[0])
-                          }
-                      })
-                  })*/
-
 
                 itemsList.map(item => {
                     groupData.map(i => {
@@ -146,7 +106,6 @@ export default class NetworkChart {
 
                 //creating hierarchy
                 let hierarchy = d3.hierarchy(packableItems, d => d.values);
-                // nodes = hierarchy.descendants();
                 let groups = packableItems.values.map(el => {
                     return el.key
                 });
@@ -177,7 +136,7 @@ export default class NetworkChart {
 
                 //set SVG attributes
                 let width = 1200
-                let height = 1200
+                let height = 1000
                 let margin = {top: 30, right: 80, bottom: 5, left: 5}
                 const svg = d3.select('#nwSVG')
                     .attr("width", width + margin.left + margin.right)
@@ -212,10 +171,7 @@ export default class NetworkChart {
                     .style("font-size", "15px")
                     .style("font-family", "Times New Roman")
 
-                console.log(nodes)
                 nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-
-
                 nodes.map(n => {
                     if (n.depth === 1) {
                         // n._children = n.children;
@@ -225,27 +181,20 @@ export default class NetworkChart {
                 })
                 links = hierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
 
-                // link = svg.selectAll(".links")
-                //     .data(links)
-                //
+
                 update(hierarchy, false)
 
+                //update function begins
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(hier, collap) {
 
-
-                    /* linksEnter.append("title")
-                         .text(d => d.key); //DESIGN tooltip text*/
-
+                    //initialize links between nodes
                     links = hier.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
-                    console.log(links)
-
-
                     link = svg.selectAll(".links")
                         .data(links)
 
-
+                    //creates visual links as lines
                     const linksEnter =
                         link.enter()
                             .append('line')
@@ -255,7 +204,6 @@ export default class NetworkChart {
                             .style('opacity', 10)
 
                     link.exit().remove();
-
                     link = linksEnter.merge(link)
                         .attr('marker-end', 'url(#arrowhead)')
 
@@ -275,8 +223,8 @@ export default class NetworkChart {
                             // .theta(-950)
                         )
                         .force('center', d3.forceCenter(width / 2, height / 2))
-                        // .force('collision', d3.forceCollide().radius(100))
-                        .force('collide', d3.forceCollide().radius(100))
+                        // .force('collision', d3.forceCollide().radius(70))
+                        .force('collide', d3.forceCollide().radius(65))
                         // .force("charge", d3.forceManyBody()
                         //     .strength(-200)
                         //     .theta(0.9)
@@ -301,13 +249,12 @@ export default class NetworkChart {
                         .attr('fill', '#999')
                         .style('stroke', 'none');
 
-
+                    //initialize nodes
                     nodes = hier.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                    console.log(collap)
-
                     node = svg.selectAll(".nodes")
                         .data(nodes)
 
+                    //create visual nodes as circles
                     let nodeEnter = node.enter()
                         .append("g")
                         .attr("class", "nodes")
@@ -317,55 +264,19 @@ export default class NetworkChart {
                             .on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
                         )
 
-                    //Wuzelknoten nicht klickbar
+                    //root not clickable
+                    //opens children nodes
                     nodeEnter.filter(function (d) {
                         if (d.depth !== 0) return d
                     })
                         .on("click", function (d) {
-                            // console.log(d3.select(this.parentNode).attr('fill'))
-                            // console.log(d.parent.color)
-
                             click(nodeEnter, d)
                         })
 
+                    //old nodes will be deleted when update function is called
                     node.exit().remove();
 
-                    /*  edgepaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
-                          .data(links)
-                          .enter()
-                          .append('path')
-                          .attr('class', 'edgepath')
-                          .attr('fill-opacity', 100)
-                          .attr('stroke-opacity', 10)
-                          .attr('id', function (d, i) {
-                              return 'edgepath' + i
-                          })*/
-
-                    /* // .style("pointer-events", "none");
-                     const edgelabels = svg.selectAll(".edgelabel")
-                         .data(links)
-                         .enter()
-                         .append('text')
-                         .style("pointer-events", "none")
-                         .attr('class', 'edgelabel')
-                         .attr('id', function (d, i) {
-                             return 'edgelabel' + i
-                         })
-                         .attr('font-size', 10)
-                         .attr('fill', '#aaa');
-
-                     //Text f?r verbindungen/Pfeile
-                     edgelabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
-                         .attr('xlink:href', function (d, i) {
-                             return '#edgepath' + i
-                         })
-                         .style("text-anchor", "middle")
-                         .style("pointer-events", "none")
-                         .attr("startOffset", "50%")
-                         .text(d => 'contains');
-    */
-
-                    //tooltip
+                    //tooltip created as filter
                     let tip = d3.tip()
                         .attr('class', 'd3-tip')
                         .style(function (d) {
@@ -376,9 +287,13 @@ export default class NetworkChart {
                             }
                         })
                         .style("background", colors[2])
-                        .style("overflow-y", 'scroll')
+                    // .style("overflow", 'scroll')
+
+                    //usage of tooltip
+                    svg.call(tip)
 
 
+                    //styling for root and children nodes
                     nodeEnter.filter(function (d) {
                         if (d.depth === 0 || d.depth === 1) return d;
                     })
@@ -402,22 +317,12 @@ export default class NetworkChart {
                             }
                         })
 
-
-                    // rectangle for literals
-                    nodeEnter.filter(function (d) {
-                        if (d.data.type === 'literal') return d;
-                    }).append("rectangle")
-
-
-                    //usage of tooltip
-                    svg.call(tip)
-
-
-                    //    title of nodes
+                    // title of nodes
                     node.append("title")
                         .text(d => d.data.key);
 
-                    //filterbutton
+                    //creates button for filtering
+                    //opens tip when clicking
                     nodeEnter.filter(function (d) {
                         if (d.depth === 0) return d;
                     })
@@ -437,6 +342,7 @@ export default class NetworkChart {
                             openTip(tip, d, i)
                         })
 
+                    //rectangle for literals
                     nodeEnter.filter(function (d) {
                         if (d.depth >= 2) return d;
                     })
@@ -449,7 +355,7 @@ export default class NetworkChart {
                             return d.depth === 2 ? d.parent.color : d.depth === 3 ? d.parent.parent.color : d.depth === 4 ? d.parent.parent.parent.color : d.parent.parent.parent.parent.color
                         });
 
-                    //author icons
+                    //author icons for author nodes
                     nodeEnter.filter(function (d) {
                         if (d.data.type === 'author') return d;
                     }).append("svg:image")
@@ -463,7 +369,8 @@ export default class NetworkChart {
                         .attr("height", 50)
                         .attr("width", 50)
 
-
+                    //opens new group as rootnode when clicking on group node
+                    //updates navigation
                     nodeEnter.filter(function (d) {
                         if (d.depth === 4) return d;
                     })
@@ -500,30 +407,26 @@ export default class NetworkChart {
                                     collapse(n)
                                 }
                             })
-
+                            console.log('hierarchy')
+                            console.log(hierarchy)
                             update(hierarchy, true)
                             simulation.restart()
                         })
 
+
                     node = nodeEnter.merge(node);
 
-                    ///*Titel auf Knoten
-                    // */
-
+                    //text labels for nodes
                     nodeEnter.append("text")
                         .attr("dy", 0)
                         .attr("dx", 20)
+                        .style("font-size", 15)
                         .attr("text-anchor", "start")
                         // .style("fill", "whitesmoke")
                         .text(function (d) {
                             if (d.depth !== 1)
                                 return d.type + d.data.key ? d.data.key : d.data.value
                         }).call(wrap, 200);
-
-                    nodeEnter.selectAll('rectangle')
-                        .attr("width", function (d) {
-                            return this.parentNode.getBBox().width;
-                        })
 
                     //Listen for tick events to render the nodes as they update in your Canvas or SVG.
                     simulation
@@ -533,6 +436,7 @@ export default class NetworkChart {
                         .links(links);
                 }
 
+                //functions
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function wrap(text, width) {
@@ -542,10 +446,10 @@ export default class NetworkChart {
                             word,
                             line = [],
                             lineNumber = 0,
-                            lineHeight = 0.9, // ems
+                            lineHeight = 0.8, // ems
                             // x = text.attr("x"),
                             // y = text.attr("y"),
-                            dy = 0, //parseFloat(text.attr("dy")),
+                            dy = 1, //parseFloat(text.attr("dy")),
                             tspan = text.text(null)
                                 .append("tspan")
                                 .attr("x", 0)
@@ -584,12 +488,11 @@ export default class NetworkChart {
                 }
 
                 //When the drag gesture starts, the targeted node is fixed to the pointer
-                //The simulation is temporarily ?heated? during interaction by setting the target alpha to a non-zero value.
                 function dragstarted(d) {
                     if (!d3.event.active) simulation.alphaTarget(0.3).restart();//sets the current target alpha to the specified number in the range [0,1].
 
-                    d.fy = d.y; //fx - the node?s fixed x-position. Original is null.
-                    d.fx = d.x; //fy - the node?s fixed y-position. Original is null.
+                    d.fy = d.y;
+                    d.fx = d.x;
                 }
 
                 //When the drag gesture starts, the targeted node is fixed to the pointer
@@ -606,18 +509,13 @@ export default class NetworkChart {
                 }
 
                 function click(node, d) {
+                    console.log('CLICK')
                     console.log(d)
                     if (d3.event.defaultPrevented) return; // ignore drag
                     if (d.children) {
-                        //SCHLIESSEN
-                        /*console.log('closed manuel')
-                        console.log(d)*/
                         d._children = d.children;
                         d.children = null;
                     } else {
-                        console.log('NEW NODE')
-
-                        //OEFFNEN
                         function simulateForce(node) {
                             simulation.force('center', function (d) {
                                 if (d === node) {
@@ -628,18 +526,12 @@ export default class NetworkChart {
 
                         d.children = d._children;
                         d._children = null;
-
-
-                        //allows just one node expanding
-                        //source :https://stackoverflow.com/questions/19167890/d3-js-tree-layout-collapsing-other-nodes-when-expanding-one
                     }
+                    //allows just one node expanding
+                    //source :https://stackoverflow.com/questions/19167890/d3-js-tree-layout-collapsing-other-nodes-when-expanding-one
                     if (d.parent) {
-                        console.log(d.parent.children)
-                        console.log(d)
                         d.parent.children.forEach(function (element) {
-                            if (d !== element && element.children!==null) {
-                                // console.log('closed automatically')
-                                // console.log(element)                                // collapse(element)
+                            if (d !== element && element.children !== null) {
                                 element._children = element.children;
                                 element.children = null;
                                 let s = d3.select('#nwSVG');
@@ -655,6 +547,7 @@ export default class NetworkChart {
                     simulation.restart()
                 }
 
+                //closes all children from specific node
                 function collapse(d) {
                     if (d.children) {
                         d._children = d.children;
@@ -663,6 +556,7 @@ export default class NetworkChart {
                     }
                 }
 
+                //creates html element for filtering
                 function openTip(tip, d, i) {
                     let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                     tip.style("background", color);
@@ -671,8 +565,8 @@ export default class NetworkChart {
                     checked()
                     submitFilter(tip, d, i)
                     tip.html(function (d) {
-                        return "<div class=row >" +
-                            "<div class=col><p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
+                        return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' ><div class=row >" +
+                            "<div class=col> <p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
                             " <div class=col>" +
                             " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
                             "</div>"
@@ -694,7 +588,10 @@ export default class NetworkChart {
                                      "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
                                      "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
                              })*!/*/
-                            + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div>"
+                            + "<div class=form-check>" +
+                            "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
+                            "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'>ALL PUBLICATIONS</label> </div>"
+                            + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div> </div>"
 
                     })
                     if (d.depth === 0) {
@@ -702,28 +599,7 @@ export default class NetworkChart {
                     }
                 }
 
-                function getYears(d) {
-                    let years = []
-                    d.children.map(item => {
-                        let itemName = item.data.key;
-                        itemsList.map(title => {
-                            if (itemName === title.key) {
-                                title.values.map(year => {
-                                    years.push(year.key)
-                                })
-                            }
-                        })
-                    })
-                    let result = Object.values(years.reduce((c, v) => {
-                        c[v] = c[v] || [v, 0];
-                        c[v][1]++;
-                        return c;
-                    }, {})).map(o => ({[o[0]]: o[1]}));
-
-                    // console.log(result)
-                    return result
-                }
-
+                //return list of all authors in chosen researchgroup
                 function getAuthors(d) {
                     let authorList = []
                     if (d.children) {
@@ -737,7 +613,6 @@ export default class NetworkChart {
                             authorList.push(author)
                         })
                     }
-                    // console.log(authorList)
                     return authorList
                 }
 
@@ -746,16 +621,38 @@ export default class NetworkChart {
                     // s.selectAll(".nodes").remove();
                     //
                     // hierarchy = getNewHierarchyByAuthor(author)
-                    // console.log(getNewHierarchyByAuthor(author))
+                    // // console.log(getNewHierarchyByAuthor(author))
+                    // nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    // nodes.map(n => {
+                    //     if (n.depth === 0) {
+                    //         n._children = n.children[1];
+                    //         n.children = n.children[2];
+                    //         // collapse(n)
+                    //     }
+                    // })
+
+                    let s = d3.select('#nwSVG');
+                    s.selectAll(".nodes").remove();
+                    s.selectAll(".links").remove();
+                    let leg = d3.select('#legendSVG');
+                    leg.selectAll(".text").remove();
+                    leg.selectAll(".circle").remove();
+
+                    hierarchy = getNewHierarchyByAuthor(author)
                     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                     nodes.map(n => {
-                        if (n.depth === 0) {
-                            n._children = n.children[1];
-                            n.children = n.children[2];
-                            // collapse(n)
+                        if (n.depth === 1) {
+                            // n._children = n.children;
+                            // n.children = null;
+                            collapse(n)
                         }
                     })
-                    update(hierarchy)
+                    console.log(hierarchy.links())
+
+                    update(hierarchy, true)
+                    simulation.restart()
+
+                    // update(hierarchy)
                     // nodes.map(n => {
                     //     if (n.depth === 1) {
                     //         collapse(n)
@@ -764,7 +661,6 @@ export default class NetworkChart {
 
                     // update(hierarchy)
                     // simulation.restart()
-                    console.log(nodes)
                     // let resultNodes = [];
                     // nodes.forEach(n => {
                     //         n.data.values.forEach(meta => {
@@ -789,29 +685,61 @@ export default class NetworkChart {
                     //     }
                     // )
 
-                    console.log(nodes)
                 }
 
+                async function showNodesByGroup(group){
+                    let s = d3.select('#nwSVG');
+                    s.selectAll(".nodes").remove();
+                    s.selectAll(".links").remove();
+                    let leg = d3.select('#legendSVG');
+                    leg.selectAll(".text").remove();
+                    leg.selectAll(".circle").remove();
+
+                    hierarchy = getNewHierarchyByGroup(group)
+                    console.log(hierarchy)
+                    nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    nodes.map(n => {
+                        if (n.depth === 1) {
+                            // n._children = n.children;
+                            // n.children = null;
+                            collapse(n)
+                        }
+                    })
+
+                    await update(hierarchy, true)
+                    simulation.restart()
+
+                }
+
+                // jquery functions for listing on button clicks
                 //-----------------------------------------------------------------------------------------------------------------
 
 
+                //disables all other filter options when checking one checkbox
                 function checked() {
                     $(document).on('click', '.form-check-input:checked', function () {
                         $(".form-check-input").prop("disabled", true);
                     });
                 }
 
+                //shows only nodes of specific author when clicking submit button in filter
                 function submitFilter(tip, d, i) {
+                    console.log(d)
                     $(document).ready(function () {
                         $('#submitFilter').click(function () {
                             let name = $('.form-check-input:checked').val();
-                            showNodesByAuthor(name)
+                            if(name==='all'){
+                                showNodesByGroup(d.data.key)
+                            }else{
+                                showNodesByAuthor(name)
+                            }
                             console.log(name)
                             tip.hide(d, i)
                         })
                     })
                 }
 
+                //closes filter window when clicking cross button in filter
                 function leftMenuClicked(tip, d, i) {
                     $(document).ready(function () {
                         $('#leftMenuBtn').click(function () {
@@ -820,16 +748,15 @@ export default class NetworkChart {
                     })
                 }
 
+                //returns new hierarchy of new researchgroup
+                //updates whole network chart
                 function getNewHierarchyByGroup(newGroup) {
-
                     //load groupspecific data
                     let newGroupData = [];
                     allData.map(el => {
                         return el.values.map(elem => {
                             if (elem.key === newGroup) {
                                 newGroupData = elem.values
-                            } else {
-                                // console.log(elem.key)
                             }
                         })
                     })
@@ -844,34 +771,31 @@ export default class NetworkChart {
                             })
                         })
                     })
+                    itemsList.map(item => {
+                        newGroupData.map(i => {
+                            if (i.key === item.key) {
+                                i.values.push(item.values[0].abstract ? item.values[0].abstract : 'No abstract')
+                                i.values.push(item.values[0].date ? item.values[0].date : 'No date')
+                                i.values.push(item.values[0].language ? item.values[0].language : 'No language')
+                                i.values.push(item.values[0].document ? item.values[0].document : 'No URL')
+                                i.values.push(item.values[0].title)
 
+                            }
+                        })
+                    })
                     let newPackableItems = {key: newGroup, values: newGroupData};
 
                     //creating hierarchy
                     let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
-                    // nodes = hierarchy.descendants();
                     groups = newPackableItems.values.map(el => {
                         return el.key
                     });
 
-                    console.log(newHierarchy)
                     return newHierarchy
-
-                    /* let newN = newHierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
-                     newN.map(n => {
-                         if (n.depth === 1) {
-                             // n._children = n.children;
-                             // n.children = null;
-                             collapse(n)
-                         }
-                     })
-                     console.log(newN)
-
-                     let l = newHierarchy.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")*/
-
-
                 }
 
+                //creates hierarchy for filterd nodes
+                //updates whole network chart
                 function getNewHierarchyByAuthor(author) {
                     let newHierarchy;
                     let tempList = [];
@@ -891,11 +815,7 @@ export default class NetworkChart {
                     //creating hierarchy
                     newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
                     newHierarchy.children = tempList;
-
-                    //
-                    console.log(newHierarchy)
                     return newHierarchy
-                    //
 
 
                 }
@@ -906,6 +826,8 @@ export default class NetworkChart {
 
     }
 
+    //called from outside
+    //necessary for creating new network chart
     delete() {
         let svg = d3.select('#nwSVG');
         svg.select("g").remove();
