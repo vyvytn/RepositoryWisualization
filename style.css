@@ -140,7 +140,7 @@ svg {
 
 }
 #legend{
-    width: 900px;
+    width: inherit;
     height:200px;
     overflow: scroll;
 }
