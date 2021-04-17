@@ -102,7 +102,6 @@ export default class PackChart {
 
                 //nesting data and creating a hierarchy
                 let rawData = data.results.bindings;
-                console.log(rawData)
                 let myNewData = d3.nest()
                     .key(d => d.area.value)
                     .key(d => d.group.value)
@@ -115,7 +114,6 @@ export default class PackChart {
                     .sort(function (a, b) {
                         return b.value - a.value;
                     });
-                console.log(root)
 
                 //zoom interaction
                 let focus = root,
@@ -162,6 +160,7 @@ export default class PackChart {
                         if (d.depth >= 2) {
                             $("#returnBtn").show();
                             drawNetwork(d.data.key);
+                            drawChord()
                         }
                         if (focus !== d) zoom(d, i), d3.event.stopPropagation();
                     })
@@ -177,8 +176,10 @@ export default class PackChart {
                     .style("display", function (d) {
                         return d.parent === root ? "block" : "none";
                     })
-                    .style('font-size',function(d){return d.r/10})
-                    .style( 'font-family', 'Monospace')
+                    .style('font-size', function (d) {
+                        return d.r / 10
+                    })
+                    .style('font-family', 'Monospace')
                     .text(function (d) {
                         return d.data.key;
                     });
@@ -202,6 +203,8 @@ export default class PackChart {
                             break;
                         case 1:
                             $(document).ready(function () {
+                                console.log('focus.data.key')
+                                console.log(focus.data.key)
                                 $('#chordMenuBtn').click(function () {
                                     drawChord(focus.data.key);
                                 });
@@ -223,7 +226,8 @@ export default class PackChart {
                             text.style("visibility", "hidden")
                             updateNavigation(2, focus.data.key)
                             break;
-                        case 2: return
+                        case 2:
+                            return
 
                     }
 
@@ -304,15 +308,17 @@ export default class PackChart {
 
                 function drawChord(name) {
                     let chordChart = new ChordChart(name);
-                    chordChart.drawChart();
-                    $("#packContainer").hide();
-                    $("#networkContainer").hide();
-                    $("#resetBtn").hide();
-                    $("#chordMenuBtn").hide();
-                    // chordChart.updateData();
-                    $("#returnBtn").show();
-                    $("#chordContainer").show();
-
+                    chordChart.drawChart().then(
+                        function () {
+                            $("#packContainer").hide()
+                            $("#networkContainer").hide()
+                            $("#resetBtn").hide()
+                            // $("#chordMenuBtn").hide();
+                            // chordChart.updateData();
+                            $("#returnBtn").show()
+                            $("#chordContainer").show()
+                        })
+                    resetMenu()
                 }
 
                 function drawNetwork(group) {
@@ -324,7 +330,7 @@ export default class PackChart {
                             $("#packContainer").hide()
                             $("#chordContainer").hide()
                             $("#networkContainer").show()
-                            $('#chordMenuBtn').hide()
+                            // $('#chordMenuBtn').hide()
                         }
                     )
                     resetMenu(nw)
@@ -347,10 +353,10 @@ export default class PackChart {
                     deleteNavigation(2)
                 }
 
-                function resetMenu(network) {
+                function resetMenu(network, chord) {
                     $(document).ready(function () {
                             $('#returnBtn').click(function () {
-                                $('#chordMenuBtn').show()
+                                // $('#chordMenuBtn').show()
                                 deleteNavigation(3)
                                 $("#chordContainer").hide()
                                 $("#networkContainer").hide()

@@ -5,36 +5,18 @@ export default class ChordChart {
         this.areaName = areaName;
     }
 
-    /*
-    *   await axios.get('https://www.weizenbaum-library.de/sparql', {
-            params: {
-                query: 'prefix+ns6%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0Aprefix+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0Aselect+%3Ftitle%2C+%3Fdate%0D%0Awhere+%7B+%0D%0A++++%3FConcept+ns6%3Atitle+%3Ftitle+.%0D%0A++++%3FConcept+ns6%3Aavailable+%3Fdate+.%0D%0A++++filter+%28+%28%3Fdate+%3E+%222019-12-31T23%3A59%3A59%22%5E%5Exsd%3AdateTime%29+%26%26%0D%0A+++++++++++++%28%3Fdate+%3C+%222020-02-01T00%3A00%3A00%22%5E%5Exsd%3AdateTime%29%29+.%0D%0A%7D%0D%0A',
-                format: 'application%2Fsparql-results%2Bjson'
-            },
-            auth: {
-                username: 'joseph',
-                password: 'fokus2020$$'
-            }
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });*/
 
     // ASYNC
     async drawChart() {
-        console.log("areaName")
-        console.log(this.areaName)
         let area = this.areaName
 
 
+
         //get data
-        await d3.json('/public/new.json', function (data) {
+        d3.json('/public/new.json', function (data) {
+
+            let s = d3.select('#chordSVG');
+            s.select("g").remove();
             let unsortedData = data.results.bindings;
 
             //nesting data
@@ -43,17 +25,16 @@ export default class ChordChart {
                 .key(d => d.group.value)
                 .entries(unsortedData);
 
-            console.log(myNewData)
 
-/*
-            let groupNested = d3.nest()
-                .key(d => d.group.value)
-                .entries(unsortedData)
+            /*
+                        let groupNested = d3.nest()
+                            .key(d => d.group.value)
+                            .entries(unsortedData)
 
-            let group = groupNested.map(el => {
-                return el.key
-            })
-            console.log(group)*/
+                        let group = groupNested.map(el => {
+                            return el.key
+                        })
+                        console.log(group)*/
 
             let groupNested = d3.nest()
                 .key(d => d.area.value)
@@ -69,7 +50,6 @@ export default class ChordChart {
                     })
                 }
             })
-            console.log(group)
 
 
             let packableItems = {key: "Weizenbaum Library", values: myNewData};
@@ -83,8 +63,6 @@ export default class ChordChart {
 
             //getting links
             let links = hierarchy.links();
-
-            console.log(links)
 
             //creating data matrix
             let matrix = [group.length];
@@ -121,10 +99,6 @@ export default class ChordChart {
                 }
             }
 
-            console.log(matrix)
-
-
-            var visual = document.getElementById("visual");
 
             var rotation = .99;
 
@@ -184,7 +158,6 @@ export default class ChordChart {
             var chord = d3.layout.chord()
                 .padding(.05)
                 .sortSubgroups(d3.descending)
-                .matrix(matrix);
 
             var innerRadius = Math.min(width, height) * .20,
                 outerRadius = innerRadius * 1.1;
@@ -193,8 +166,8 @@ export default class ChordChart {
                 .domain(d3.range(matrix.length - 1))
                 .range(colors);
 
-            var svg = d3.select("#chordSVG")
-                .attr("id", "visual")
+
+            let svg = d3.select('#chordSVG')
                 .attr("viewBox", viewBoxDimensions)
                 .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio
                 .attr("width", width)
@@ -202,12 +175,15 @@ export default class ChordChart {
                 .append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-            var g = svg.selectAll("g.group")
+
+            chord.matrix(matrix)
+            console.log(matrix)
+            var g = svg.selectAll("group")
                 .data(chord.groups)
-                .enter().append("svg:g")
+                .enter().append("g")
                 .attr("class", "group");
 
-            g.append("svg:path")
+            g.append("path")
                 .style("fill", function (d) {
                     return fill(d.index);
                 })
@@ -220,10 +196,11 @@ export default class ChordChart {
                 .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius).startAngle(startAngle).endAngle(endAngle))
                 .on("mouseover", fade(.1))
                 .on("mouseout", fade(1))
-                .on('click', function(d){
-                    console.log( gnames[d.index])})
+                .on('click', function (d) {
+                    console.log(gnames[d.index])
+                })
 
-            g.append("svg:text")
+            g.append("text")
                 .style('font-size', '12px')
                 .style('font-family', 'Monospace')
                 .each(function (d) {
@@ -252,12 +229,14 @@ export default class ChordChart {
                     return fill(d.source.index);
                 })
                 .style("opacity", 1)
-                .append("svg:title")
+                .append("title")
                 .text(function (d) {
                     return d.source.value + "  " + gnames[d.source.index] + " shared with " + gnames[d.target.index];
                 });
 
-            // helper functions start here
+            console.log('svg')
+            console.log(svg)
+// helper functions start here
 
             function startAngle(d) {
                 return d.startAngle + offset;
@@ -283,32 +262,14 @@ export default class ChordChart {
                         .transition()
                         .style("opacity", opacity);
                 };
+
+
             }
 
 
-            /*window.onresize = function () {
-                var targetWidth = (window.innerWidth < width) ? window.innerWidth : width;
+        })
 
-                var svg = d3.select("#visual")
-                    .attr("width", targetWidth)
-                    .attr("height", targetWidth / aspect);
-            }*/
-
-
-            /*window.onload = function () {
-                Chord(visual, chord_options, groupMatrix);
-
-            }*/
-
-            // d3.select(self.frameElement).style("height", "600px");
-
-
-        });
     }
 
 
-    /*updateData(){
-        console.log(this.areaName);
-        Chord(this.vis, this.opt, this.mat);
-    }*/
 }

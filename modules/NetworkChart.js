@@ -17,7 +17,7 @@ export default class NetworkChart {
         }
         await d3.json("./public/new.json", function (data) {
 
-                var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles
+                var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels, linkText
                 let unsortedData = data.results.bindings;
 
                 let authors = d3.nest()
@@ -142,7 +142,8 @@ export default class NetworkChart {
                     .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-
+                let legend = d3.select('#legendSVG');
+                legend.selectAll("*").remove();
                 // legend for items
                 let legendSVG = d3.select('#legendSVG')
                     .attr('width', 800)
@@ -199,10 +200,56 @@ export default class NetworkChart {
                             .style('stroke', 'black')
                             .style('opacity', 10)
 
+                    edgePaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
+                        .data(links)
+                        .enter()
+                        .append('path')
+                        .attr('class', 'edgepath')
+                        .attr('fill-opacity', 0)
+                        .attr('stroke-opacity', 0)
+                        .attr('id', function (d, i) {
+                            return 'edgepath' + i
+                        })
+                        .style("pointer-events", "none");
+
+                    edgeLabels = svg.selectAll(".edgelabel")
+                        .data(links)
+                        .enter()
+                        .append('text')
+                        .style("pointer-events", "none")
+                        .attr('class', 'edgelabel')
+                        .attr('id', function (d, i) {
+                            return 'edgelabel' + i
+                        })
+                        .attr('font-size', 20)
+                        .attr('fill', '#aaa');
+
+                    edgeLabels.append('textPath') //To render text along the shape of a <path>, enclose the text in a <textPath> element that has an href attribute with a reference to the <path> element.
+                        .attr('xlink:href', function (d, i) {
+                            return '#edgepath' + i
+                        })
+                        .style("text-anchor", "middle")
+                        .style("pointer-events", "none")
+                        .attr("startOffset", "50%")
+                        .text(function (d) {
+                            console.log(d)
+                            return 'has ' + d.target.data.type
+                        })
+                    legend_g.append("circle")
+                        .attr("cx", -800)
+                        .attr("cy", 20)
+                        .attr("r", 5)
+                        .attr("fill", colorScale);
+
+                    legend_g.append("text")
+                        .attr("x", -790)
+                        .attr("y", 25)
+                        .text(d => d)
+                        .style("font-size", "15px")
+                        .style("font-family", "Times New Roman")
                     link.exit().remove();
                     link = linksEnter.merge(link)
                         .attr('marker-end', 'url(#arrowhead)')
-
 
                     //d3 network simulation
                     simulation = d3.forceSimulation()
@@ -339,12 +386,12 @@ export default class NetworkChart {
 
                     rectWidth = 130;
                     //rectangle for literals
-                     rectangles=nodeEnter.filter(function (d) {
+                    rectangles = nodeEnter.filter(function (d) {
                         if (d.depth >= 2 && d.depth < 4) return d;
                     })
                         .append("rect")
-                        .attr("width", rectWidth+40)
-                        .attr("height",40)
+                        .attr("width", rectWidth + 40)
+                        .attr("height", 40)
                         .attr("dy", 200)
                         .attr("dx", -40)
                         .style('opacity', 0.85)
@@ -370,8 +417,53 @@ export default class NetworkChart {
                         });
 
 
+                    nodeEnter.filter(n => n.depth === 0)
+                        .append("text")
+                        .attr("y", 0)
+                        .attr("x", 0)
+                        .attr("dy", 0)
+                        .attr("dx", 0)
+                        .style("font-size", 15)
+                        .attr("text-anchor", "middle")
+                        // .style("fill", "whitesmoke")
+                        .text(function (d) {
+                            return d.data.key
+                        }).each(function (d) {
+                        var text = d3.select(this);
+                        var words = text.text().split("").reverse(),
+                            word,
+                            line = [],
+                            lineHeight = 1.1, // ems
+                            y = 0,
+                            dy = parseFloat(0),
+                            tspan = text
+                                .text(null)
+                                .append("tspan")
+                                .attr("text-anchor", "middle")
+                                .attr("x", 0)
+                                .attr("y", 0)
+                                .attr("dy", dy + "em");
+
+
+                        while (word = words.pop()) {
+                            line.push(word);
+                            tspan.text(line.join(""));
+                            if (tspan.node().getComputedTextLength() > 150) {
+                                line.pop();
+                                tspan.text(line.join(""));
+                                line = [word];
+                                tspan = text
+                                    .append("tspan")
+                                    .attr("text-anchor", "start").attr("x", 0).attr("y", 0).attr("dy", lineHeight + dy + "em").text(word);
+                            }
+                        }
+
+
+                    })
+
                     //text labels for nodes
-                    nodeEnter.append("text")
+                    nodeEnter.filter(n => n.depth !== 0)
+                        .append("text")
                         .attr("dy", 0)
                         .attr("dx", 0)
                         .style("font-size", 15)
@@ -381,8 +473,8 @@ export default class NetworkChart {
                         .text(function (d) {
                             if (d.depth !== 1)
                                 return d.type + d.data.key ? d.data.key : d.data.value
-                        }).each(function(d) {
-                        calculateTextWrap(this,d);
+                        }).each(function (d) {
+                        calculateTextWrap(this, d);
                     })
 
 
@@ -410,7 +502,7 @@ export default class NetworkChart {
 
                     //publication icons for publication nodes
                     nodeEnter.filter(function (d) {
-                        if (d.data.type === 'title' &&d.depth===3) return d;
+                        if (d.data.type === 'title' && d.depth === 3) return d;
                     }).append("svg:image")
                         .attr("xlink:href", 'https://simpleicon.com/wp-content/uploads/note-5.png')
                         .attr("x", function (d) {
@@ -467,6 +559,7 @@ export default class NetworkChart {
 
                     node = nodeEnter.merge(node);
 
+
                     //Listen for tick events to render the nodes as they update in your Canvas or SVG.
                     simulation
                         .nodes(nodes)
@@ -478,50 +571,51 @@ export default class NetworkChart {
                 //functions
                 //-----------------------------------------------------------------------------------------------------------------
 
-            function calculateTextWrap(element, data) {
-                var text = d3.select(element);
-                if (text.node().getComputedTextLength() < 150) {
-                    //console.log("No need to wrap");
-                    text.attr("y", 20)
-                        .attr("x", 23)
+                function calculateTextWrap(element, data) {
+                    var text = d3.select(element);
+                    if (text.node().getComputedTextLength() < 150) {
+                        //console.log("No need to wrap");
+                        text.attr("y", 20)
+                            .attr("x", 23)
 
 
-                } else {
-                    var words = text.text().split("").reverse(),
-                        word,
-                        line = [],
-                        lineNumber = 0,
-                        lineHeight = 1.1, // ems
-                        y = text.attr("y"),
-                        dy = parseFloat(0.35),
-                        tspan = text
-                            .text(null)
-                            .append("tspan")
-                            .attr("text-anchor", "start")
-                            .attr("x", 0)
-                            .attr("y", 20)
-                            .attr("dy", dy + "em");
-
-
-                    while (word = words.pop()) {
-                        line.push(word);
-                        tspan.text(line.join(""));
-                        if (tspan.node().getComputedTextLength() > 150) {
-                            lineNumber++;
-                            line.pop();
-                            tspan.text(line.join(""));
-                            line = [word];
+                    } else {
+                        var words = text.text().split("").reverse(),
+                            word,
+                            line = [],
+                            lineNumber = 0,
+                            lineHeight = 1.1, // ems
+                            y = text.attr("y"),
+                            dy = parseFloat(0.35),
                             tspan = text
+                                .text(null)
                                 .append("tspan")
-                                .attr("text-anchor", "start").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(word);
+                                .attr("text-anchor", "start")
+                                .attr("x", 0)
+                                .attr("y", 20)
+                                .attr("dy", dy + "em");
+
+
+                        while (word = words.pop()) {
+                            line.push(word);
+                            tspan.text(line.join(""));
+                            if (tspan.node().getComputedTextLength() > 150) {
+                                lineNumber++;
+                                line.pop();
+                                tspan.text(line.join(""));
+                                line = [word];
+                                tspan = text
+                                    .append("tspan")
+                                    .attr("text-anchor", "start").attr("x", 0).attr("y", y).attr("dy", lineHeight + dy + "em").text(word);
+                            }
                         }
                     }
+                    /*var rectHeight = text.node().getBBox().height;
+                    if(rectHeight < 30) rectHeight = 30;*/
+                    data.rectHeight = lineNumber;
+                    console.log(lineNumber)
                 }
-                /*var rectHeight = text.node().getBBox().height;
-                if(rectHeight < 30) rectHeight = 30;*/
-                data.rectHeight = lineNumber;
-                console.log(lineNumber)
-            }
+
                 // This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).
                 function ticked() {
                     link.attr("x1", d => d.source.x)
@@ -529,23 +623,28 @@ export default class NetworkChart {
                         .attr("x2", d => d.target.x)
                         .attr("y2", d => d.target.y);
 
-                   rectangles
-                       .attr("height", function(d) { return d.rectHeight? (d.rectHeight+2)*22:40})
-                    rectangles.filter(n=>n.depth===3)
-                       .on("mouseover", function (d) {
-                           d3.select(this).style('color',  'black')
-                       })
-                       .on('mouseout', function (d) {
-                           d3.select(this).attr("width", rectWidth+40);
-                           d3.select(this).attr("height", function(d) { return d.rectHeight? (d.rectHeight+2)*22:40})
-                       })
+                    rectangles
+                        .attr("height", function (d) {
+                            return d.rectHeight ? (d.rectHeight + 2) * 22 : 40
+                        })
+                    rectangles.filter(n => n.depth === 3)
+                        .on("mouseover", function (d) {
+                            d3.select(this).style('color', 'black')
+                        })
+                        .on('mouseout', function (d) {
+                            d3.select(this).attr("width", rectWidth + 40);
+                            d3.select(this).attr("height", function (d) {
+                                return d.rectHeight ? (d.rectHeight + 2) * 22 : 40
+                            })
+                        })
 
                     // node.attr("transform", d => `translate(${d.x},${d.y})`);
                     node.attr("transform",
                         function (d) {
                             return "translate(" + d.x + ", " + d.y + ")";
                         });
-                    // edgepaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
+
+                    edgePaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
                 }
 
                 //When the drag gesture starts, the targeted node is fixed to the pointer
@@ -826,6 +925,14 @@ export default class NetworkChart {
                     leg.selectAll(".circle").remove();
                     let t = d3.selectAll('.d3-tip')
                     t.remove()
+                    let eL = d3.selectAll('edgelabel')
+                    eL.remove();
+                    let eP = d3.selectAll('edgepath')
+                    eP.remove();
+                    let tP = d3.selectAll('textpath')
+                    tP.remove();
+                    let legend = d3.select('#legendSVG');
+                    legend.selectAll("*").remove();
                 }
 
             }
