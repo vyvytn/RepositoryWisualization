@@ -160,7 +160,6 @@ export default class PackChart {
                         if (d.depth >= 2) {
                             $("#returnBtn").show();
                             drawNetwork(d.data.key);
-                            drawChord()
                         }
                         if (focus !== d) zoom(d, i), d3.event.stopPropagation();
                     })
@@ -313,7 +312,7 @@ export default class PackChart {
                             $("#packContainer").hide()
                             $("#networkContainer").hide()
                             $("#resetBtn").hide()
-                            // $("#chordMenuBtn").hide();
+                            $("#chordMenuBtn").hide();
                             // chordChart.updateData();
                             $("#returnBtn").show()
                             $("#chordContainer").show()
@@ -330,7 +329,7 @@ export default class PackChart {
                             $("#packContainer").hide()
                             $("#chordContainer").hide()
                             $("#networkContainer").show()
-                            // $('#chordMenuBtn').hide()
+                            $('#chordMenuBtn').hide()
                         }
                     )
                     resetMenu(nw)
@@ -339,7 +338,10 @@ export default class PackChart {
 
                 function initZoomRoot() {
                     circle
-                        .on("mouseover", tip.hide)
+                        .on("mouseover", function (d,i) {
+                            tip.style("background", colorFIll(d.data.key));
+                            tip.show(d, i)
+                        })
                         .style("pointer-events", function (d) {
                             if (d.depth === 2) return "none"
                         })
@@ -356,14 +358,16 @@ export default class PackChart {
                 function resetMenu(network, chord) {
                     $(document).ready(function () {
                             $('#returnBtn').click(function () {
-                                // $('#chordMenuBtn').show()
-                                deleteNavigation(3)
                                 $("#chordContainer").hide()
                                 $("#networkContainer").hide()
                                 $('#returnBtn').hide()
+                                $('#chordMenuBtn').show()
                                 $("#packContainer").show()
                                 $('#resetBtn').show()
-                                if (network) network.delete();
+                                deleteNavigation(3)
+                                if (network) {
+                                    network.delete();
+                                }
                             })
                         }
                     )
@@ -371,6 +375,7 @@ export default class PackChart {
 
                 $(document).ready(function () {
                     $('#resetBtn').click(function () {
+                        svg.call(tip)
                         focus = root;
                         initZoomRoot()
                         zoomTo([root.x, root.y, root.r * 2 + margin]);

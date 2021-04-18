@@ -17,6 +17,7 @@ export default class NetworkChart {
         }
         await d3.json("./public/new.json", function (data) {
 
+                // removeOldD3()
                 var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels, linkText
                 let unsortedData = data.results.bindings;
 
@@ -101,13 +102,16 @@ export default class NetworkChart {
 
                 //creating hierarchy
                 let hierarchy = d3.hierarchy(packableItems, d => d.values);
-                let groups = packableItems.values.map(el => {
+                let titles = packableItems.values.map(el => {
                     return el.key
                 });
 
+                console.log(titles)
+
+
 
                 let colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
-                    .domain(groups)
+                    .domain(titles)
                     .range([
                         "#beab90",
                         "#7d94b1",
@@ -117,6 +121,10 @@ export default class NetworkChart {
                         "#c38a2b",
                         "#4e8a60"
                     ])
+            console.log('colorScale')
+            console.log(colorScale)
+            console.log('colorScale.domain()')
+            console.log(colorScale.domain())
 
                 let colors = [
                     "#beab90",
@@ -144,13 +152,14 @@ export default class NetworkChart {
 
                 let legend = d3.select('#legendSVG');
                 legend.selectAll("*").remove();
+
                 // legend for items
                 let legendSVG = d3.select('#legendSVG')
                     .attr('width', 800)
                     .attr('height', 800)
 
                 const legend_g = legendSVG.selectAll(".legend")
-                    .data(colorScale.domain())
+                    .data(titles)
                     .enter().append("g")
                     .attr("transform", (d, i) => `translate(${width},${i * 30})`);
 
@@ -158,7 +167,7 @@ export default class NetworkChart {
                     .attr("cx", -800)
                     .attr("cy", 20)
                     .attr("r", 5)
-                    .attr("fill", colorScale);
+                    .attr("fill", colorScale)
 
                 legend_g.append("text")
                     .attr("x", -790)
@@ -184,6 +193,14 @@ export default class NetworkChart {
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(hier, collap) {
+
+                    //delete old links and text on links
+                    let ep = svg.selectAll(".edgepath")
+                    let el = svg.selectAll(".edgelabel")
+                    let tp = svg.selectAll('textPath')
+                    ep.remove()
+                    el.remove()
+                    tp.remove();
 
 
                     //initialize links between nodes
@@ -235,18 +252,47 @@ export default class NetworkChart {
                             console.log(d)
                             return 'has ' + d.target.data.type
                         })
-                    legend_g.append("circle")
+
+
+                    legend.selectAll("*").remove();
+
+                    let cScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
+                        .domain(titles)
+                        .range([
+                            "#beab90",
+                            "#7d94b1",
+                            "#8b5964",
+                            "#cb5616",
+                            "#7a9b54",
+                            "#c38a2b",
+                            "#4e8a60"
+                        ])
+
+                   console.log( cScale.domain())
+                    console.log(titles)
+                    // legend for items
+                    let lSVG = d3.select('#legendSVG')
+                        .attr('width', 800)
+                        .attr('height', 800)
+                    const leg_g = lSVG.selectAll(".legend")
+                        .data(titles)
+                        .enter().append("g")
+                        .attr("transform", (d, i) => `translate(${width},${i * 30})`);
+
+                    leg_g.append("circle")
                         .attr("cx", -800)
                         .attr("cy", 20)
                         .attr("r", 5)
-                        .attr("fill", colorScale);
+                        .attr("fill", cScale)
 
-                    legend_g.append("text")
+                    leg_g.append("text")
                         .attr("x", -790)
                         .attr("y", 25)
                         .text(d => d)
                         .style("font-size", "15px")
                         .style("font-family", "Times New Roman")
+                    
+
                     link.exit().remove();
                     link = linksEnter.merge(link)
                         .attr('marker-end', 'url(#arrowhead)')
@@ -272,6 +318,10 @@ export default class NetworkChart {
                         //     .strength(-200)
                         //     .theta(0.9)
                         //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
+                        /*
+                        * .gravity(.05)
+    .charge(-240)
+    .linkDistance(50)*/
                         .on("tick", ticked);
 
 
@@ -610,10 +660,7 @@ export default class NetworkChart {
                             }
                         }
                     }
-                    /*var rectHeight = text.node().getBBox().height;
-                    if(rectHeight < 30) rectHeight = 30;*/
                     data.rectHeight = lineNumber;
-                    console.log(lineNumber)
                 }
 
                 // This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).
@@ -688,6 +735,7 @@ export default class NetworkChart {
                         d.children = d._children;
                         d._children = null;
                     }
+
                     //allows just one node expanding
                     //source :https://stackoverflow.com/questions/19167890/d3-js-tree-layout-collapsing-other-nodes-when-expanding-one
                     if (d.parent) {
@@ -718,9 +766,6 @@ export default class NetworkChart {
                     let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                     tip.style("background", color);
                     tip.direction('e')
-                    // checked()
-                    // submitFilter(tip, d, i)
-                    // leftMenuClicked(tip, d, i)
 
                     if (bool) {
                         tip.html(function (d) {
@@ -732,10 +777,10 @@ export default class NetworkChart {
                                 "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
                                 "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'> show all publications</label> " +
                                 "</div>" +
+                                "</div>" +
                                 "<div class=\"d-grid gap-2\">" +
                                 "<button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button>" +
-                                " </div>" +
-                                "</div>"
+                                " </div>"
 
                         })
                     } else {
@@ -766,7 +811,10 @@ export default class NetworkChart {
                                 + "<div class=form-check>" +
                                 "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
                                 "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'>ALL PUBLICATIONS</label> </div>"
-                                + "<div class=\"d-grid gap-2\"><button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> </div> </div>"
+                                + "</div>"
+                                + "<div class=\"d-grid gap-2\">" +
+                                "<button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> " +
+                                "</div>"
 
                         })
                     }
@@ -884,7 +932,8 @@ export default class NetworkChart {
 
                     //creating hierarchy
                     let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
-                    groups = newPackableItems.values.map(el => {
+                    titles = newPackableItems.values.map(el => {
+                        console.log(el.key)
                         return el.key
                     });
 
@@ -920,9 +969,9 @@ export default class NetworkChart {
                     let s = d3.select('#nwSVG');
                     s.selectAll(".nodes").remove();
                     s.selectAll(".links").remove();
-                    let leg = d3.select('#legendSVG');
-                    leg.selectAll(".text").remove();
-                    leg.selectAll(".circle").remove();
+                    /* let leg = d3.select('#legendSVG');
+                     leg.selectAll(".text").remove();
+                     leg.selectAll(".circle").remove();*/
                     let t = d3.selectAll('.d3-tip')
                     t.remove()
                     let eL = d3.selectAll('edgelabel')
@@ -931,8 +980,8 @@ export default class NetworkChart {
                     eP.remove();
                     let tP = d3.selectAll('textpath')
                     tP.remove();
-                    let legend = d3.select('#legendSVG');
-                    legend.selectAll("*").remove();
+                    // let legend = d3.select('#legendSVG');
+                    // legend.selectAll("*").remove();
                 }
 
             }

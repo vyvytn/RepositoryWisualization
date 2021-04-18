@@ -177,7 +177,6 @@ export default class ChordChart {
 
 
             chord.matrix(matrix)
-            console.log(matrix)
             var g = svg.selectAll("group")
                 .data(chord.groups)
                 .enter().append("g")
@@ -197,7 +196,7 @@ export default class ChordChart {
                 .on("mouseover", fade(.1))
                 .on("mouseout", fade(1))
                 .on('click', function (d) {
-                    console.log(gnames[d.index])
+                    // console.log(gnames[d.index])
                 })
 
             g.append("text")
@@ -234,8 +233,6 @@ export default class ChordChart {
                     return d.source.value + "  " + gnames[d.source.index] + " shared with " + gnames[d.target.index];
                 });
 
-            console.log('svg')
-            console.log(svg)
 // helper functions start here
 
             function startAngle(d) {
