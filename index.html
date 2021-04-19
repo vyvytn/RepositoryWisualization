@@ -51,8 +51,7 @@
 
 <body>
 <div class="container">
-    <div class="col-auto">
-        <div class="row justify-content-center">
+        <div style="display: block; margin: auto">
             <h1 style="font-family: 'Times New Roman'">
                 <!--                <button class="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>-->
                 Weizenbaum Library
@@ -68,7 +67,7 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
         </div>-->
-        <div class="row justify-content-center">
+        <div>
 
             <!--   PACK CHART  -->
             <div class="col" id="packContainer">
@@ -123,7 +122,7 @@
                              data-bs-parent="#legendContainer">
                             <div class="accordion-body" id="legend"
                                  style="overflow: scroll; overflow-x: hidden">
-                                <svg id="legendSVG" >
+                                <svg id="legendSVG">
 
                                 </svg>
                             </div>
@@ -131,7 +130,7 @@
                     </div>
                 </div>
 
-                <svg id="nwSVG">
+               <svg id="nwSVG" style="display: block; margin: auto">
                          <!--width="960" height="900"
                          viewBox="0 0 960 500"-->
 <!--                         preserveAspectRatio="xMidYMid meet">-->
@@ -147,7 +146,6 @@
                             </g>
                         </g>
                     </svg>
-
 <!--                         <svg id="legendSVG">-->
 
 <!--                         </svg>-->
@@ -178,7 +176,7 @@
             </div>
         </div>
 
-    </div>
+
     <script type="module" src="./main.js">
     </script>
 </body>

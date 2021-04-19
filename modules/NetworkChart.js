@@ -18,7 +18,7 @@ export default class NetworkChart {
         await d3.json("./public/new.json", function (data) {
 
                 removeOldD3()
-                var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels, linkText
+                var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels, linkText, zoom
                 let unsortedData = data.results.bindings;
 
                 let authors = d3.nest()
@@ -148,15 +148,15 @@ export default class NetworkChart {
 
                 const svg = d3.select('#nwSVG')
                     // .attr("width", width + margin.left + margin.right)
-                    .attr("width", 1200)
+                    .attr("width", 2000)
                     .attr("height", 1000)
-                    .call(d3.zoom().on("zoom", function (){
+                    .call(d3.zoom().on("zoom", function () {
                         svg.attr('transform', `translate(${d3.event.transform.x},  	 ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
                         // svg.attr("transform", d3.event.transform)
                     }))
-
                     .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`)
+
 
                 let legend = d3.select('#legendSVG');
                 legend.selectAll("*").remove();
@@ -167,7 +167,7 @@ export default class NetworkChart {
                     .attr('height', 800)
 
 
-            const legend_g = legendSVG.selectAll(".legend")
+                const legend_g = legendSVG.selectAll(".legend")
                     .data(titles)
                     .enter().append("g")
                     .attr("transform", (d, i) => `translate(${width},${i * 30})`);
@@ -201,26 +201,16 @@ export default class NetworkChart {
                 //update function begins
                 //-----------------------------------------------------------------------------------------------------------------
 
-                function update(hier, collap) {
+                function update(hier, collap, newGroup) {
 
                     //ZOOM
                     //https://jsfiddle.net/vbabenko/jcsqqu6j/9/
-                    var zoom = d3.zoom()
-                        .scaleExtent([1/2, 4])
-                        .on("zoom", function (){
+                     zoom = d3.zoom()
+                        .scaleExtent([1 / 2, 4])
+                        .on("zoom", function () {
                             svg.attr('transform', `translate(${d3.event.transform.x},  	 ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
                             // svg.attr("transform", d3.event.transform)
                         });
-
-
-                    svg.call(zoom)
-
-                    function transition(zoomLevel) {
-                        svg.transition()
-                            .delay(100)
-                            .duration(700)
-                            .call(zoom.scaleBy, zoomLevel);
-                    }
 
                     d3.select('#zoom-in').on('click', function () {
                         transition(1.2);
@@ -229,6 +219,7 @@ export default class NetworkChart {
                     d3.select('#zoom-out').on('click', function () {
                         transition(0.8);
                     });
+
 
                     //delete old links and text on links
                     let eL = d3.selectAll('edgelabel')
@@ -334,16 +325,17 @@ export default class NetworkChart {
 
                     link.exit().remove();
                     link = linksEnter.merge(link)
-                        // .attr('marker-end', 'url(#arrowhead)')
+                    // .attr('marker-end', 'url(#arrowhead)')
 
+                    console.log(links)
                     //d3 network simulation
                     simulation = d3.forceSimulation()
-                        .force("charge", d3.forceManyBody().strength(-600))
+                        .force("charge", d3.forceManyBody().strength(d=>d.depth>=2 && d._children? d._children.length>=5?-1500: -600: -300))
                         .force("link", d3.forceLink().id(d => d.id))
-                        .force("link", d3.forceLink().distance(200).strength(0.9))
+                        .force("link", d3.forceLink().distance(d => d.target.depth <= 1 ? 130 : d.target.depth === 4 ? 100 : 400).strength(0.9))
+                        // .force("link", d3.forceLink().distance(d => d.depth>=2 && d.children? d.children.length>=5? 400 :200: 100).strength(0.9))
                         .force("collide", d3.forceCollide().radius(d => d.r * 50))
-                        // .force("center", d3.forceCenter(200,100))
-                        .on("tick", ticked);
+                        .on("tick", ticked)
 
 
                     //appending little triangles, path object, as arrowhead
@@ -413,7 +405,7 @@ export default class NetworkChart {
                             // console.log(d.color)
                             return col
                         })
-                        .on("mouseover", function (node) {
+                        .on("mouseover", function (d) {
                             d3.select(this).attr("r", d.depth === 1 ? 50 : d.depth === 3 ? 20 : d.depth === 0 ? 50 : 25);
                         })
                         .on('mouseout', function (d) {
@@ -425,26 +417,20 @@ export default class NetworkChart {
                         })
 
 
-                    nodeEnter
+                    nodeEnter.filter(d => d.depth !== 0)
                         .on("mouseover", function (node) {
-                            // console.log(node)
-                            var filtered = node.ancestors().filter(d => node.index !== d.index)
-                            // console.log(filtered)
                             linksEnter
                                 .filter(function (d) {
-                                    // console.log(d)
                                     if (d.source.index === node.index || d.target.index === node.index) return d
                                 })
-                                .style('stroke', function (d){
-                                    // console.log(d)
-                                    return d.target.color? d.target.color:d.source.color ? d.source.color :d.source.parent.color? d.source.parent.color:d.source.parent.parent.color
+                                .style('stroke', function (d) {
+                                    return d.target.color ? d.target.color : d.source.color ? d.source.color : d.source.parent.color ? d.source.parent.color : d.source.parent.parent.color
                                 })
-                                .style('stroke-width', function (d){
-                                    // console.log(d)
+                                .style('stroke-width', function (d) {
                                     return 8
                                 })
                                 .style('opacity', function (d) {
-                                    return d.source.index === node.index || d.target.index === node.index ? 1 : 0.3;
+                                    return 1;
                                 })
                         })
                         .on('mouseout', function (d) {
@@ -452,7 +438,6 @@ export default class NetworkChart {
                                 .style('stroke', 'dimgrey')
                                 .style('stroke-width', '1')
                         })
-
 
                     // title of nodes
                     node.append("title")
@@ -715,6 +700,13 @@ export default class NetworkChart {
                     data.rectHeight = lineNumber;
                 }
 
+                function transition(zoomLevel) {
+                    svg.transition()
+                        .delay(100)
+                        .duration(700)
+                        .call(zoom.scaleBy, zoomLevel);
+                }
+
                 // This function is run at each iteration of the force algorithm, updating the nodes position (the nodes data array is directly manipulated).
                 function ticked() {
                     link.attr("x1", d => d.source.x)
@@ -755,16 +747,6 @@ export default class NetworkChart {
                         .attr("height", function (d) {
                             return d.rectHeight ? (d.rectHeight + 2) * 22 : 40
                         })
-                    rectangles.filter(n => n.depth === 3)
-                        .on("mouseover", function (d) {
-                            d3.select(this).style('color', 'black')
-                        })
-                        .on('mouseout', function (d) {
-                            d3.select(this).attr("width", rectWidth + 40);
-                            d3.select(this).attr("height", function (d) {
-                                return d.rectHeight ? (d.rectHeight + 2) * 22 : 40
-                            })
-                        })
 
                     // node.attr("transform", d => `translate(${d.x},${d.y})`);
                     node.attr("transform",
@@ -773,13 +755,13 @@ export default class NetworkChart {
                         })
 
 
-                node.filter(d=>d.depth===0)
-                    .attr("transform",
-                        function (d) {
-                            d.x = width / 2
-                            d.y = height / 2
-                            return "translate(" + d.x + ", " + d.y + ")";
-                        })
+                    node.filter(d => d.depth === 0)
+                        .attr("transform",
+                            function (d) {
+                                d.x = width / 1.7
+                                d.y = height / 2
+                                return "translate(" + d.x + ", " + d.y + ")";
+                            })
 
                     edgePaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
                 }
@@ -806,8 +788,8 @@ export default class NetworkChart {
                 }
 
                 function click(node, d) {
-                    // console.log('CLICK')
-                    // console.log(d)
+                    console.log('CLICK')
+                    console.log(d)
                     if (d3.event.defaultPrevented) return; // ignore drag
                     if (d.children) {
                         // d._children = d.children;
@@ -979,7 +961,7 @@ export default class NetworkChart {
                         }
                     })
 
-                    update(hierarchy, false)
+                    update(hierarchy, false, true)
                     simulation.restart()
                 }
 
