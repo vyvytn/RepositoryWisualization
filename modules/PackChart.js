@@ -248,7 +248,7 @@ export default class PackChart {
                     //label changing while zooming
                     transition.selectAll("text")
                         .filter(function (d) {
-                            return d.parent === focus || this.style.display === "block";
+                            return this.style.display === "block";
                         })
                         .style("fill-opacity", function (d) {
                             return d.parent === focus ? 1 : 0;
