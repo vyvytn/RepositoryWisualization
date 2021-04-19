@@ -35,76 +35,130 @@
             // $("#chordChart").load("/html/chordchart.html");
 
         });
+        /*
+                function openNav() {
+                    document.getElementById("mySidebar").style.width = "250px";
+                    document.getElementById("main").style.marginLeft = "250px";
+                }
+
+                /!* Set the width of the sidebar to 0 and the left margin of the page content to 0 *!/
+                function closeNav() {
+                    document.getElementById("mySidebar").style.width = "0";
+                    document.getElementById("main").style.marginLeft = "0";
+                }*/
     </script>
 </head>
 
 <body>
 <div class="container">
-    <div class="row justify-content-center">
-        <h1 style="font-family: 'Times New Roman'">
-            Weizenbaum Library
-        </h1>
-    </div>
-    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
-        <ol class="breadcrumb" id="navBar">
-            <li class="breadcrumb-item active" aria-current="page" style="font-family: 'Times New Roman'">Home</li>
-        </ol>
-    </nav>
-    <div class="row justify-content-center">
-
-        <!--   PACK CHART  -->
-        <div class="col" id="packContainer">
-            <svg width="800" height="800"></svg>
+    <div class="col-auto">
+        <div class="row justify-content-center">
+            <h1 style="font-family: 'Times New Roman'">
+                <!--                <button class="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>-->
+                Weizenbaum Library
+            </h1>
         </div>
+        <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb" id="navBar">
+                <li class="breadcrumb-item active" aria-current="page" style="font-family: 'Times New Roman'">Home</li>
+            </ol>
+        </nav>
+        <!-- SIDEBAR-->
+        <!--<div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-        <!--   CHORD CHART  -->
-        <div class="col" id="chordContainer">
-            <div class="col-lg-9" id="chordChart">
-                <svg id="chordSVG"></svg>
+        </div>-->
+        <div class="row justify-content-center">
+
+            <!--   PACK CHART  -->
+            <div class="col" id="packContainer">
+                <svg width="1200" height="1200"></svg>
             </div>
-            <!--            <div class="col">
-                            <button type="button" class="btn btn-light" id="returnBtn">back<i
-                                    class="bi bi-arrow-counterclockwise"></i>
-                            </button>
-                        </div>-->
-        </div>
 
-        <!--   NETWORK CHART  -->
-        <div class="col" id="networkContainer">
+            <!--   CHORD CHART  -->
+            <div class="col" id="chordContainer">
+                <div class="col-lg-9" id="chordChart">
+                    <!-- Akkordeon Legend with explaination Code: https://getbootstrap.com/docs/5.0/components/accordion/ -->
+                    <div class="accordion" id="legendChordContainer">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseLegendChord" aria-expanded="true"
+                                        aria-controls="collapseLegendChord"
+                                        id="legendChordBtn">
+                                    Legende
+                                </button>
+                            </h2>
+                            <div id="collapseLegendChord" class="accordion-collapse collapse show"
+                                 aria-labelledby="heading"
+                                 data-bs-parent="#legendChordContainer">
+                                <div class="accordion-body" id="legendC"
+                                     style="overflow: scroll; overflow-x: hidden">
+                                    <svg id="legendChordSVG" >
 
-            <!-- Akkordeon Legend with explaination Code: https://getbootstrap.com/docs/5.0/components/accordion/ -->
-            <div class="accordion" id="legendContainer">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="legendBtn">
-                            Legend
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                         data-bs-parent="#legendContainer" >
-                        <div class="accordion-body" id="legend" style="overflow: scroll; overflow-x: hidden">
-                            <svg id="legendSVG">
-
-                            </svg>
-                            <!--<strong>This is the first item's accordion body.</strong> It is hidden by default, until the
-                            collapse plugin adds the appropriate classes that we use to style each element. These
-                            classes control the overall appearance, as well as the showing and hiding via CSS
-                            transitions. You can modify any of this with custom CSS or overriding our default variables.
-                            It's also worth noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit overflow.-->
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <svg id="chordSVG"></svg>
                 </div>
             </div>
 
-            <svg id="nwSVG">
+            <!--   NETWORK CHART  -->
+            <div class="col" id="networkContainer">
+                <!-- Akkordeon Legend with explaination Code: https://getbootstrap.com/docs/5.0/components/accordion/ -->
+                <div class="accordion" id="legendContainer">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne"
+                                    id="legendBtn">
+                                Legende
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show"
+                             aria-labelledby="headingOne"
+                             data-bs-parent="#legendContainer">
+                            <div class="accordion-body" id="legend"
+                                 style="overflow: scroll; overflow-x: hidden">
+                                <svg id="legendSVG" >
 
-            </svg>
-            <!--            <div class="col" id="networkViz"></div>-->
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <svg id="nwSVG">
+                         <!--width="960" height="900"
+                         viewBox="0 0 960 500"-->
+<!--                         preserveAspectRatio="xMidYMid meet">-->
+                        <g class="zoom-controls" transform="translate(10, 10)">
+                            <g id="zoom-in" transform="translate(0, 0)">
+                                <rect width="30" height="30"></rect>
+                                <line x1="5" y1="15" x2="25" y2="15"></line>
+                                <line x1="15" y1="5" x2="15" y2="25"></line>
+                            </g>
+                            <g id="zoom-out" transform="translate(30, 0)">
+                                <rect width="30" height="30"></rect>
+                                <line x1="5" y1="15" x2="25" y2="15"></line>
+                            </g>
+                        </g>
+                    </svg>
+
+<!--                         <svg id="legendSVG">-->
+
+<!--                         </svg>-->
+
+
+
+            </div>
         </div>
 
 
+        <!--BUTTONS-->
         <div class="col">
             <div class="row">
                 <button type="button" class="btn btn-light" id="resetBtn"> reset view <i
@@ -120,23 +174,6 @@
                 <button class="btn btn-light" type="button" id="chordMenuBtn">show
                     chord chart <i class="bi bi-pie-chart-fill"></i>
                 </button>
-                <!--                COLLAPSE MENU-->
-                <!-- <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#chordMenu"
-                         aria-expanded="false" aria-controls="collapseExample">show
-                     chord chart <i class="bi bi-pie-chart-fill"></i>
-                 </button>-->
-                <!--<div id="chordMenu" class="collapse">
-                    <div id="card-body">
-                        &lt;!&ndash;   SELECT MENU &ndash;&gt;
-                        <select class="form-select" aria-label="Default select example" id="selectMenu">
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <button type="button" class="btn btn-light" id="networkBtn"> show network chart<i class="bi bi-diagram-2-fill"></i>
-                </button>
-            </div>-->
 
             </div>
         </div>

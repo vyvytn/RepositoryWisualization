@@ -17,6 +17,8 @@ export default class ChordChart {
 
             let s = d3.select('#chordSVG');
             s.select("g").remove();
+            /*let lSvg = d3.select('#legendChordSVG');
+            lSvg.select("text").remove();*/
             let unsortedData = data.results.bindings;
 
             //nesting data
@@ -99,6 +101,54 @@ export default class ChordChart {
                 }
             }
 
+            let legend = d3.select('#legendChordSVG');
+            legend.append('text')
+                .text('Beziehungen: gemeinsame Autoren')
+                .attr("x", 30)
+                .attr("y", 25)
+                .style("font-size", "15px")
+                .style("font-family", "Times New Roman")
+
+          /*  let legend = d3.select('#legendChordSVG');
+            legend.selectAll("*").remove();
+
+            // legend for items
+            let legendSVG = d3.select('#legendChordSVG')
+                .attr('width', 800)
+                .attr('height', 800)
+
+            console.log(group)
+
+
+            let cScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
+                .domain(group)
+                .range([
+                    "#beab90",
+                    "#7d94b1",
+                    "#8b5964",
+                    "#cb5616",
+                    "#7a9b54",
+                    "#c38a2b",
+                    "#4e8a60"
+                ])
+
+            const legend_g = legendSVG.selectAll(".legend")
+                .data(cScale.domain())
+                .enter().append("g")
+                .attr("transform", (d, i) => `translate(${width},${i * 30})`);
+
+            legend_g.append("circle")
+                .attr("cx", -800)
+                .attr("cy", 20)
+                .attr("r", 5)
+                .attr("fill", cScale)
+
+            legend_g.append("text")
+                .attr("x", -790)
+                .attr("y", 25)
+                .text(d => d)
+                .style("font-size", "15px")
+                .style("font-family", "Times New Roman")*/
 
             var rotation = .99;
 

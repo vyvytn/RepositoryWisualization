@@ -156,7 +156,7 @@ export default class PackChart {
                         return d.depth === 0 ? 0.5 : d.depth === 1 ? 0.7 : d.depth === 2 ? 0.7 : 1
                     })
                     .on("click", function (d, i) {
-                        console.log(d)
+                        // console.log(d)
                         if (d.depth >= 2) {
                             $("#returnBtn").show();
                             drawNetwork(d.data.key);
@@ -202,8 +202,8 @@ export default class PackChart {
                             break;
                         case 1:
                             $(document).ready(function () {
-                                console.log('focus.data.key')
-                                console.log(focus.data.key)
+                                // console.log('focus.data.key')
+                                // console.log(focus.data.key)
                                 $('#chordMenuBtn').click(function () {
                                     drawChord(focus.data.key);
                                 });
@@ -328,17 +328,16 @@ export default class PackChart {
                             $("#resetBtn").hide();
                             $("#packContainer").hide()
                             $("#chordContainer").hide()
-                            $("#networkContainer").show()
                             $('#chordMenuBtn').hide()
-                        }
-                    )
+                            $("#networkContainer").show()
+                        })
                     resetMenu(nw)
 
                 }
 
                 function initZoomRoot() {
                     circle
-                        .on("mouseover", function (d,i) {
+                        .on("mouseover", function (d, i) {
                             tip.style("background", colorFIll(d.data.key));
                             tip.show(d, i)
                         })

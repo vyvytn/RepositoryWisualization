@@ -17,7 +17,7 @@ export default class NetworkChart {
         }
         await d3.json("./public/new.json", function (data) {
 
-                // removeOldD3()
+                removeOldD3()
                 var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels, linkText
                 let unsortedData = data.results.bindings;
 
@@ -106,8 +106,7 @@ export default class NetworkChart {
                     return el.key
                 });
 
-                console.log(titles)
-
+                // console.log(titles)
 
 
                 let colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
@@ -121,10 +120,7 @@ export default class NetworkChart {
                         "#c38a2b",
                         "#4e8a60"
                     ])
-            console.log('colorScale')
-            console.log(colorScale)
-            console.log('colorScale.domain()')
-            console.log(colorScale.domain())
+
 
                 let colors = [
                     "#beab90",
@@ -141,14 +137,26 @@ export default class NetworkChart {
                 let width = 1200
                 let height = 1000
                 let margin = {top: 30, right: 80, bottom: 5, left: 5}
+
+                //https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
+                var w = window,
+                    d = document,
+                    e = d.documentElement,
+                    g = d.getElementsByTagName('body')[0],
+                    x = w.innerWidth || e.clientWidth || g.clientWidth,
+                    y = w.innerHeight || e.clientHeight || g.clientHeight;
+
                 const svg = d3.select('#nwSVG')
-                    .attr("width", width + margin.left + margin.right)
-                    .attr("height", height + margin.top + margin.bottom)
-                    .call(d3.zoom().on("zoom", function () {
-                        svg.attr("transform", d3.event.transform)
+                    // .attr("width", width + margin.left + margin.right)
+                    .attr("width", 1200)
+                    .attr("height", 1000)
+                    .call(d3.zoom().on("zoom", function (){
+                        svg.attr('transform', `translate(${d3.event.transform.x},  	 ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+                        // svg.attr("transform", d3.event.transform)
                     }))
+
                     .append("g")
-                    .attr("transform", `translate(${margin.left},${margin.top})`);
+                    .attr("transform", `translate(${margin.left},${margin.top})`)
 
                 let legend = d3.select('#legendSVG');
                 legend.selectAll("*").remove();
@@ -158,7 +166,8 @@ export default class NetworkChart {
                     .attr('width', 800)
                     .attr('height', 800)
 
-                const legend_g = legendSVG.selectAll(".legend")
+
+            const legend_g = legendSVG.selectAll(".legend")
                     .data(titles)
                     .enter().append("g")
                     .attr("transform", (d, i) => `translate(${width},${i * 30})`);
@@ -194,14 +203,40 @@ export default class NetworkChart {
 
                 function update(hier, collap) {
 
-                    //delete old links and text on links
-                    let ep = svg.selectAll(".edgepath")
-                    let el = svg.selectAll(".edgelabel")
-                    let tp = svg.selectAll('textPath')
-                    ep.remove()
-                    el.remove()
-                    tp.remove();
+                    //ZOOM
+                    //https://jsfiddle.net/vbabenko/jcsqqu6j/9/
+                    var zoom = d3.zoom()
+                        .scaleExtent([1/2, 4])
+                        .on("zoom", function (){
+                            svg.attr('transform', `translate(${d3.event.transform.x},  	 ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
+                            // svg.attr("transform", d3.event.transform)
+                        });
 
+
+                    svg.call(zoom)
+
+                    function transition(zoomLevel) {
+                        svg.transition()
+                            .delay(100)
+                            .duration(700)
+                            .call(zoom.scaleBy, zoomLevel);
+                    }
+
+                    d3.select('#zoom-in').on('click', function () {
+                        transition(1.2);
+                    });
+
+                    d3.select('#zoom-out').on('click', function () {
+                        transition(0.8);
+                    });
+
+                    //delete old links and text on links
+                    let eL = d3.selectAll('edgelabel')
+                    eL.remove();
+                    let eP = d3.selectAll('edgepath')
+                    eP.remove();
+                    let tP = d3.selectAll('textpath')
+                    tP.remove();
 
                     //initialize links between nodes
                     links = hier.links().filter(l => l.target.data.value !== '' && l.target.data.value !== "")
@@ -214,8 +249,9 @@ export default class NetworkChart {
                             .append('line')
                             .attr("class", "links")
                             .attr("stroke-width", 1)
-                            .style('stroke', 'black')
+                            .style('stroke', 'dimgrey')
                             .style('opacity', 10)
+
 
                     edgePaths = svg.selectAll(".edgepath") //make path go along with the link provide position for link labels
                         .data(links)
@@ -249,7 +285,7 @@ export default class NetworkChart {
                         .style("pointer-events", "none")
                         .attr("startOffset", "50%")
                         .text(function (d) {
-                            console.log(d)
+                            // console.log(d)
                             return 'has ' + d.target.data.type
                         })
 
@@ -268,12 +304,12 @@ export default class NetworkChart {
                             "#4e8a60"
                         ])
 
-                   console.log( cScale.domain())
-                    console.log(titles)
+                    // console.log(cScale.domain())
+                    // console.log(titles)
                     // legend for items
                     let lSVG = d3.select('#legendSVG')
                         .attr('width', 800)
-                        .attr('height', 800)
+                        .attr('height', 200)
                     const leg_g = lSVG.selectAll(".legend")
                         .data(titles)
                         .enter().append("g")
@@ -284,6 +320,9 @@ export default class NetworkChart {
                         .attr("cy", 20)
                         .attr("r", 5)
                         .attr("fill", cScale)
+                        .on('click', function (d) {
+                            // console.log(d)
+                        })
 
                     leg_g.append("text")
                         .attr("x", -790)
@@ -291,37 +330,19 @@ export default class NetworkChart {
                         .text(d => d)
                         .style("font-size", "15px")
                         .style("font-family", "Times New Roman")
-                    
+
 
                     link.exit().remove();
                     link = linksEnter.merge(link)
-                        .attr('marker-end', 'url(#arrowhead)')
+                        // .attr('marker-end', 'url(#arrowhead)')
 
                     //d3 network simulation
                     simulation = d3.forceSimulation()
-                        .force("link", d3.forceLink().id(function (d) {
-                                return d.id;
-                            })
-                                // .id(d => d.data.key) // This sets the node id accessor to the specified function. If not specified, will default to the index of a node.
-                                //DESIGN Abstand der Knoten zueinander
-                                .distance(50).strength(0.1)
-                        )
-                        //abstand von Kind-Elternknoten
-                        .force('charge', d3.forceManyBody()
-                            // .strength(-50)
-                            // .theta(-950)
-                        )
-                        .force('center', d3.forceCenter(width / 2, height / 2))
-                        // .force('collision', d3.forceCollide().radius(70))
-                        .force('collide', d3.forceCollide().radius(65))
-                        // .force("charge", d3.forceManyBody()
-                        //     .strength(-200)
-                        //     .theta(0.9)
-                        //     .distanceMax(50)) // DESIGN Absto?en- Abstand zwischen Nodes
-                        /*
-                        * .gravity(.05)
-    .charge(-240)
-    .linkDistance(50)*/
+                        .force("charge", d3.forceManyBody().strength(-600))
+                        .force("link", d3.forceLink().id(d => d.id))
+                        .force("link", d3.forceLink().distance(200).strength(0.9))
+                        .force("collide", d3.forceCollide().radius(d => d.r * 50))
+                        // .force("center", d3.forceCenter(200,100))
                         .on("tick", ticked);
 
 
@@ -392,7 +413,7 @@ export default class NetworkChart {
                             // console.log(d.color)
                             return col
                         })
-                        .on("mouseover", function (d) {
+                        .on("mouseover", function (node) {
                             d3.select(this).attr("r", d.depth === 1 ? 50 : d.depth === 3 ? 20 : d.depth === 0 ? 50 : 25);
                         })
                         .on('mouseout', function (d) {
@@ -400,7 +421,38 @@ export default class NetworkChart {
                             if (d.depth === 0) {
                                 d3.select(this).select('circle').attr("r", 50)
                             }
+
                         })
+
+
+                    nodeEnter
+                        .on("mouseover", function (node) {
+                            // console.log(node)
+                            var filtered = node.ancestors().filter(d => node.index !== d.index)
+                            // console.log(filtered)
+                            linksEnter
+                                .filter(function (d) {
+                                    // console.log(d)
+                                    if (d.source.index === node.index || d.target.index === node.index) return d
+                                })
+                                .style('stroke', function (d){
+                                    // console.log(d)
+                                    return d.target.color? d.target.color:d.source.color ? d.source.color :d.source.parent.color? d.source.parent.color:d.source.parent.parent.color
+                                })
+                                .style('stroke-width', function (d){
+                                    // console.log(d)
+                                    return 8
+                                })
+                                .style('opacity', function (d) {
+                                    return d.source.index === node.index || d.target.index === node.index ? 1 : 0.3;
+                                })
+                        })
+                        .on('mouseout', function (d) {
+                            linksEnter
+                                .style('stroke', 'dimgrey')
+                                .style('stroke-width', '1')
+                        })
+
 
                     // title of nodes
                     node.append("title")
@@ -430,7 +482,7 @@ export default class NetworkChart {
                             d3.select(this).style('font-size', 10)
                         })
                         .on('click', function (d, i) {
-                            console.log(d)
+                            // console.log(d)
                             openTip(tip, d, i, collap)
                         })
 
@@ -670,6 +722,35 @@ export default class NetworkChart {
                         .attr("x2", d => d.target.x)
                         .attr("y2", d => d.target.y);
 
+                    /*  link.attr("points", function(d) {
+                          return d.source.x + "," + d.source.y + " " +
+                              (d.source.x + d.target.x)/2 + "," + (d.source.y + d.target.y)/2 + " " +
+                              d.target.x + "," + d.target.y; });
+  */
+                    link.attr("points", function (d) {
+                        var dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+                            dr = Math.sqrt(dx * dx + dy * dy);
+
+                        // We know the center of the arc will be some distance perpendicular from the
+                        // link segment's midpoint. The midpoint is computed as:
+                        var endX = (d.target.x + d.source.x) / 2;
+                        var endY = (d.target.y + d.source.y) / 2;
+
+                        // Notice that the paths are the arcs generated by a circle whose
+                        // radius is the same as the distance between the nodes. This simplifies the
+                        // trig as we can simply apply the 30-60-90 triangle rule to find the difference
+                        // between the radius and the distance to the segment midpoint from the circle
+                        // center.
+                        var len = dr - ((dr / 2) * Math.sqrt(3));
+
+                        // Remember that is we have a line's slope then the perpendicular slope is the
+                        // negative inverse.
+                        endX = endX + (dy * len / dr);
+                        endY = endY + (-dx * len / dr);
+
+                        return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + endX + "," + endY;
+                    });
                     rectangles
                         .attr("height", function (d) {
                             return d.rectHeight ? (d.rectHeight + 2) * 22 : 40
@@ -689,7 +770,16 @@ export default class NetworkChart {
                     node.attr("transform",
                         function (d) {
                             return "translate(" + d.x + ", " + d.y + ")";
-                        });
+                        })
+
+
+                node.filter(d=>d.depth===0)
+                    .attr("transform",
+                        function (d) {
+                            d.x = width / 2
+                            d.y = height / 2
+                            return "translate(" + d.x + ", " + d.y + ")";
+                        })
 
                     edgePaths.attr('d', d => 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y);
                 }
@@ -716,8 +806,8 @@ export default class NetworkChart {
                 }
 
                 function click(node, d) {
-                    console.log('CLICK')
-                    console.log(d)
+                    // console.log('CLICK')
+                    // console.log(d)
                     if (d3.event.defaultPrevented) return; // ignore drag
                     if (d.children) {
                         // d._children = d.children;
@@ -881,7 +971,7 @@ export default class NetworkChart {
                     removeOldD3()
 
                     hierarchy = getNewHierarchyByGroup(group)
-                    console.log(getNewHierarchyByGroup(group))
+                    // console.log(getNewHierarchyByGroup(group))
                     nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
                     nodes.map(n => {
                         if (n.depth === 1) {
@@ -933,7 +1023,7 @@ export default class NetworkChart {
                     //creating hierarchy
                     let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
                     titles = newPackableItems.values.map(el => {
-                        console.log(el.key)
+                        // console.log(el.key)
                         return el.key
                     });
 
@@ -961,6 +1051,11 @@ export default class NetworkChart {
                     })
                     let newPackableItems = {key: groupname, values: newGroupData};
                     //creating hierarchy
+                    titles = newPackableItems.values.map(el => {
+                        // console.log(el.key)
+                        return el.key
+                    });
+
                     let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
                     return newHierarchy
                 }
@@ -969,19 +1064,15 @@ export default class NetworkChart {
                     let s = d3.select('#nwSVG');
                     s.selectAll(".nodes").remove();
                     s.selectAll(".links").remove();
-                    /* let leg = d3.select('#legendSVG');
-                     leg.selectAll(".text").remove();
-                     leg.selectAll(".circle").remove();*/
                     let t = d3.selectAll('.d3-tip')
                     t.remove()
                     let eL = d3.selectAll('edgelabel')
                     eL.remove();
-                    let eP = d3.selectAll('edgepath')
+                    let eP = d3.selectAll('path')
                     eP.remove();
-                    let tP = d3.selectAll('textpath')
+                    let tP = d3.selectAll('text')
                     tP.remove();
-                    // let legend = d3.select('#legendSVG');
-                    // legend.selectAll("*").remove();
+
                 }
 
             }
@@ -993,11 +1084,19 @@ export default class NetworkChart {
     //necessary for creating new network chart
     delete() {
         let svg = d3.select('#nwSVG');
-        svg.select("g").remove();
+        // svg.select("g").remove();
+        svg.selectAll(".nodes").remove();
+        svg.selectAll(".links").remove();
         let legend = d3.select('#legendSVG');
         legend.selectAll("*").remove();
         let t = d3.selectAll('.d3-tip')
         t.remove()
+        let eL = d3.selectAll('edgelabel')
+        eL.remove();
+        let eP = d3.selectAll('path')
+        eP.remove();
+        let tP = d3.selectAll('text')
+        tP.remove();
     }
 
 

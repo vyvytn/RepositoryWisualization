@@ -124,24 +124,46 @@ line.link {
 text {
     pointer-events: none;
     fill: #000;
-    font: 10px sans-serif;
+    font: 14px sans-serif;
 }
 
 svg {
     /*border:1px solid #000;*/
 }
-/*legend of network chart*/
-.accordion-item{
-    /*background-color: coral;*/
-}
+
 #legendBtn{
     background-color: whitesmoke;
     stroke:none
+
+}
+#legendSVG{
+width: 800px;
+height: 800px
+
+}
+#legendChordSVG{
+width: 800px;
+height: 100px
 
 }
 #legend{
     width: inherit;
     height:200px;
     overflow: scroll;
+}
+/*Zoom Controls*/
+
+g.zoom-controls {
+    cursor: pointer;
+    pointer-events: all;
+}
+g.zoom-controls rect {
+    fill: white;
+    stroke: #596877;
+    stroke-width: 1;
+}
+g.zoom-controls line {
+    stroke: #596877;
+    stroke-width: 2;
 }
 
