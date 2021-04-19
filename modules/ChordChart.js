@@ -17,8 +17,8 @@ export default class ChordChart {
 
             let s = d3.select('#chordSVG');
             s.select("g").remove();
-            /*let lSvg = d3.select('#legendChordSVG');
-            lSvg.select("text").remove();*/
+            let lSvg = d3.select('#legendChordSVG');
+            lSvg.select("text").remove();
             let unsortedData = data.results.bindings;
 
             //nesting data
@@ -100,6 +100,8 @@ export default class ChordChart {
                     }
                 }
             }
+
+            document.querySelector('#legendChordBtn').innerHTML = 'Beziehungen zwischen den Forschungsgruppen im Forschungsbereich '+area;
 
             let legend = d3.select('#legendChordSVG');
             legend.append('text')

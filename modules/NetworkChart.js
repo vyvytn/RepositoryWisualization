@@ -18,7 +18,8 @@ export default class NetworkChart {
         await d3.json("./public/new.json", function (data) {
 
                 removeOldD3()
-                var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels, linkText, zoom
+                var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels,
+                    linkText, zoom
                 let unsortedData = data.results.bindings;
 
                 let authors = d3.nest()
@@ -166,8 +167,10 @@ export default class NetworkChart {
                     .attr('width', 800)
                     .attr('height', 800)
 
+            document.querySelector('#legendBtn').innerHTML = 'Publikationen der Forschungsgruppe '+group;
 
-                const legend_g = legendSVG.selectAll(".legend")
+
+            const legend_g = legendSVG.selectAll(".legend")
                     .data(titles)
                     .enter().append("g")
                     .attr("transform", (d, i) => `translate(${width},${i * 30})`);
@@ -202,10 +205,12 @@ export default class NetworkChart {
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(hier, collap, newGroup) {
+                    console.log(hier)
+                    document.querySelector('#legendBtn').innerHTML = 'Publikationen der Forschungsgruppe '+hier.data.key;
 
                     //ZOOM
                     //https://jsfiddle.net/vbabenko/jcsqqu6j/9/
-                     zoom = d3.zoom()
+                    zoom = d3.zoom()
                         .scaleExtent([1 / 2, 4])
                         .on("zoom", function () {
                             svg.attr('transform', `translate(${d3.event.transform.x},  	 ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
@@ -298,6 +303,10 @@ export default class NetworkChart {
                     // console.log(cScale.domain())
                     // console.log(titles)
                     // legend for items
+
+                    let legendToggleBtn = document.getElementById('legendChordBtn');
+                    legendToggleBtn.innerHTML = group;
+
                     let lSVG = d3.select('#legendSVG')
                         .attr('width', 800)
                         .attr('height', 200)
@@ -330,7 +339,7 @@ export default class NetworkChart {
                     console.log(links)
                     //d3 network simulation
                     simulation = d3.forceSimulation()
-                        .force("charge", d3.forceManyBody().strength(d=>d.depth>=2 && d._children? d._children.length>=5?-1500: -600: -300))
+                        .force("charge", d3.forceManyBody().strength(d => d.depth >= 2 && d._children ? d._children.length >= 5 ? -1500 : -600 : -300))
                         .force("link", d3.forceLink().id(d => d.id))
                         .force("link", d3.forceLink().distance(d => d.target.depth <= 1 ? 130 : d.target.depth === 4 ? 100 : 400).strength(0.9))
                         // .force("link", d3.forceLink().distance(d => d.depth>=2 && d.children? d.children.length>=5? 400 :200: 100).strength(0.9))
