@@ -47,6 +47,12 @@ export default class NetworkChart {
                             title.type = 'title'
                             title.values.map(author => {
                                 author.type = 'author'
+                                author.values.map(meta => {
+                                    // console.log(meta["abstract"])
+                                    /*meta.abstract={
+                                        type:'abstract'
+                                    }*/
+                                })
                             })
                         })
                     })
@@ -167,10 +173,10 @@ export default class NetworkChart {
                     .attr('width', 800)
                     .attr('height', 800)
 
-            document.querySelector('#legendBtn').innerHTML = 'Publikationen der Forschungsgruppe '+group;
+                document.querySelector('#legendBtn').innerHTML = 'Publikationen der Forschungsgruppe ' + group;
 
 
-            const legend_g = legendSVG.selectAll(".legend")
+                const legend_g = legendSVG.selectAll(".legend")
                     .data(titles)
                     .enter().append("g")
                     .attr("transform", (d, i) => `translate(${width},${i * 30})`);
@@ -205,8 +211,7 @@ export default class NetworkChart {
                 //-----------------------------------------------------------------------------------------------------------------
 
                 function update(hier, collap, newGroup) {
-                    console.log(hier)
-                    document.querySelector('#legendBtn').innerHTML = 'Publikationen der Forschungsgruppe '+hier.data.key;
+                    document.querySelector('#legendBtn').innerHTML = 'Publikationen der Forschungsgruppe ' + hier.data.key;
 
                     //ZOOM
                     //https://jsfiddle.net/vbabenko/jcsqqu6j/9/
@@ -336,7 +341,7 @@ export default class NetworkChart {
                     link = linksEnter.merge(link)
                     // .attr('marker-end', 'url(#arrowhead)')
 
-                    console.log(links)
+                    // console.log(links)
                     //d3 network simulation
                     simulation = d3.forceSimulation()
                         .force("charge", d3.forceManyBody().strength(d => d.depth >= 2 && d._children ? d._children.length >= 5 ? -1500 : -600 : -300))
@@ -797,8 +802,8 @@ export default class NetworkChart {
                 }
 
                 function click(node, d) {
-                    console.log('CLICK')
-                    console.log(d)
+                    /*    console.log('CLICK')
+                        console.log(d)*/
                     if (d3.event.defaultPrevented) return; // ignore drag
                     if (d.children) {
                         // d._children = d.children;
@@ -856,7 +861,7 @@ export default class NetworkChart {
                                 "</div>" +
                                 "<div class=form-check>" +
                                 "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
-                                "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'> show all publications</label> " +
+                                "<label class=form-check-label style='color:white; font-family: Monospace;  font-weight: bold;  font-size: larger' for=flexCheckDefault value='all'> RESET ALL FILTERS </label> " +
                                 "</div>" +
                                 "</div>" +
                                 "<div class=\"d-grid gap-2\">" +
@@ -867,31 +872,34 @@ export default class NetworkChart {
                     } else {
                         tip.html(function (d) {
                             return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' ><div class=row >" +
-                                "<div class=col> <p style='color:white; font-family: Monospace; font-weight: bold;'>show publications by author:</p> </div>" +
+                                "<div class=col> <p style='color:white; font-family: Monospace; font-weight: bold; font-size: larger'>show publications by year:</p> </div>" +
                                 " <div class=col>" +
                                 " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> </div>" +
                                 "</div>"
-
-                                + getAuthors(d).map(el => {
+                                + getYear(d).map(el => {
                                     return "<div class=form-check>" +
                                         "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el + "'> " +
                                         "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el + ">" + el + "</label> </div>"
                                 })
-                                /* + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by year:</p>"
-                                 + getYears(d).map(el => {
-                                     return "<div class=form-check>" +
-                                         "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
-                                         "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
-                                 })
+
+
+                                + '<p></p>'
+                                + "<p style='color:white; font-family: Monospace; font-weight: bold;  font-size: larger'>show publications by author:</p>"
+                                + getAuthors(d).map(el => {
+                                    return "<div class=form-check>" +
+                                        "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el + "'> " +
+                                        "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el + ">" + el + "</label> </div>"
+                                })/*
                                  + "<p style='color:white; font-family: Monospace; font-weight: bold'>show publications by type:</p>"
                                  /!*+ getYears(d).map(el => {
                                      return "<div class=form-check>" +
                                          "<input class=form-check-input type=checkbox id=flexCheckDefault value='" + el.key + "'> " +
                                          "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value=" + el.key + ">" + el.key + "</label> </div>"
                                  })*!/*/
+                                + '<p></p>'
                                 + "<div class=form-check>" +
                                 "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
-                                "<label class=form-check-label style='color:white; font-family: Monospace' for=flexCheckDefault value='all'>ALL PUBLICATIONS</label> </div>"
+                                "<label class=form-check-label style='color:white; font-family: Monospace;  font-weight: bold;  font-size: larger' for=flexCheckDefault value='all'> RESET ALL FILTERS </label> </div>"
                                 + "</div>"
                                 + "<div class=\"d-grid gap-2\">" +
                                 "<button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> " +
@@ -905,11 +913,17 @@ export default class NetworkChart {
                     $(document).ready(function () {
                         $('#submitFilter').click(function () {
                             tip.hide(d, i)
-                            let name = $('.form-check-input:checked').val();
-                            if (name === 'all') {
-                                showNodesByGroup(d.data.key)
-                            } else {
-                                showNodesByAuthor(d, name)
+                            let value = $('.form-check-input:checked').val();
+                            if(value === 'undefined' || value === undefined){
+                             return
+                            }else{
+                                if (value === 'all') {
+                                    showNodesByGroup(d.data.key)
+                                } else if (value === '2018' || value === '2019' || value === '2020' || value === '2021') {
+                                    showNodesByYear(d, value)
+                                } else {
+                                    showNodesByAuthor(d, value)
+                                }
                             }
                         })
                     })
@@ -927,6 +941,7 @@ export default class NetworkChart {
 
                 //return list of all authors in chosen researchgroup
                 function getAuthors(d) {
+                    console.log(getYear(d))
                     let authorList = []
                     if (d.children) {
                         d.children.map(child => {
@@ -940,6 +955,28 @@ export default class NetworkChart {
                         })
                     }
                     return authorList
+                }
+
+
+                //return list of all years witch publications
+                function getYear(d) {
+                    let yearList = []
+                    if (d.children) {
+                        d.children.map(child => {
+                            child.data.values.map(meta => {
+                                if (meta.value === '2019' || meta.value === '2020' || meta.value === '2021' || meta.value === '2018') {
+                                    // authorList.push(author.key)
+                                    console.log(child.data.key)
+                                    let duplicate = yearList.find(i => i === meta.value)
+                                    if (duplicate !== meta.value) {
+                                        yearList.push(meta.value)
+                                    }
+
+                                }
+                            })
+                        })
+                    }
+                    return yearList
                 }
 
                 function showNodesByAuthor(d, author) {
@@ -971,6 +1008,21 @@ export default class NetworkChart {
                     })
 
                     update(hierarchy, false, true)
+                    simulation.restart()
+                }
+
+                function showNodesByYear(d, year) {
+                    removeOldD3()
+                    console.log(getNewHierarchyByYear(d, year))
+                    hierarchy = getNewHierarchyByYear(d, year)
+                    nodes = hierarchy.descendants().filter(n => n.data.value !== '' && n.data.value !== "")
+                    nodes.map(n => {
+                        if (n.depth === 1) {
+                            collapse(n)
+                        }
+                    })
+
+                    update(hierarchy, true)
                     simulation.restart()
                 }
 
@@ -1027,6 +1079,7 @@ export default class NetworkChart {
                     let groupname = d.data.key
                     //load groupspecific data
                     let newGroupData = [];
+                    console.log(newGroupData)
                     allData.map(el => {
                         el.values.map(elem => {
                             if (elem.key === groupname) {
@@ -1040,6 +1093,44 @@ export default class NetworkChart {
                             }
                         })
                     })
+                    let newPackableItems = {key: groupname, values: newGroupData};
+                    //creating hierarchy
+                    titles = newPackableItems.values.map(el => {
+                        // console.log(el.key)
+                        return el.key
+                    });
+
+                    let newHierarchy = d3.hierarchy(newPackableItems, d => d.values);
+                    console.log(newHierarchy)
+                    return newHierarchy
+                }
+
+                //creates hierarchy for chosen year
+                //updates whole network chart
+                function getNewHierarchyByYear(d, year) {
+                    let groupname = d.data.key
+                    //load groupspecific data
+                    let newGroupData = [];
+                    allData.map(el => {
+                        el.values.map(elem => {
+                            if (elem.key === groupname) {
+                                elem.values.map(item => {
+                                    item.values.map(meta => {
+                                        if (meta.value === year) {
+                                            // newGroupData.push(item)
+                                            console.log(item)
+                                            let duplicate = newGroupData.find(i => i.key === item.key)
+                                            if (duplicate !== item) {
+                                                newGroupData.push(item)
+                                            }
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+
+                    console.log(newGroupData)
                     let newPackableItems = {key: groupname, values: newGroupData};
                     //creating hierarchy
                     titles = newPackableItems.values.map(el => {

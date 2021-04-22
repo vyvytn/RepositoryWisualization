@@ -105,7 +105,7 @@ export default class PackChart {
 
 
                 svg.on("click", function () {
-                    console.log('ZOOM ROOT')
+                    // console.log('ZOOM ROOT')
                     zoom(root);
                 }).call(tip)
 
@@ -133,13 +133,13 @@ export default class PackChart {
                         return d.depth === 0 ? 0.5 : d.depth === 1 ? 0.7 : d.depth === 2 ? 0.7 : 1
                     })
                     .on("click", function (d, i) {
-                        console.log(d)
+                        // console.log(d)
                         if (d.depth >= 2) {
-                            console.log('CLICK DEPTH 2')
+                            // console.log('CLICK DEPTH 2')
                             $("#returnBtn").show();
                             drawNetwork(d);
                         } else {
-                            console.log('ZOOM')
+                            // console.log('ZOOM')
                             if (focus !== d && d.depth!==2) zoom(d, i), d3.event.stopPropagation();
                         }
                     })
@@ -172,14 +172,14 @@ export default class PackChart {
                 //ZOOM function
                 //---------------------------------------------------------------------------
                 function zoom(d, i) {
-                    console.log(d)
+                    // console.log(d)
 
                     let focus0 = focus;
                     focus = d;
 
                     switch (d.depth) {
                         case 0:
-                            console.log('DEPTH 0')
+                            // console.log('DEPTH 0')
                             text.style('display', 'block')
                             initZoomRoot()
                             break;
@@ -280,7 +280,7 @@ export default class PackChart {
                 }
 
                 function deleteNavigation(depth) {
-                    console.log('DELETE')
+                    // console.log('DELETE')
                     let navBar = document.getElementById('navBar');
                     while (navBar.childElementCount > depth) {
                         navBar.removeChild(navBar.lastChild)
@@ -317,7 +317,7 @@ export default class PackChart {
                 }
 
                 function drawNetwork(d, i) {
-                    console.log('DRAW NETWORK')
+                    // console.log('DRAW NETWORK')
                     let group = d.data.key
                     addNavigation(group)
                     // updateNavigation(3, d.data.key)
@@ -336,7 +336,7 @@ export default class PackChart {
                 }
 
                 function initZoomRoot() {
-                    console.log('INIT')
+                    // console.log('INIT')
                     circle
                         .on("mouseover", function (d, i) {
                             tip.style("background", colorFIll(d.data.key));
@@ -350,11 +350,11 @@ export default class PackChart {
                 }
 
                 function resetMenu(network, d, i) {
-                    console.log('RESET ENTERD')
+                    // console.log('RESET ENTERD')
 
                     $(document).ready(function () {
                             $('#returnBtn').click(function () {
-                                console.log('RESET RETURN BTN CLICKED')
+                                // console.log('RESET RETURN BTN CLICKED')
                                 if (network) {
                                     network.delete()
                                     svg.call(tip)
@@ -388,7 +388,7 @@ export default class PackChart {
                                 /*  if(d.depth===2){
                                       zoom(d.parent,i)
                                   }*/
-                                console.log(d)
+                                // console.log(d)
                                 $("#chordContainer").hide()
                                 $("#networkContainer").hide()
                                 $('#returnBtn').hide()
@@ -400,14 +400,14 @@ export default class PackChart {
 
                         }
                     )
-                    console.log('RESET LEAVE')
+                    // console.log('RESET LEAVE')
 
                 }
 
 
                 $(document).ready(function () {
                     $('#resetBtn').click(function () {
-                        console.log('RESET BUTTON CLICKED')
+                        // console.log('RESET BUTTON CLICKED')
                         $('#chordMenuBtn').hide()
                         svg.call(tip)
                         circle
@@ -427,7 +427,7 @@ export default class PackChart {
                             .on("end", function (d) {
                                 if (d.parent !== focus) this.style.display = "none";
                             });
-                        console.log('RESET BUTTON LEAVED')
+                        // console.log('RESET BUTTON LEAVED')
 
                     });
                     /*  $('#returnBtn').click(function () {
