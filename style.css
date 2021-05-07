@@ -148,7 +148,7 @@ height: 100px
 }
 #legend{
     width: inherit;
-    height:200px;
+    height:150px;
     overflow: scroll;
 }
 /*Zoom Controls*/

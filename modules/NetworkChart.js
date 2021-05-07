@@ -21,7 +21,7 @@ export default class NetworkChart {
                 var link, nodes, node, simulation, links, rectWidth, rectHeight, rectangles, edgePaths, edgeLabels,
                     linkText, zoom
                 let unsortedData = data.results.bindings;
-
+console.log(unsortedData)
                 let authors = d3.nest()
                     .key(d => d.author.value)
                     .key(d => d.title.value)
@@ -113,7 +113,7 @@ export default class NetworkChart {
                     return el.key
                 });
 
-                // console.log(titles)
+                console.log(groupData)
 
 
                 let colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
@@ -156,7 +156,7 @@ export default class NetworkChart {
                 const svg = d3.select('#nwSVG')
                     // .attr("width", width + margin.left + margin.right)
                     .attr("width", 2000)
-                    .attr("height", 1000)
+                    .attr("height", 950)
                     .call(d3.zoom().on("zoom", function () {
                         svg.attr('transform', `translate(${d3.event.transform.x},  	 ${d3.event.transform.y}) scale(${d3.event.transform.k})`);
                         // svg.attr("transform", d3.event.transform)
@@ -206,6 +206,8 @@ export default class NetworkChart {
 
 
                 update(hierarchy, false)
+            console.log('hierarchy2')
+            console.log(hierarchy)
 
                 //update function begins
                 //-----------------------------------------------------------------------------------------------------------------
@@ -802,22 +804,10 @@ export default class NetworkChart {
                 }
 
                 function click(node, d) {
-                    /*    console.log('CLICK')
-                        console.log(d)*/
                     if (d3.event.defaultPrevented) return; // ignore drag
                     if (d.children) {
-                        // d._children = d.children;
-                        // d.children = null;
                         collapse(d)
                     } else {
-                        function simulateForce(node) {
-                            simulation.force('center', function (d) {
-                                if (d === node) {
-                                    return d3.forceCenter(width / 2, height / 1)
-                                }
-                            })
-                        }
-
                         d.children = d._children;
                         d._children = null;
                     }
@@ -852,16 +842,18 @@ export default class NetworkChart {
                     let color = d.depth === 0 ? 'grey' : d.depth === 1 ? colorScale(d.data.key) : d.depth === 2 ? colorScale(d.parent.data.key) : colorScale(d.parent.parent.data.key)
                     tip.style("background", color);
                     tip.direction('e')
-
+                    console.log('D')
+                    console.log(d)
                     if (bool) {
                         tip.html(function (d) {
+                            let allPub = d.children.length
                             return "<div style='height: auto; overflow-x: hidden; overflow-y: auto' >" +
                                 "<div class=row >" +
                                 " <button align=\"right\" type=\"button\" class=\"btn btn-default\" style=\"color:white;\" id=leftMenuBtn><i class=\"bi bi-x-circle-fill\"></i></button> " +
                                 "</div>" +
                                 "<div class=form-check>" +
                                 "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
-                                "<label class=form-check-label style='color:white; font-family: Monospace;  font-weight: bold;  font-size: larger' for=flexCheckDefault value='all'> RESET ALL FILTERS </label> " +
+                                "<label class=form-check-label style='color:white; font-family: Monospace;  font-weight: bold;  font-size: larger' for=flexCheckDefault value='all'> SHOW ALL PUBLICATIONS </label> " +
                                 "</div>" +
                                 "</div>" +
                                 "<div class=\"d-grid gap-2\">" +
@@ -871,6 +863,8 @@ export default class NetworkChart {
                         })
                     } else {
                         tip.html(function (d) {
+                            let allPub = d.children.length
+                            console.log(getYear(d))
                             return "<div style='height: 500px; overflow-x: hidden; overflow-y: auto' ><div class=row >" +
                                 "<div class=col> <p style='color:white; font-family: Monospace; font-weight: bold; font-size: larger'>show publications by year:</p> </div>" +
                                 " <div class=col>" +
@@ -899,7 +893,7 @@ export default class NetworkChart {
                                 + '<p></p>'
                                 + "<div class=form-check>" +
                                 "<input class=form-check-input type=checkbox id=flexCheckDefault value='all'> " +
-                                "<label class=form-check-label style='color:white; font-family: Monospace;  font-weight: bold;  font-size: larger' for=flexCheckDefault value='all'> RESET ALL FILTERS </label> </div>"
+                                "<label class=form-check-label style='color:white; font-family: Monospace;  font-weight: bold;  font-size: larger' for=flexCheckDefault value='all'> SHOW ALL PUBLICATIONS </label> </div>"
                                 + "</div>"
                                 + "<div class=\"d-grid gap-2\">" +
                                 "<button class=\"btn btn-light\" type=\"button\" id=submitFilter><i class=\"bi bi-check2-square\"></i></button> " +
@@ -914,9 +908,9 @@ export default class NetworkChart {
                         $('#submitFilter').click(function () {
                             tip.hide(d, i)
                             let value = $('.form-check-input:checked').val();
-                            if(value === 'undefined' || value === undefined){
-                             return
-                            }else{
+                            if (value === 'undefined' || value === undefined) {
+                                return
+                            } else {
                                 if (value === 'all') {
                                     showNodesByGroup(d.data.key)
                                 } else if (value === '2018' || value === '2019' || value === '2020' || value === '2021') {
@@ -1030,14 +1024,17 @@ export default class NetworkChart {
                 //updates whole network chart
                 function getNewHierarchyByGroup(newGroup) {
                     //load groupspecific data
+                    console.log('allData')
+                    console.log(allData)
                     let newGroupData = [];
-                    allData.map(el => {
-                        return el.values.map(elem => {
+                    allData.forEach(el => {
+                        return el.values.forEach(elem => {
                             if (elem.key === newGroup) {
                                 newGroupData = elem.values
                             }
                         })
                     })
+                    console.log('METADATA ADDED')
                     // console.log(newGroupData)
                     //match author with its metadata
                     newGroupData.map(item => {
@@ -1049,9 +1046,20 @@ export default class NetworkChart {
                             })
                         })
                     })
-                    itemsList.map(item => {
+                    itemsList.forEach(item => {
                         newGroupData.map(i => {
                             if (i.key === item.key) {
+                                // let duplicate = i.values.find(data => data.value === item.values[0].title)
+                               /* if (duplicate !== item) {
+                                    newGroupData.push(item)
+                                }*/
+
+                                 // i.values.forEach(data=>data.value? console.log(data.value):console.log('no value'));
+                               /* var isDuplicate = valueArr.some(function(item, idx){
+                                    return valueArr.indexOf(item) != idx
+                                });*/
+                                console.log(i.values)
+
                                 i.values.push(item.values[0].abstract ? item.values[0].abstract : 'No abstract')
                                 i.values.push(item.values[0].date ? item.values[0].date : 'No date')
                                 i.values.push(item.values[0].language ? item.values[0].language : 'No language')
@@ -1061,6 +1069,8 @@ export default class NetworkChart {
                             }
                         })
                     })
+
+
                     let newPackableItems = {key: newGroup, values: newGroupData};
 
                     //creating hierarchy
@@ -1080,13 +1090,20 @@ export default class NetworkChart {
                     //load groupspecific data
                     let newGroupData = [];
                     console.log(newGroupData)
-                    allData.map(el => {
-                        el.values.map(elem => {
+                    allData.forEach(el => {
+                        el.values.forEach(elem => {
                             if (elem.key === groupname) {
-                                elem.values.map(item => {
-                                    item.values.map(meta => {
+                                elem.values.forEach(item => {
+                                    item.values.forEach(meta => {
                                         if (meta.key === author) {
-                                            newGroupData.push(item)
+                                            let duplicate = newGroupData.find(i => i.key === item.key)
+                                            if (duplicate !== item) {
+                                                newGroupData.push(item)
+                                            }
+                                            /* let duplicate = newGroupData.find(i => i.key === item.key)
+                                            if (duplicate !== item) {
+                                                newGroupData.push(item)
+                                            }*/
                                         }
                                     })
                                 })
